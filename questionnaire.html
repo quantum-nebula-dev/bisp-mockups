@@ -414,7 +414,8 @@ function buildVis(){
         {q:"Décrivez librement votre vision du site idéal\u00a0:",hint:"Imaginez le site parfait de BISP"},
         {q:"Sites web que vous admirez (URLs ou noms)\u00a0:",hint:""},
     ];
-    let h=`<h1>Votre site BISP idéal</h1><p class="intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait.</p>`;
+    let h=previewBar('vis');
+    h+=`<div style="padding:2.5rem"><h1>Votre site BISP idéal</h1><p class="intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait. Utilisez les onglets ci-dessus si besoin de revoir une maquette.</p>`;
     qs.forEach((q,i)=>{
         h+=`<div class="vq"><label>${i+1}. ${q.q}</label>${q.hint?`<p class="hint">${q.hint}</p>`:''}<textarea rows="3" onchange="D.vis['q${i}']=this.value;save()"></textarea></div>`;
     });
