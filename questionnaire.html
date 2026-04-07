@@ -243,6 +243,11 @@ function rate(id,crit,val){
     updateProgress();updateSiteChecks();
 }
 
+function saveComment(id,crit,val){
+    if(!D.mockups[id].comments)D.mockups[id].comments={};
+    D.mockups[id].comments[crit]=val;save();
+}
+
 // === TAB 1: COMPARER ===
 function buildComparer(){
     const opts=M.map(m=>`<option value="${m.id}" ${D.cmp[m.id]?'':''}>${m.name}</option>`).join('');
