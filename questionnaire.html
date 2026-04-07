@@ -291,14 +291,14 @@ function buildHybrider(){
 function buildVisionPanel(){
     const pc=document.getElementById('panelContent');
     const qs=[
-        {q:"Quelle émotion doit ressentir un parent en arrivant\u00a0?",hint:""},
-        {q:"3 adjectifs pour le site BISP idéal\u00a0:",hint:"ex.\u00a0: chaleureux, prestigieux, moderne, intime..."},
-        {q:"Éléments NON-NÉGOCIABLES\u00a0:",hint:"ex.\u00a0: vidéo en hero, tarifs visibles, accréd. Cambridge..."},
-        {q:"Éléments à ÉVITER\u00a0:",hint:"ex.\u00a0: trop sombre, trop corporate, trop d\u2019animations..."},
-        {q:"Décrivez votre vision du site idéal\u00a0:",hint:"Imaginez le site parfait de BISP"},
-        {q:"Sites web que vous admirez\u00a0:",hint:"URLs ou noms"},
+        {q:"Quelle \u00e9motion un parent devrait-il ressentir en arrivant sur le site\u00a0?",hint:""},
+        {q:"Quels adjectifs d\u00e9crivent le mieux le site BISP id\u00e9al\u00a0?",hint:"ex.\u00a0: chaleureux, prestigieux, moderne, intime, international..."},
+        {q:"Quels \u00e9l\u00e9ments consid\u00e9rez-vous comme non n\u00e9gociables\u00a0?",hint:"ex.\u00a0: vid\u00e9o en accueil, tarifs visibles, accr\u00e9ditations Cambridge..."},
+        {q:"Quels \u00e9l\u00e9ments souhaitez-vous absolument \u00e9viter\u00a0?",hint:"ex.\u00a0: trop sombre, trop corporate, trop d\u2019animations..."},
+        {q:"Comment d\u00e9cririez-vous votre vision du site id\u00e9al\u00a0?",hint:"Imaginez le site parfait de BISP et d\u00e9crivez-le librement"},
+        {q:"Y a-t-il des sites web que vous admirez et qui pourraient servir d\u2019inspiration\u00a0?",hint:"Noms ou adresses web"},
     ];
-    let h=`<div class="p-section-title">Votre site BISP idéal</div><p class="p-intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait.</p>`;
+    let h=`<div class="p-section-title">Votre vision du site BISP</div><p class="p-intro">En vous appuyant sur les 9 maquettes, d\u00e9crivez le site id\u00e9al selon vous.</p>`;
     qs.forEach((q,i)=>{
         h+=`<div class="vis-q"><label>${i+1}. ${q.q}</label>${q.hint?`<p class="hint">${q.hint}</p>`:''}<textarea rows="3" onchange="D.vis['q${i}']=this.value;save()">${D.vis['q'+i]||''}</textarea></div>`;
     });
