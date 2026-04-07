@@ -159,6 +159,22 @@
         /* Close fullpage button */
         .fp-close{position:fixed;top:1rem;right:1.5rem;z-index:131;background:var(--navy);color:var(--white);border:none;padding:0.4rem 1rem;border-radius:6px;font-family:inherit;font-size:0.8rem;cursor:pointer;font-weight:600}
         .fp-close:hover{background:var(--gold);color:var(--navy)}
+
+        /* PREVIEW BAR inside fullpage sections */
+        .preview-bar{position:sticky;top:0;z-index:132;background:var(--white);border-bottom:1px solid var(--border);margin:-2.5rem -2.5rem 0;padding:0}
+        .preview-tabs{display:flex;gap:2px;padding:0.5rem 0.8rem;background:var(--navy);overflow-x:auto;scrollbar-width:none}
+        .preview-tabs::-webkit-scrollbar{display:none}
+        .preview-tab{padding:0.3rem 0.6rem;border-radius:4px;border:none;font-family:inherit;font-size:0.72rem;font-weight:600;cursor:pointer;white-space:nowrap;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);transition:all 0.15s}
+        .preview-tab:hover{background:rgba(255,255,255,0.2);color:var(--white)}
+        .preview-tab.active{background:var(--gold);color:var(--navy)}
+        .preview-frame-wrap{position:relative;height:45vh;min-height:300px;background:#e2e2e2;border-bottom:3px solid var(--gold)}
+        .preview-frame-wrap iframe{width:100%;height:100%;border:none}
+        .preview-collapse{position:absolute;bottom:0.5rem;right:0.8rem;background:rgba(26,39,68,0.85);color:var(--white);border:none;padding:0.3rem 0.7rem;border-radius:4px;font-size:0.7rem;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)}
+        .preview-collapse:hover{background:var(--gold);color:var(--navy)}
+        .preview-bar.collapsed .preview-frame-wrap{height:0;min-height:0;overflow:hidden;border:none}
+        .preview-bar.collapsed .preview-collapse-row{display:flex;justify-content:center;padding:0.3rem;background:var(--cream)}
+        .preview-expand{background:var(--navy);color:var(--white);border:none;padding:0.3rem 0.8rem;border-radius:4px;font-size:0.7rem;cursor:pointer;font-family:inherit}
+        .preview-expand:hover{background:var(--gold);color:var(--navy)}
     </style>
 </head>
 <body>
