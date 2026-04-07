@@ -248,8 +248,7 @@ function goSite(i){
     cur=i;
     document.querySelectorAll('.fp').forEach(p=>p.classList.remove('active'));
     document.getElementById('iframeWrap').style.display='block';
-    document.getElementById('vpBar').style.display='flex';
-    document.getElementById('rightToggle').style.display='block';
+        document.getElementById('rightToggle').style.display='block';
     document.getElementById('mockupFrame').src=M[i].url;
     document.querySelectorAll('.site-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
     document.querySelectorAll('.special-btn').forEach(b=>b.classList.remove('active'));
