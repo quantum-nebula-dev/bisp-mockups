@@ -254,7 +254,7 @@ function buildSiteList(){
     M.forEach((m,i)=>{
         const b=document.createElement('button');
         b.className='site-btn';b.id='sb'+i;
-        b.innerHTML=`<span class="sb-rank">#${m.rank}</span><span class="sb-name">${m.name}</span><span class="sb-score">${m.score}</span>`;
+        b.innerHTML=`<span class="sb-rank">#${m.rank}</span><span class="sb-name">${m.name}</span>`;
         b.onclick=()=>goSite(i);
         el.appendChild(b);
     });
