@@ -15,608 +15,511 @@
             --muted: #6b7280;
             --light: #f3f4f6;
             --border: #e5e7eb;
-            --accent: #2563eb;
-            --panel-width: 420px;
+            --panel-w: 440px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--text); }
+        body { font-family: 'DM Sans', sans-serif; background: #111; color: var(--text); overflow: hidden; }
 
         /* === TOP BAR === */
         .topbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: var(--navy); height: 56px;
-            display: flex; align-items: center; padding: 0 1rem;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            background: var(--navy); height: 48px;
+            display: flex; align-items: center; padding: 0 0.8rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
         }
         .topbar-brand {
             font-family: 'EB Garamond', serif; color: var(--white);
-            font-size: 1.2rem; margin-right: 1.5rem; white-space: nowrap;
+            font-size: 1.1rem; margin-right: 1rem; white-space: nowrap;
         }
         .topbar-brand span { color: var(--gold); }
-        .tab-bar {
-            display: flex; gap: 2px; overflow-x: auto; flex: 1;
-            scrollbar-width: none; -ms-overflow-style: none;
-        }
+        .tab-bar { display: flex; gap: 2px; overflow-x: auto; flex: 1; scrollbar-width: none; }
         .tab-bar::-webkit-scrollbar { display: none; }
         .tab {
-            padding: 0.4rem 0.8rem; border-radius: 6px 6px 0 0;
-            font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            padding: 0.35rem 0.7rem; border-radius: 5px 5px 0 0;
+            font-size: 0.72rem; font-weight: 600; cursor: pointer;
             white-space: nowrap; transition: all 0.2s;
-            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55);
             border: none; font-family: inherit;
         }
         .tab:hover { background: rgba(255,255,255,0.15); color: var(--white); }
         .tab.active { background: var(--gold); color: var(--navy); }
-        .tab .rank { font-weight: 700; }
-        .tab .score { opacity: 0.7; font-size: 0.65rem; margin-left: 4px; }
+        .tab.special { background: rgba(196,165,90,0.18); }
+        .tab.special.active { background: var(--gold); }
+        .tab-check { color: #4ade80; margin-left: 3px; font-size: 0.65rem; }
         .btn-export {
-            margin-left: auto; padding: 0.4rem 1rem; border-radius: 20px;
+            margin-left: auto; padding: 0.35rem 0.9rem; border-radius: 20px;
             background: var(--gold); color: var(--navy); border: none;
-            font-weight: 700; font-size: 0.75rem; cursor: pointer;
+            font-weight: 700; font-size: 0.72rem; cursor: pointer;
             font-family: inherit; white-space: nowrap;
         }
-        .btn-export:hover { background: #d4b46a; }
 
-        /* === MAIN LAYOUT === */
-        .main { margin-top: 56px; display: flex; height: calc(100vh - 56px); }
-        .iframe-panel {
-            flex: 1; position: relative; background: #e2e2e2;
-        }
-        .iframe-panel iframe {
-            width: 100%; height: 100%; border: none;
-        }
-        .iframe-overlay {
-            position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
-            display: flex; gap: 0.5rem; justify-content: center;
-        }
-        .viewport-btn {
-            padding: 0.3rem 0.7rem; border-radius: 4px;
-            background: rgba(26,39,68,0.85); color: var(--white);
-            border: none; font-size: 0.7rem; cursor: pointer;
-            font-family: inherit; backdrop-filter: blur(8px);
-        }
-        .viewport-btn.active { background: var(--gold); color: var(--navy); }
+        /* === PROGRESS BAR === */
+        .progress-bar { position: fixed; top: 48px; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.1); z-index: 199; }
+        .progress-fill { height: 100%; background: var(--gold); transition: width 0.3s; width: 0%; }
 
-        /* === FORM PANEL === */
-        .form-panel {
-            width: var(--panel-width); min-width: var(--panel-width);
+        /* === IFRAME FULLSCREEN === */
+        .iframe-wrap {
+            position: fixed; top: 51px; left: 0; right: 0; bottom: 0; z-index: 1;
+        }
+        .iframe-wrap iframe { width: 100%; height: 100%; border: none; background: var(--white); }
+
+        /* === VIEWPORT TOGGLE === */
+        .viewport-bar {
+            position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 4px; z-index: 100; background: rgba(26,39,68,0.9);
+            padding: 4px; border-radius: 8px; backdrop-filter: blur(10px);
+        }
+        .vp-btn {
+            padding: 0.3rem 0.7rem; border-radius: 5px; border: none;
+            font-size: 0.7rem; cursor: pointer; font-family: inherit;
+            background: transparent; color: rgba(255,255,255,0.6); transition: all 0.15s;
+        }
+        .vp-btn.active { background: var(--gold); color: var(--navy); font-weight: 600; }
+
+        /* === FLOATING TOGGLE BUTTON === */
+        .panel-toggle {
+            position: fixed; right: 0; top: 50%; transform: translateY(-50%);
+            z-index: 150; background: var(--navy); color: var(--white);
+            border: none; padding: 1rem 0.5rem; border-radius: 8px 0 0 8px;
+            cursor: pointer; font-family: inherit; font-size: 0.7rem;
+            writing-mode: vertical-rl; text-orientation: mixed;
+            letter-spacing: 0.1em; font-weight: 600;
+            box-shadow: -2px 0 12px rgba(0,0,0,0.2); transition: all 0.3s;
+        }
+        .panel-toggle:hover { background: var(--gold); color: var(--navy); }
+        .panel-toggle.open { right: var(--panel-w); }
+        .panel-toggle .arrow { display: inline-block; margin-bottom: 4px; }
+
+        /* === SLIDE PANEL === */
+        .slide-panel {
+            position: fixed; top: 51px; right: calc(-1 * var(--panel-w)); bottom: 0;
+            width: var(--panel-w); z-index: 140;
             background: var(--white); border-left: 1px solid var(--border);
-            overflow-y: auto; padding: 1.5rem;
+            box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+            overflow-y: auto; transition: right 0.3s ease;
+            padding: 1.5rem;
         }
-        .form-panel h2 {
-            font-family: 'EB Garamond', serif; font-size: 1.5rem;
-            color: var(--navy); margin-bottom: 0.3rem;
+        .slide-panel.open { right: 0; }
+
+        /* === PANEL CONTENT === */
+        .panel-header h2 {
+            font-family: 'EB Garamond', serif; font-size: 1.4rem;
+            color: var(--navy); margin-bottom: 0.2rem;
         }
-        .form-panel .subtitle {
-            font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem;
-            font-style: italic;
+        .panel-header .style-desc {
+            font-size: 0.78rem; color: var(--muted); font-style: italic;
+            margin-bottom: 0.2rem;
         }
-        .form-panel .score-badge {
+        .panel-header .score-badge {
             display: inline-block; background: var(--navy); color: var(--gold);
-            padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem;
+            padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem;
             font-weight: 700; margin-bottom: 1rem;
         }
-
-        /* Rating groups */
-        .rating-group { margin-bottom: 1.2rem; }
-        .rating-group-title {
-            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.08em; color: var(--gold); margin-bottom: 0.5rem;
-            padding-bottom: 0.3rem; border-bottom: 2px solid var(--cream);
+        .rating-group { margin-bottom: 1rem; }
+        .rg-title {
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--gold); margin-bottom: 0.4rem;
+            padding-bottom: 0.25rem; border-bottom: 2px solid var(--cream);
         }
-        .rating-item { margin-bottom: 0.6rem; }
-        .rating-label {
-            font-size: 0.8rem; color: var(--text); margin-bottom: 0.3rem;
-            line-height: 1.3;
-        }
-        .rating-stars {
-            display: flex; gap: 4px;
-        }
-        .star-btn {
-            width: 32px; height: 32px; border-radius: 6px;
+        .rating-item { margin-bottom: 0.5rem; }
+        .r-label { font-size: 0.78rem; color: var(--text); margin-bottom: 0.2rem; line-height: 1.3; }
+        .r-stars { display: flex; gap: 3px; }
+        .s-btn {
+            width: 30px; height: 30px; border-radius: 5px;
             border: 1.5px solid var(--border); background: var(--white);
-            font-size: 0.8rem; font-weight: 700; color: var(--muted);
-            cursor: pointer; transition: all 0.15s; font-family: inherit;
+            font-size: 0.78rem; font-weight: 700; color: var(--muted);
+            cursor: pointer; transition: all 0.12s; font-family: inherit;
         }
-        .star-btn:hover { border-color: var(--gold); color: var(--gold); }
-        .star-btn.selected {
-            background: var(--navy); border-color: var(--navy);
-            color: var(--white);
-        }
-
-        /* Text areas */
-        .text-q { margin-bottom: 1rem; }
-        .text-q label {
-            display: block; font-size: 0.8rem; font-weight: 600;
-            color: var(--navy); margin-bottom: 0.3rem;
-        }
+        .s-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .s-btn.sel { background: var(--navy); border-color: var(--navy); color: var(--white); }
+        .text-q { margin-bottom: 0.8rem; }
+        .text-q label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
         .text-q textarea {
-            width: 100%; padding: 0.5rem; border: 1.5px solid var(--border);
-            border-radius: 6px; font-family: inherit; font-size: 0.8rem;
-            resize: vertical; min-height: 50px; transition: border-color 0.2s;
+            width: 100%; padding: 0.4rem; border: 1.5px solid var(--border);
+            border-radius: 5px; font-family: inherit; font-size: 0.78rem;
+            resize: vertical; min-height: 44px;
         }
         .text-q textarea:focus { outline: none; border-color: var(--gold); }
+        .nav-btns { display: flex; gap: 0.4rem; margin-top: 1rem; }
+        .nav-btns button {
+            flex: 1; padding: 0.5rem; border-radius: 6px; font-family: inherit;
+            font-size: 0.78rem; font-weight: 600; cursor: pointer;
+        }
+        .nb-sec { background: var(--light); border: 1px solid var(--border); color: var(--text); }
+        .nb-pri { background: var(--navy); border: none; color: var(--white); }
+        .nb-pri:hover { background: var(--gold); color: var(--navy); }
 
-        /* === SPECIAL SECTIONS (Hybridation, Vision) === */
-        .section-page { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
-        .section-page.active { display: block; }
-        .section-page h1 {
-            font-family: 'EB Garamond', serif; font-size: 2rem;
-            color: var(--navy); margin-bottom: 0.5rem;
+        /* === FULL PAGE SECTIONS === */
+        .fullpage { display: none; position: fixed; top: 51px; left: 0; right: 0; bottom: 0; z-index: 130; background: var(--white); overflow-y: auto; padding: 2.5rem; }
+        .fullpage.active { display: block; }
+        .fullpage h1 { font-family: 'EB Garamond', serif; font-size: 2rem; color: var(--navy); margin-bottom: 0.5rem; }
+        .fullpage .intro { font-size: 0.92rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; max-width: 750px; }
+        .fp-inner { max-width: 850px; margin: 0 auto; }
+
+        /* Comparison */
+        .cmp-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+            margin-bottom: 0.5rem; padding: 0.6rem 0.8rem; border-radius: 6px;
         }
-        .section-page .intro {
-            font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem;
-            line-height: 1.6;
+        .cmp-row:nth-child(odd) { background: var(--cream); }
+        .cmp-row label { font-size: 0.88rem; font-weight: 600; color: var(--navy); align-self: center; }
+        .cmp-row select {
+            padding: 0.45rem; border: 1.5px solid var(--border); border-radius: 6px;
+            font-family: inherit; font-size: 0.85rem; background: var(--white);
         }
-        .hybrid-group { margin-bottom: 2rem; }
-        .hybrid-group h3 {
-            font-family: 'EB Garamond', serif; font-size: 1.2rem;
-            color: var(--navy); margin-bottom: 0.8rem;
-            padding-bottom: 0.4rem; border-bottom: 2px solid var(--gold);
+        .cmp-row select:focus { outline: none; border-color: var(--gold); }
+        .top3-row { display: grid; grid-template-columns: 50px 1fr 1.2fr; gap: 0.8rem; margin-bottom: 0.5rem; align-items: center; }
+        .top3-rank { font-family: 'EB Garamond', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700; text-align: center; }
+        .top3-row select, .top3-row input {
+            padding: 0.45rem; border: 1.5px solid var(--border); border-radius: 6px;
+            font-family: inherit; font-size: 0.85rem;
         }
-        .hybrid-item {
-            display: grid; grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.8rem; padding: 0.8rem; border-radius: 8px;
-            margin-bottom: 0.5rem; background: var(--cream);
+
+        /* Hybrid */
+        .hyb-group { margin-bottom: 2rem; }
+        .hyb-group h3 {
+            font-family: 'EB Garamond', serif; font-size: 1.15rem; color: var(--navy);
+            margin-bottom: 0.7rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--gold);
         }
-        .hybrid-item:nth-child(odd) { background: var(--white); border: 1px solid var(--border); }
-        .hybrid-el { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
-        .hybrid-el small { display: block; font-weight: 400; color: var(--muted); font-size: 0.75rem; }
-        .hybrid-item select {
-            padding: 0.4rem; border: 1.5px solid var(--border); border-radius: 6px;
-            font-family: inherit; font-size: 0.8rem; background: var(--white);
+        .hyb-item {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.7rem;
+            padding: 0.7rem; border-radius: 6px; margin-bottom: 0.4rem;
         }
-        .hybrid-item select:focus { outline: none; border-color: var(--gold); }
-        .hybrid-item input {
+        .hyb-item:nth-child(odd) { background: var(--cream); }
+        .hyb-item:nth-child(even) { background: var(--white); border: 1px solid var(--border); }
+        .hyb-el { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+        .hyb-el small { display: block; font-weight: 400; color: var(--muted); font-size: 0.73rem; }
+        .hyb-item select, .hyb-item input {
             padding: 0.4rem; border: 1.5px solid var(--border); border-radius: 6px;
             font-family: inherit; font-size: 0.8rem;
         }
-        .hybrid-item input:focus { outline: none; border-color: var(--gold); }
 
         /* Vision */
-        .vision-q { margin-bottom: 1.5rem; }
-        .vision-q label {
-            display: block; font-size: 0.95rem; font-weight: 600;
-            color: var(--navy); margin-bottom: 0.3rem;
-        }
-        .vision-q .hint {
-            font-size: 0.8rem; color: var(--muted); font-style: italic;
-            margin-bottom: 0.5rem;
-        }
-        .vision-q textarea {
-            width: 100%; padding: 0.6rem; border: 1.5px solid var(--border);
-            border-radius: 8px; font-family: inherit; font-size: 0.85rem;
-            resize: vertical; min-height: 70px;
-        }
-        .vision-q textarea:focus { outline: none; border-color: var(--gold); }
-
-        /* Top 3 */
-        .top3-row {
-            display: grid; grid-template-columns: 60px 1fr 1fr;
-            gap: 0.8rem; margin-bottom: 0.5rem; align-items: center;
-        }
-        .top3-rank {
-            font-family: 'EB Garamond', serif; font-size: 1.5rem;
-            color: var(--gold); font-weight: 700; text-align: center;
-        }
-
-        /* Nav bottom bar for special sections */
-        .section-nav {
-            display: flex; gap: 0.5rem; margin-top: 2rem;
-            justify-content: flex-end;
-        }
-        .section-nav button {
-            padding: 0.6rem 1.5rem; border-radius: 8px;
-            font-family: inherit; font-size: 0.85rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .btn-secondary { background: var(--light); border: 1px solid var(--border); color: var(--text); }
-        .btn-primary { background: var(--navy); border: none; color: var(--white); }
-        .btn-primary:hover { background: var(--gold); color: var(--navy); }
-
-        /* Evaluateur */
-        .eval-field { margin-bottom: 1rem; }
-        .eval-field label { display: block; font-weight: 600; color: var(--navy); font-size: 0.9rem; margin-bottom: 0.3rem; }
-        .eval-field input {
+        .vis-q { margin-bottom: 1.5rem; }
+        .vis-q label { display: block; font-size: 0.92rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
+        .vis-q .hint { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-bottom: 0.4rem; }
+        .vis-q textarea {
             width: 100%; padding: 0.5rem; border: 1.5px solid var(--border);
             border-radius: 6px; font-family: inherit; font-size: 0.85rem;
+            resize: vertical; min-height: 60px;
         }
-
-        /* Full-page mode for hybridation/vision */
-        .full-page-mode .iframe-panel { display: none; }
-        .full-page-mode .form-panel { display: none; }
-        .full-page-mode .section-page.active {
-            display: block; width: 100%; height: calc(100vh - 56px); overflow-y: auto;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .main { flex-direction: column; }
-            .iframe-panel { height: 50vh; }
-            .form-panel { width: 100%; min-width: 100%; height: 50vh; }
-            :root { --panel-width: 100%; }
-        }
-
-        /* Judge reco box */
-        .judge-reco {
-            background: var(--cream); border: 1px solid var(--gold);
-            border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;
-        }
-        .judge-reco h4 {
-            font-family: 'EB Garamond', serif; color: var(--navy);
-            font-size: 1rem; margin-bottom: 0.5rem;
-        }
-        .judge-reco ul { list-style: none; padding: 0; }
-        .judge-reco li {
-            font-size: 0.78rem; padding: 0.2rem 0;
-            color: var(--text); line-height: 1.4;
-        }
-        .judge-reco li strong { color: var(--navy); }
-
-        /* Progress */
-        .progress-bar {
-            position: fixed; top: 56px; left: 0; right: 0; height: 3px;
-            background: var(--border); z-index: 99;
-        }
-        .progress-fill {
-            height: 100%; background: var(--gold); transition: width 0.3s;
-            width: 0%;
-        }
+        .vis-q textarea:focus { outline: none; border-color: var(--gold); }
+        .eval-field { margin-bottom: 0.8rem; }
+        .eval-field label { display: block; font-weight: 600; color: var(--navy); font-size: 0.88rem; margin-bottom: 0.2rem; }
+        .eval-field input { width: 100%; padding: 0.45rem; border: 1.5px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 0.85rem; }
+        .sec-nav { display: flex; gap: 0.5rem; margin-top: 2rem; justify-content: flex-end; }
+        .sec-nav button { padding: 0.6rem 1.5rem; border-radius: 8px; font-family: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
 
         /* Toast */
         .toast {
             position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
             background: var(--navy); color: var(--white); padding: 0.8rem 1.5rem;
-            border-radius: 8px; font-size: 0.85rem; z-index: 200;
+            border-radius: 8px; font-size: 0.85rem; z-index: 300;
             display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-        .toast.show { display: block; animation: fadeInUp 0.3s; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        .toast.show { display: block; animation: pop 0.3s; }
+        @keyframes pop { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
     </style>
 </head>
 <body>
-    <!-- TOP BAR -->
-    <div class="topbar">
-        <div class="topbar-brand">BISP <span>Phase 1</span></div>
-        <div class="tab-bar" id="tabBar"></div>
-        <button class="btn-export" onclick="exportJSON()">Exporter JSON</button>
+
+<div class="topbar">
+    <div class="topbar-brand">BISP <span>Phase 1</span></div>
+    <div class="tab-bar" id="tabBar"></div>
+    <button class="btn-export" onclick="exportJSON()">Exporter JSON</button>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="iframe-wrap" id="iframeWrap">
+    <iframe id="mockupFrame" src=""></iframe>
+</div>
+
+<div class="viewport-bar" id="vpBar">
+    <button class="vp-btn active" onclick="setVP('100%',this)">Desktop</button>
+    <button class="vp-btn" onclick="setVP('768px',this)">Tablette</button>
+    <button class="vp-btn" onclick="setVP('375px',this)">Mobile</button>
+</div>
+
+<button class="panel-toggle" id="panelToggle" onclick="togglePanel()">
+    <span class="arrow">◀</span> NOTER
+</button>
+
+<div class="slide-panel" id="slidePanel"></div>
+
+<div class="fullpage" id="pgComparison"><div class="fp-inner" id="fpComparison"></div></div>
+<div class="fullpage" id="pgHybrid"><div class="fp-inner" id="fpHybrid"></div></div>
+<div class="fullpage" id="pgVision"><div class="fp-inner" id="fpVision"></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const M = [
+    { id:"aiglon", name:"Aiglon", rank:1, score:"84/100", url:"inspired-aiglon/index.html", style:"Cinématique sombre, mots-clés rouges, or, ombres dramatiques" },
+    { id:"lerosey", name:"Le Rosey", rank:2, score:"81/100", url:"inspired-lerosey/index.html", style:"Bichromatique old money, serif pur, retenue absolue" },
+    { id:"sevenoaks", name:"Sevenoaks", rank:3, score:"79/100", url:"inspired-sevenoaks/index.html", style:"Split hero teal, sobriété radicale, mosaïque photo" },
+    { id:"gordonstoun", name:"Gordonstoun", rank:4, score:"77/100", url:"inspired-gordonstoun/index.html", style:"Pourpre magazine, layout asymétrique, texture grain" },
+    { id:"kentcollege", name:"Kent College", rank:5, score:"76/100", url:"inspired-kentcollege/index.html", style:"Rouge énergique, formes organiques, anti-scolaire" },
+    { id:"repton", name:"Repton", rank:6, score:"74/100", url:"inspired-repton/index.html", style:"Navy + or, timeline dorée, quiet luxury" },
+    { id:"ecoledesroches", name:"École des Roches", rank:7, score:"73/100", url:"inspired-ecoledesroches/index.html", style:"Navy + or vif, ombres cinéma, pills arrondies" },
+    { id:"beausoleil", name:"Beau Soleil", rank:8, score:"68/100", url:"inspired-beausoleil/index.html", style:"Swiss polish, alternance blanc/navy, boutons pill" },
+    { id:"hautlac", name:"Haut-Lac", rank:9, score:"67/100", url:"inspired-hautlac/index.html", style:"Teal + rouge, coupes diagonales, photos N&B" },
+];
+
+const CRIT = [
+    { cat:"Première impression", items:["Impact visuel (donne envie de scroller\u00a0?)", "Professionnalisme / confiance", "Correspondance image BISP"] },
+    { cat:"Design & esthétique", items:["Couleurs\u00a0: sophistication et cohérence", "Typographie\u00a0: lisibilité + personnalité", "Photos & vidéo\u00a0: qualité et émotion", "Mise en page\u00a0: structure et rythme"] },
+    { cat:"Contenu & UX", items:["Hero\u00a0: impact du titre + message", "Programmes\u00a0: clarté (niveaux, âges, tarifs)", "Témoignages\u00a0: crédibilité et mise en valeur", "Navigation\u00a0: facilité d\u2019utilisation"] },
+    { cat:"Conversion", items:["Envie de contacter / s\u2019inscrire", "Boutons d\u2019action\u00a0: visibilité et efficacité"] },
+    { cat:"Différenciation", items:["Originalité / mémorabilité", "Envie de montrer ce site à quelqu\u2019un"] },
+];
+
+const HYB = [
+    { title:"Hero / Accueil", items:[
+        { el:"Traitement vidéo / image", desc:"Plein écran\u00a0? Split\u00a0? Overlay\u00a0?" },
+        { el:"Titre et sous-titre", desc:"Police, taille, couleur, animation" },
+        { el:"Badges de preuve", desc:"300 élèves, 32 nationalités..." },
+        { el:"Boutons d\u2019action", desc:"Style, couleur, texte" },
+    ]},
+    { title:"Navigation & Structure", items:[
+        { el:"Menu principal", desc:"Police, espacement, comportement" },
+        { el:"CTA dans la nav", desc:"\u00ab\u00a0Planifier une visite\u00a0\u00bb" },
+        { el:"Structure de la page", desc:"Ordre des sections, rythme" },
+    ]},
+    { title:"Identité visuelle", items:[
+        { el:"Palette de couleurs", desc:"Dominante + accents" },
+        { el:"Typographie titres", desc:"Serif / sans-serif, graisse" },
+        { el:"Typographie corps", desc:"Police, taille, interligne" },
+        { el:"Ambiance / émotion", desc:"Le feeling global" },
+    ]},
+    { title:"Sections clés", items:[
+        { el:"4 Promesses", desc:"Layout, icônes, style" },
+        { el:"Chiffres clés", desc:"Compteurs, fond, présentation" },
+        { el:"Programmes", desc:"Cards, timeline, photos, tarifs" },
+        { el:"Témoignages", desc:"Carrousel, quotes, diversité" },
+        { el:"Mot du directeur", desc:"Photo, citation, mise en valeur" },
+        { el:"Footer", desc:"Colonnes, infos, accréditations" },
+    ]},
+];
+
+const CMP_ASPECTS = [
+    "Meilleur hero","Meilleure navigation","Meilleures couleurs","Meilleure typographie",
+    "Meilleur layout","Meilleure section programmes","Meilleurs témoignages",
+    "Le plus émotionnel","Le plus professionnel","Le plus original","Le plus adapté à BISP"
+];
+
+let D = { mockups:{}, cmp:{}, top3:[{},{},{}], hyb:{}, vis:{}, eval:{} };
+let cur = 0, panelOpen = false;
+
+// Try restore
+try { const s = localStorage.getItem('bisp-eval'); if (s) D = JSON.parse(s); } catch(e) {}
+function save() { try { localStorage.setItem('bisp-eval', JSON.stringify(D)); } catch(e) {} }
+
+function init() {
+    buildTabs(); buildComparison(); buildHybrid(); buildVision();
+    switchTo(0);
+    updateProgress();
+}
+
+function buildTabs() {
+    const bar = document.getElementById('tabBar');
+    M.forEach((m, i) => {
+        const t = document.createElement('button');
+        t.className = 'tab'; t.id = 'tab'+i;
+        t.innerHTML = `<span style="font-weight:700">#${m.rank}</span> ${m.name}`;
+        t.onclick = () => switchTo(i);
+        bar.appendChild(t);
+    });
+    ['Comparaison','Hybridation','Vision'].forEach((l, i) => {
+        const t = document.createElement('button');
+        t.className = 'tab special'; t.id = 'tabS'+i;
+        t.textContent = l;
+        t.onclick = () => switchSpecial(i);
+        bar.appendChild(t);
+    });
+}
+
+function switchTo(i) {
+    cur = i;
+    document.querySelectorAll('.fullpage').forEach(p => p.classList.remove('active'));
+    document.getElementById('iframeWrap').style.display = 'block';
+    document.getElementById('vpBar').style.display = 'flex';
+    document.getElementById('panelToggle').style.display = 'block';
+    document.getElementById('mockupFrame').src = M[i].url;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab'+i).classList.add('active');
+    buildPanel(M[i]);
+}
+
+function switchSpecial(idx) {
+    document.getElementById('iframeWrap').style.display = 'none';
+    document.getElementById('vpBar').style.display = 'none';
+    document.getElementById('panelToggle').style.display = 'none';
+    if (panelOpen) togglePanel();
+    document.querySelectorAll('.fullpage').forEach(p => p.classList.remove('active'));
+    ['pgComparison','pgHybrid','pgVision'][idx] && document.getElementById(['pgComparison','pgHybrid','pgVision'][idx]).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tabS'+idx).classList.add('active');
+}
+
+function togglePanel() {
+    panelOpen = !panelOpen;
+    document.getElementById('slidePanel').classList.toggle('open', panelOpen);
+    document.getElementById('panelToggle').classList.toggle('open', panelOpen);
+    const tog = document.getElementById('panelToggle');
+    tog.innerHTML = panelOpen ? '<span class="arrow">▶</span> FERMER' : '<span class="arrow">◀</span> NOTER';
+}
+
+function setVP(w, btn) {
+    const f = document.getElementById('mockupFrame');
+    f.style.width = w; f.style.margin = w === '100%' ? '0' : '0 auto'; f.style.display = 'block';
+    document.querySelectorAll('.vp-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+function buildPanel(m) {
+    if (!D.mockups[m.id]) D.mockups[m.id] = { ratings:{}, keep:'', change:'' };
+    const d = D.mockups[m.id];
+    const p = document.getElementById('slidePanel');
+    let h = `<div class="panel-header">
+        <h2>#${m.rank} ${m.name}</h2>
+        <p class="style-desc">${m.style}</p>
+        <span class="score-badge">Score technique\u00a0: ${m.score}</span>
+    </div>`;
+
+    CRIT.forEach(g => {
+        h += `<div class="rating-group"><div class="rg-title">${g.cat}</div>`;
+        g.items.forEach(item => {
+            const v = d.ratings[item] || 0;
+            h += `<div class="rating-item"><div class="r-label">${item}</div><div class="r-stars">
+                ${[1,2,3,4,5].map(n => `<button class="s-btn ${v===n?'sel':''}" onclick="rate('${m.id}',\`${item}\`,${n})">${n}</button>`).join('')}
+            </div></div>`;
+        });
+        h += '</div>';
+    });
+
+    h += `<div class="text-q"><label>Ce que vous garderiez absolument\u00a0:</label>
+        <textarea onchange="D.mockups['${m.id}'].keep=this.value;save()">${d.keep||''}</textarea></div>
+    <div class="text-q"><label>Ce que vous changeriez\u00a0:</label>
+        <textarea onchange="D.mockups['${m.id}'].change=this.value;save()">${d.change||''}</textarea></div>`;
+
+    // Nav
+    h += '<div class="nav-btns">';
+    if (cur > 0) h += `<button class="nb-sec" onclick="switchTo(${cur-1})">← ${M[cur-1].name}</button>`;
+    if (cur < M.length-1) h += `<button class="nb-pri" onclick="switchTo(${cur+1})">${M[cur+1].name} →</button>`;
+    else h += `<button class="nb-pri" onclick="switchSpecial(0)">Comparaison →</button>`;
+    h += '</div>';
+
+    p.innerHTML = h;
+    p.scrollTop = 0;
+}
+
+function rate(id, crit, val) {
+    D.mockups[id].ratings[crit] = val;
+    save(); buildPanel(M.find(m=>m.id===id)); updateProgress();
+}
+
+// === COMPARISON ===
+function buildComparison() {
+    const opts = M.map(m=>`<option value="${m.id}" ${D.cmp[m.id]?'selected':''}>${m.name}</option>`).join('');
+    let h = `<h1>Comparaison directe</h1><p class="intro">Pour chaque aspect, choisissez la maquette gagnante.</p>`;
+    CMP_ASPECTS.forEach(a => {
+        h += `<div class="cmp-row"><label>${a}</label>
+            <select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()">
+                <option value="">— Choisir —</option>${opts}
+            </select></div>`;
+    });
+    h += `<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem;">Votre Top 3</h2>`;
+    ['1er','2e','3e'].forEach((r,i) => {
+        h += `<div class="top3-row"><div class="top3-rank">${r}</div>
+            <select onchange="D.top3[${i}].choice=this.value;save()"><option value="">— Choisir —</option>${opts}</select>
+            <input placeholder="Pourquoi\u00a0?" onchange="D.top3[${i}].why=this.value;save()">
+        </div>`;
+    });
+    h += `<div class="sec-nav">
+        <button class="nb-sec" onclick="switchTo(8)">← Maquettes</button>
+        <button class="nb-pri" onclick="switchSpecial(1)">Hybridation →</button>
+    </div>`;
+    document.getElementById('fpComparison').innerHTML = h;
+}
+
+// === HYBRID ===
+function buildHybrid() {
+    const opts = M.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+    let h = `<h1>Hybridation</h1>
+        <p class="intro">C'est la partie la plus importante. Le site final sera un mélange des meilleurs éléments. Pour chaque composant, choisissez la maquette que vous préférez et expliquez pourquoi.</p>`;
+    HYB.forEach(s => {
+        h += `<div class="hyb-group"><h3>${s.title}</h3>`;
+        s.items.forEach(item => {
+            const k = (s.title+'_'+item.el).replace(/[^a-zA-Z0-9]/g,'_');
+            h += `<div class="hyb-item">
+                <div class="hyb-el">${item.el}<small>${item.desc}</small></div>
+                <select onchange="D.hyb['${k}']=this.value;save();updateProgress()"><option value="">— Choisir —</option>${opts}</select>
+                <input placeholder="Pourquoi\u00a0?" onchange="D.hyb['${k}_why']=this.value;save()">
+            </div>`;
+        });
+        h += '</div>';
+    });
+    h += `<div class="sec-nav">
+        <button class="nb-sec" onclick="switchSpecial(0)">← Comparaison</button>
+        <button class="nb-pri" onclick="switchSpecial(2)">Vision →</button>
+    </div>`;
+    document.getElementById('fpHybrid').innerHTML = h;
+}
+
+// === VISION ===
+function buildVision() {
+    const qs = [
+        { q:"Quand un parent arrive sur le site, quelle émotion doit-il ressentir\u00a0?", hint:"" },
+        { q:"3 adjectifs qui décrivent le site BISP idéal\u00a0:", hint:"ex.\u00a0: chaleureux, prestigieux, moderne, intime, international, audacieux, joyeux, élégant..." },
+        { q:"Éléments NON-NÉGOCIABLES pour le site final\u00a0:", hint:"ex.\u00a0: vidéo en hero, tarifs visibles, accréditations Cambridge, ton chaleureux, logo bien visible..." },
+        { q:"Éléments à ÉVITER ABSOLUMENT\u00a0:", hint:"ex.\u00a0: trop sombre, couleurs trop vives, trop corporate, trop d\u2019animations..." },
+        { q:"Décrivez librement votre vision du site idéal\u00a0:", hint:"Imaginez que vous racontez à quelqu\u2019un ce que vous voyez quand vous ouvrez le site parfait de BISP" },
+        { q:"Sites web que vous admirez (URLs ou noms)\u00a0:", hint:"" },
+    ];
+    let h = `<h1>Votre site BISP idéal</h1>
+        <p class="intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait pour BISP.</p>`;
+    qs.forEach((q,i) => {
+        h += `<div class="vis-q"><label>${i+1}. ${q.q}</label>
+            ${q.hint?`<p class="hint">${q.hint}</p>`:''}
+            <textarea rows="3" onchange="D.vis['q${i}']=this.value;save()"></textarea></div>`;
+    });
+    h += `<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem;">Informations</h2>`;
+    ['Nom','Rôle / Fonction','Date'].forEach(f => {
+        h += `<div class="eval-field"><label>${f}</label><input onchange="D.eval['${f}']=this.value;save()"></div>`;
+    });
+    h += `<div class="sec-nav">
+        <button class="nb-sec" onclick="switchSpecial(1)">← Hybridation</button>
+        <button class="nb-pri" onclick="exportJSON()">Exporter mes réponses</button>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center;margin-top:2rem;color:var(--gold);font-family:'EB Garamond',serif;font-style:italic;font-size:1.1rem;">Merci pour votre évaluation.</p>`;
+    document.getElementById('fpVision').innerHTML = h;
+}
 
-    <!-- MAIN SPLIT -->
-    <div class="main" id="mainLayout">
-        <div class="iframe-panel" id="iframePanel">
-            <iframe id="mockupFrame" src=""></iframe>
-            <div class="iframe-overlay">
-                <button class="viewport-btn active" onclick="setViewport('100%')">Desktop</button>
-                <button class="viewport-btn" onclick="setViewport('768px')">Tablette</button>
-                <button class="viewport-btn" onclick="setViewport('375px')">Mobile</button>
-            </div>
-        </div>
-        <div class="form-panel" id="formPanel"></div>
+function updateProgress() {
+    let total = M.length * 15 + CMP_ASPECTS.length + 18;
+    let filled = 0;
+    Object.values(D.mockups).forEach(m => { filled += Object.keys(m.ratings).length; });
+    filled += Object.values(D.cmp).filter(v=>v).length;
+    filled += Object.keys(D.hyb).filter(k=>!k.endsWith('_why') && D.hyb[k]).length;
+    document.getElementById('progressFill').style.width = Math.min(100, Math.round(filled/total*100))+'%';
+}
 
-        <!-- Special sections (hidden by default) -->
-        <div class="section-page" id="sectionComparison"></div>
-        <div class="section-page" id="sectionHybrid"></div>
-        <div class="section-page" id="sectionVision"></div>
-    </div>
+function exportJSON() {
+    const blob = new Blob([JSON.stringify(D,null,2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'BISP-evaluation-'+new Date().toISOString().slice(0,10)+'.json';
+    a.click(); URL.revokeObjectURL(a.href);
+    showToast('Réponses exportées\u00a0!');
+}
 
-    <div class="toast" id="toast"></div>
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 3000);
+}
 
-    <script>
-    const MOCKUPS = [
-        { id: "aiglon", name: "Aiglon", rank: 1, score: "84/100", url: "inspired-aiglon/index.html", style: "Cinématique sombre, mots-clés rouges, or, ombres dramatiques" },
-        { id: "lerosey", name: "Le Rosey", rank: 2, score: "81/100", url: "inspired-lerosey/index.html", style: "Bichromatique old money, serif pur, retenue absolue" },
-        { id: "sevenoaks", name: "Sevenoaks", rank: 3, score: "79/100", url: "inspired-sevenoaks/index.html", style: "Split hero teal, sobriété radicale, mosaïque photo" },
-        { id: "gordonstoun", name: "Gordonstoun", rank: 4, score: "77/100", url: "inspired-gordonstoun/index.html", style: "Pourpre magazine, layout asymétrique, texture grain" },
-        { id: "kentcollege", name: "Kent College", rank: 5, score: "76/100", url: "inspired-kentcollege/index.html", style: "Rouge énergique, formes organiques, anti-scolaire" },
-        { id: "repton", name: "Repton", rank: 6, score: "74/100", url: "inspired-repton/index.html", style: "Navy + or, timeline dorée, quiet luxury" },
-        { id: "ecoledesroches", name: "École des Roches", rank: 7, score: "73/100", url: "inspired-ecoledesroches/index.html", style: "Navy + or vif, ombres cinéma, pills arrondies" },
-        { id: "beausoleil", name: "Beau Soleil", rank: 8, score: "68/100", url: "inspired-beausoleil/index.html", style: "Swiss polish, alternance blanc/navy, boutons pill" },
-        { id: "hautlac", name: "Haut-Lac", rank: 9, score: "67/100", url: "inspired-hautlac/index.html", style: "Teal + rouge, coupes diagonales, photos N&B" },
-    ];
-
-    const CRITERIA = [
-        { cat: "Première impression", items: ["Impact visuel (donne envie de scroller ?)", "Professionnalisme / confiance", "Correspondance image BISP"] },
-        { cat: "Design", items: ["Palette de couleurs", "Typographie (lisibilité + personnalité)", "Photos & vidéo", "Mise en page / rythme"] },
-        { cat: "Contenu & UX", items: ["Hero : titre + message", "Programmes : clarté", "Témoignages : crédibilité", "Navigation : facilité"] },
-        { cat: "Conversion", items: ["Envie de contacter / s'inscrire", "Boutons d'action (visibilité)"] },
-        { cat: "Différenciation", items: ["Originalité / mémorabilité", "Envie de montrer ce site"] },
-    ];
-
-    const HYBRID_SECTIONS = [
-        { title: "Hero / Accueil", items: [
-            { el: "Traitement vidéo / image", desc: "Plein écran ? Split ? Overlay ?" },
-            { el: "Titre et sous-titre", desc: "Police, taille, couleur, animation" },
-            { el: "Badges de preuve", desc: "300 élèves, 32 nationalités..." },
-            { el: "Boutons d'action", desc: "Style, couleur, texte" },
-        ]},
-        { title: "Navigation & Structure", items: [
-            { el: "Menu principal", desc: "Police, espacement, comportement" },
-            { el: "CTA dans la nav", desc: "« Planifier une visite »" },
-            { el: "Structure de la page", desc: "Ordre des sections, rythme" },
-        ]},
-        { title: "Identité visuelle", items: [
-            { el: "Palette de couleurs", desc: "Dominante + accents" },
-            { el: "Typographie titres", desc: "Serif / sans-serif, graisse" },
-            { el: "Typographie corps", desc: "Police, taille, interligne" },
-            { el: "Ambiance / émotion", desc: "Le feeling global" },
-        ]},
-        { title: "Sections clés", items: [
-            { el: "4 Promesses", desc: "Layout, icônes, style" },
-            { el: "Chiffres clés", desc: "Compteurs, fond, présentation" },
-            { el: "Programmes", desc: "Cards, timeline, photos, tarifs" },
-            { el: "Témoignages", desc: "Carrousel, quotes, diversité" },
-            { el: "Mot du directeur", desc: "Photo, citation, mise en valeur" },
-            { el: "Footer", desc: "Colonnes, infos, accréditations" },
-        ]},
-    ];
-
-    // === STATE ===
-    let data = { mockups: {}, comparison: {}, top3: [{},{},{}], hybrid: {}, vision: {}, evaluator: {} };
-    let currentTab = 0;
-
-    // === INIT ===
-    function init() {
-        buildTabs();
-        buildSpecialSections();
-        switchTab(0);
-        updateProgress();
-    }
-
-    function buildTabs() {
-        const bar = document.getElementById('tabBar');
-        MOCKUPS.forEach((m, i) => {
-            const t = document.createElement('button');
-            t.className = 'tab';
-            t.innerHTML = `<span class="rank">#${m.rank}</span> ${m.name} <span class="score">${m.score}</span>`;
-            t.onclick = () => switchTab(i);
-            bar.appendChild(t);
-        });
-        // Special tabs
-        ['Comparaison', 'Hybridation', 'Vision'].forEach((label, i) => {
-            const t = document.createElement('button');
-            t.className = 'tab';
-            t.style.background = 'rgba(196,165,90,0.15)';
-            t.innerHTML = `${label}`;
-            t.onclick = () => switchSpecial(i);
-            bar.appendChild(t);
-        });
-    }
-
-    function switchTab(i) {
-        currentTab = i;
-        const m = MOCKUPS[i];
-        document.getElementById('mockupFrame').src = m.url;
-        document.getElementById('mainLayout').classList.remove('full-page-mode');
-        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === i));
-        buildForm(m);
-    }
-
-    function switchSpecial(idx) {
-        document.getElementById('mainLayout').classList.add('full-page-mode');
-        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
-        const ids = ['sectionComparison', 'sectionHybrid', 'sectionVision'];
-        document.getElementById(ids[idx]).classList.add('active');
-        document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === MOCKUPS.length + idx));
-    }
-
-    function setViewport(w) {
-        const frame = document.getElementById('mockupFrame');
-        frame.style.width = w;
-        frame.style.margin = w === '100%' ? '0' : '0 auto';
-        frame.style.display = 'block';
-        document.querySelectorAll('.viewport-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-    }
-
-    // === BUILD MOCKUP FORM ===
-    function buildForm(m) {
-        if (!data.mockups[m.id]) data.mockups[m.id] = { ratings: {}, keep: '', change: '' };
-        const d = data.mockups[m.id];
-        const panel = document.getElementById('formPanel');
-
-        let html = `<h2>#${m.rank} Inspired ${m.name}</h2>
-            <p class="subtitle">${m.style}</p>
-            <span class="score-badge">Score technique : ${m.score}</span>`;
-
-        CRITERIA.forEach(g => {
-            html += `<div class="rating-group"><div class="rating-group-title">${g.cat}</div>`;
-            g.items.forEach(item => {
-                const key = `${m.id}_${item}`;
-                const val = d.ratings[item] || 0;
-                html += `<div class="rating-item">
-                    <div class="rating-label">${item}</div>
-                    <div class="rating-stars">
-                        ${[1,2,3,4,5].map(n => `<button class="star-btn ${val===n?'selected':''}"
-                            onclick="rate('${m.id}','${item.replace(/'/g,"\\'")}',${n})">${n}</button>`).join('')}
-                    </div>
-                </div>`;
-            });
-            html += '</div>';
-        });
-
-        html += `<div class="text-q">
-            <label>✦ Ce que vous garderiez absolument :</label>
-            <textarea onchange="saveText('${m.id}','keep',this.value)">${d.keep}</textarea>
-        </div>
-        <div class="text-q">
-            <label>✦ Ce que vous changeriez :</label>
-            <textarea onchange="saveText('${m.id}','change',this.value)">${d.change}</textarea>
-        </div>`;
-
-        // Nav
-        const prev = MOCKUPS[MOCKUPS.indexOf(m) - 1];
-        const next = MOCKUPS[MOCKUPS.indexOf(m) + 1];
-        html += `<div style="display:flex;gap:0.5rem;margin-top:1rem;">`;
-        if (prev) html += `<button class="btn-secondary" style="flex:1;padding:0.5rem;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;" onclick="switchTab(${MOCKUPS.indexOf(prev)})">← ${prev.name}</button>`;
-        if (next) html += `<button class="btn-primary" style="flex:1;padding:0.5rem;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;" onclick="switchTab(${MOCKUPS.indexOf(next)})">${next.name} →</button>`;
-        else html += `<button class="btn-primary" style="flex:1;padding:0.5rem;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;" onclick="switchSpecial(0)">Comparaison →</button>`;
-        html += `</div>`;
-
-        panel.innerHTML = html;
-        panel.scrollTop = 0;
-    }
-
-    function rate(mockupId, criterion, value) {
-        data.mockups[mockupId].ratings[criterion] = value;
-        buildForm(MOCKUPS.find(m => m.id === mockupId));
-        updateProgress();
-    }
-
-    function saveText(mockupId, field, value) {
-        data.mockups[mockupId][field] = value;
-    }
-
-    // === BUILD SPECIAL SECTIONS ===
-    function buildSpecialSections() {
-        buildComparison();
-        buildHybrid();
-        buildVision();
-    }
-
-    function buildComparison() {
-        const aspects = [
-            "Meilleur hero", "Meilleure navigation", "Meilleures couleurs",
-            "Meilleure typographie", "Meilleur layout", "Meilleure section programmes",
-            "Meilleurs témoignages", "Le plus émotionnel", "Le plus professionnel",
-            "Le plus original", "Le plus adapté à BISP"
-        ];
-        const opts = MOCKUPS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
-
-        let html = `<h1>Comparaison directe</h1>
-            <p class="intro">Pour chaque aspect, choisissez la maquette gagnante.</p>`;
-
-        aspects.forEach(a => {
-            html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.6rem;padding:0.6rem;background:${aspects.indexOf(a)%2===0?'var(--cream)':'var(--white)'};border-radius:6px;">
-                <div style="font-size:0.9rem;font-weight:600;color:var(--navy);align-self:center;">${a}</div>
-                <select style="padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem;" onchange="data.comparison['${a.replace(/'/g,"\\'")}']=this.value;updateProgress()">
-                    <option value="">— Choisir —</option>${opts}
-                </select>
-            </div>`;
-        });
-
-        // Top 3
-        html += `<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem;">Votre Top 3</h2>`;
-        ['1er', '2e', '3e'].forEach((r, i) => {
-            html += `<div class="top3-row">
-                <div class="top3-rank">${r}</div>
-                <select style="padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;" onchange="data.top3[${i}].choice=this.value">
-                    <option value="">— Choisir —</option>${opts}
-                </select>
-                <input placeholder="Pourquoi ?" style="padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem;" onchange="data.top3[${i}].why=this.value">
-            </div>`;
-        });
-
-        html += `<div class="section-nav">
-            <button class="btn-secondary" onclick="switchTab(8)">← Retour maquettes</button>
-            <button class="btn-primary" onclick="switchSpecial(1)">Hybridation →</button>
-        </div>`;
-
-        document.getElementById('sectionComparison').innerHTML = html;
-    }
-
-    function buildHybrid() {
-        const opts = MOCKUPS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
-
-        let html = `<h1>Hybridation</h1>
-            <p class="intro">C'est la partie la plus importante. Le site final sera un mélange des meilleurs éléments.
-            Pour chaque composant, choisissez la maquette que vous préférez et expliquez pourquoi.</p>`;
-
-
-        HYBRID_SECTIONS.forEach(s => {
-            html += `<div class="hybrid-group"><h3>${s.title}</h3>`;
-            s.items.forEach(item => {
-                const key = `${s.title}_${item.el}`.replace(/[^a-zA-Z0-9]/g, '_');
-                html += `<div class="hybrid-item">
-                    <div class="hybrid-el">${item.el}<small>${item.desc}</small></div>
-                    <select onchange="data.hybrid['${key}']=this.value;updateProgress()">
-                        <option value="">— Choisir —</option>${opts}
-                    </select>
-                    <input placeholder="Pourquoi ?" onchange="data.hybrid['${key}_why']=this.value">
-                </div>`;
-            });
-            html += '</div>';
-        });
-
-        html += `<div class="section-nav">
-            <button class="btn-secondary" onclick="switchSpecial(0)">← Comparaison</button>
-            <button class="btn-primary" onclick="switchSpecial(2)">Vision →</button>
-        </div>`;
-
-        document.getElementById('sectionHybrid').innerHTML = html;
-    }
-
-    function buildVision() {
-        const questions = [
-            { q: "Quand un parent arrive sur le site, quelle émotion doit-il ressentir ?", hint: "" },
-            { q: "3 adjectifs qui décrivent le site BISP idéal :", hint: "ex. : chaleureux, prestigieux, moderne, intime, international, audacieux, joyeux..." },
-            { q: "Éléments NON-NÉGOCIABLES pour le site final :", hint: "ex. : vidéo en hero, tarifs visibles, accréditations Cambridge, ton chaleureux..." },
-            { q: "Éléments à ÉVITER ABSOLUMENT :", hint: "ex. : trop sombre, couleurs trop vives, trop corporate, trop d'animations..." },
-            { q: "Décrivez librement votre vision du site idéal :", hint: "Imaginez que vous racontez à quelqu'un ce que vous voyez quand vous ouvrez le site parfait de BISP" },
-            { q: "Sites web (d'écoles ou autres) que vous admirez :", hint: "URLs ou noms" },
-        ];
-
-        let html = `<h1>Votre site BISP idéal</h1>
-            <p class="intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait pour BISP.</p>`;
-
-        questions.forEach((q, i) => {
-            html += `<div class="vision-q">
-                <label>${i + 1}. ${q.q}</label>
-                ${q.hint ? `<p class="hint">${q.hint}</p>` : ''}
-                <textarea rows="3" onchange="data.vision['q${i}']=this.value"></textarea>
-            </div>`;
-        });
-
-        // Evaluateur
-        html += `<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem;">Informations</h2>`;
-        ['Nom', 'Rôle / Fonction', 'Date'].forEach(f => {
-            html += `<div class="eval-field">
-                <label>${f}</label>
-                <input onchange="data.evaluator['${f}']=this.value">
-            </div>`;
-        });
-
-        html += `<div class="section-nav">
-            <button class="btn-secondary" onclick="switchSpecial(1)">← Hybridation</button>
-            <button class="btn-primary" onclick="exportJSON()">Exporter mes réponses ✦</button>
-        </div>`;
-
-        document.getElementById('sectionVision').innerHTML = html;
-    }
-
-    // === PROGRESS ===
-    function updateProgress() {
-        let total = MOCKUPS.length * 15 + 11 + 18; // ratings + comparison + hybrid
-        let filled = 0;
-        Object.values(data.mockups).forEach(m => { filled += Object.keys(m.ratings).length; });
-        filled += Object.keys(data.comparison).length;
-        filled += Object.values(data.hybrid).filter(v => v && !v.endsWith('_why')).length;
-        document.getElementById('progressFill').style.width = Math.min(100, Math.round(filled / total * 100)) + '%';
-    }
-
-    // === EXPORT ===
-    function exportJSON() {
-        const json = JSON.stringify(data, null, 2);
-        const blob = new Blob([json], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'BISP-evaluation-' + new Date().toISOString().slice(0, 10) + '.json';
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast('Réponses exportées en JSON !');
-    }
-
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.textContent = msg;
-        t.classList.add('show');
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    init();
-    </script>
+init();
+</script>
 </body>
 </html>
