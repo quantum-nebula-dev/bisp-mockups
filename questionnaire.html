@@ -308,7 +308,7 @@ function setVP(w,btn){
 function buildRight(m){
     if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},keep:'',change:''};
     const d=D.mockups[m.id],p=document.getElementById('rightPanel');
-    let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p><span class="badge">Score\u00a0: ${m.score}</span></div>`;
+    let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p></div>`;
     CRIT.forEach(g=>{
         h+=`<div class="rg"><div class="rg-t">${g.cat}</div>`;
         g.items.forEach(item=>{
