@@ -221,11 +221,11 @@ function buildNoter(){
         });
         h+='</div>';
     });
-    h+=`<div class="tq"><label>Premier élément que vous remarquez (test 5 sec)\u00a0:</label><textarea rows="2" onchange="D.mockups['${m.id}'].firstNotice=this.value;save()" placeholder="Qu'avez-vous vu en premier\u00a0?">${d.firstNotice||''}</textarea></div>`;
-    h+=`<div class="tq"><label>Ce design vous fait penser à quoi\u00a0? (1-2 mots)</label><textarea rows="2" onchange="D.mockups['${m.id}'].emotion=this.value;save()" placeholder="ex.\u00a0: luxe discret, énergie, sérieux, chaleureux...">${d.emotion||''}</textarea></div>`;
-    h+=`<div class="tq"><label>L'élément qui vous a le plus marqué\u00a0:</label><textarea rows="2" onchange="D.mockups['${m.id}'].standout=this.value;save()" placeholder="Le truc dont vous vous souviendrez">${d.standout||''}</textarea></div>`;
-    h+=`<div class="tq"><label>Ce que vous garderiez absolument\u00a0:</label><textarea onchange="D.mockups['${m.id}'].keep=this.value;save()">${d.keep||''}</textarea></div>`;
-    h+=`<div class="tq"><label>Ce que vous changeriez\u00a0:</label><textarea onchange="D.mockups['${m.id}'].change=this.value;save()">${d.change||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Quel est le premier \u00e9l\u00e9ment que vous remarquez\u00a0?</label><textarea onchange="D.mockups['${m.id}'].firstNotice=this.value;save()">${d.firstNotice||''}</textarea></div>`;
+    h+=`<div class="tq"><label>\u00c0 quoi ce design vous fait-il penser\u00a0?</label><textarea onchange="D.mockups['${m.id}'].emotion=this.value;save()">${d.emotion||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Quel \u00e9l\u00e9ment vous a le plus marqu\u00e9\u00a0?</label><textarea onchange="D.mockups['${m.id}'].standout=this.value;save()">${d.standout||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Que garderiez-vous absolument\u00a0?</label><textarea onchange="D.mockups['${m.id}'].keep=this.value;save()">${d.keep||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Que changeriez-vous\u00a0?</label><textarea onchange="D.mockups['${m.id}'].change=this.value;save()">${d.change||''}</textarea></div>`;
     pc.innerHTML=h;pc.scrollTop=0;
 }
 
