@@ -253,9 +253,11 @@ function buildComparer(){
     const opts=M.map(m=>`<option value="${m.id}" ${D.cmp[m.id]?'':''}>${m.name}</option>`).join('');
     const pc=document.getElementById('panelContent');
     let h=`<div class="p-section-title">Comparaison directe</div><p class="p-intro">Pour chaque aspect, quelle maquette est la meilleure\u00a0? Changez de site avec le panneau gauche pour revoir.</p>`;
+    if(!D.cmpComments)D.cmpComments={};
     CMP.forEach(a=>{
         const sel=D.cmp[a]||'';
-        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select></div>`;
+        const cc=D.cmpComments[a]||'';
+        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select><textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires (optionnel)" onchange="if(!D.cmpComments)D.cmpComments={};D.cmpComments[\`${a}\`]=this.value;save()">${cc}</textarea></div>`;
     });
     h+=`<div style="margin-top:1.2rem"><div class="rg-t">Votre Top 3</div>`;
     ['1er','2e','3e'].forEach((r,i)=>{
