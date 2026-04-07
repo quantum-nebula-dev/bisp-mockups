@@ -349,10 +349,10 @@ function updateSiteChecks(){
 }
 
 function previewBar(containerId){
-    const tabs=M.map((m,i)=>`<button class="preview-tab" onclick="loadPreview('${containerId}','${m.url}',this)">#${m.rank} ${m.name}</button>`).join('');
+    const tabs=M.map((m,i)=>`<button class="preview-tab ${i===0?'active':''}" onclick="loadPreview('${containerId}','${m.url}',this)">#${m.rank} ${m.name}</button>`).join('');
     return `<div class="preview-bar" id="pb_${containerId}">
         <div class="preview-tabs">${tabs}<button class="preview-tab" onclick="togglePreview('${containerId}')" style="margin-left:auto;background:rgba(255,255,255,0.05)">▼ Réduire</button></div>
-        <div class="preview-frame-wrap"><iframe id="pf_${containerId}" src=""></iframe></div>
+        <div class="preview-frame-wrap"><iframe id="pf_${containerId}" src="${M[0].url}"></iframe></div>
         <div class="preview-collapse-row" style="display:none"><button class="preview-expand" onclick="togglePreview('${containerId}')">▲ Afficher les maquettes</button></div>
     </div>`;
 }
