@@ -217,7 +217,7 @@ function buildNoter(){
             const cval=D.mockups[m.id].comments?D.mockups[m.id].comments[item]||'':'';
             h+=`<div class="ri"><div class="rl">${item}</div><div class="rs">
                 ${[1,2,3,4,5].map(n=>`<button class="sb ${v===n?'sel':''}" onclick="rate('${m.id}',\`${item}\`,${n})">${n}</button>`).join('')}
-            </div><textarea class="ri-comment" placeholder="Commentaire (optionnel)" onchange="saveComment('${m.id}',\`${item}\`,this.value)">${cval}</textarea></div>`;
+            </div><textarea class="ri-comment" placeholder="" onchange="saveComment('${m.id}',\`${item}\`,this.value)">${cval}</textarea></div>`;
         });
         h+='</div>';
     });
