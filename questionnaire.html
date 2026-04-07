@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BISP — Évaluation & Hybridation des Maquettes</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1a2744;
+            --gold: #c4a35a;
+            --cream: #f5f0eb;
+            --white: #ffffff;
+            --text: #2d2d2d;
+            --muted: #6b7280;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+            --accent: #2563eb;
+            --panel-width: 420px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--text); }
+
+        /* === TOP BAR === */
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: var(--navy); height: 56px;
+            display: flex; align-items: center; padding: 0 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .topbar-brand {
+            font-family: 'EB Garamond', serif; color: var(--white);
+            font-size: 1.2rem; margin-right: 1.5rem; white-space: nowrap;
+        }
+        .topbar-brand span { color: var(--gold); }
+        .tab-bar {
+            display: flex; gap: 2px; overflow-x: auto; flex: 1;
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .tab-bar::-webkit-scrollbar { display: none; }
+        .tab {
+            padding: 0.4rem 0.8rem; border-radius: 6px 6px 0 0;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            white-space: nowrap; transition: all 0.2s;
+            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6);
+            border: none; font-family: inherit;
+        }
+        .tab:hover { background: rgba(255,255,255,0.15); color: var(--white); }
+        .tab.active { background: var(--gold); color: var(--navy); }
+        .tab .rank { font-weight: 700; }
+        .tab .score { opacity: 0.7; font-size: 0.65rem; margin-left: 4px; }
+        .btn-export {
+            margin-left: auto; padding: 0.4rem 1rem; border-radius: 20px;
+            background: var(--gold); color: var(--navy); border: none;
+            font-weight: 700; font-size: 0.75rem; cursor: pointer;
+            font-family: inherit; white-space: nowrap;
+        }
+        .btn-export:hover { background: #d4b46a; }
+
+        /* === MAIN LAYOUT === */
+        .main { margin-top: 56px; display: flex; height: calc(100vh - 56px); }
+        .iframe-panel {
+            flex: 1; position: relative; background: #e2e2e2;
+        }
+        .iframe-panel iframe {
+            width: 100%; height: 100%; border: none;
+        }
+        .iframe-overlay {
+            position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
+            display: flex; gap: 0.5rem; justify-content: center;
+        }
+        .viewport-btn {
+            padding: 0.3rem 0.7rem; border-radius: 4px;
+            background: rgba(26,39,68,0.85); color: var(--white);
+            border: none; font-size: 0.7rem; cursor: pointer;
+            font-family: inherit; backdrop-filter: blur(8px);
+        }
+        .viewport-btn.active { background: var(--gold); color: var(--navy); }
+
+        /* === FORM PANEL === */
+        .form-panel {
+            width: var(--panel-width); min-width: var(--panel-width);
+            background: var(--white); border-left: 1px solid var(--border);
+            overflow-y: auto; padding: 1.5rem;
+        }
+        .form-panel h2 {
+            font-family: 'EB Garamond', serif; font-size: 1.5rem;
+            color: var(--navy); margin-bottom: 0.3rem;
+        }
+        .form-panel .subtitle {
+            font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem;
+            font-style: italic;
+        }
+        .form-panel .score-badge {
+            display: inline-block; background: var(--navy); color: var(--gold);
+            padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem;
+            font-weight: 700; margin-bottom: 1rem;
+        }
+
+        /* Rating groups */
+        .rating-group { margin-bottom: 1.2rem; }
+        .rating-group-title {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--gold); margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem; border-bottom: 2px solid var(--cream);
+        }
+        .rating-item { margin-bottom: 0.6rem; }
+        .rating-label {
+            font-size: 0.8rem; color: var(--text); margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+        .rating-stars {
+            display: flex; gap: 4px;
+        }
+        .star-btn {
+            width: 32px; height: 32px; border-radius: 6px;
+            border: 1.5px solid var(--border); background: var(--white);
+            font-size: 0.8rem; font-weight: 700; color: var(--muted);
+            cursor: pointer; transition: all 0.15s; font-family: inherit;
+        }
+        .star-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .star-btn.selected {
+            background: var(--navy); border-color: var(--navy);
+            color: var(--white);
+        }
+
+        /* Text areas */
+        .text-q { margin-bottom: 1rem; }
+        .text-q label {
+            display: block; font-size: 0.8rem; font-weight: 600;
+            color: var(--navy); margin-bottom: 0.3rem;
+        }
+        .text-q textarea {
+            width: 100%; padding: 0.5rem; border: 1.5px solid var(--border);
+            border-radius: 6px; font-family: inherit; font-size: 0.8rem;
+            resize: vertical; min-height: 50px; transition: border-color 0.2s;
+        }
+        .text-q textarea:focus { outline: none; border-color: var(--gold); }
+
+        /* === SPECIAL SECTIONS (Hybridation, Vision) === */
+        .section-page { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
+        .section-page.active { display: block; }
+        .section-page h1 {
+            font-family: 'EB Garamond', serif; font-size: 2rem;
+            color: var(--navy); margin-bottom: 0.5rem;
+        }
+        .section-page .intro {
+            font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .hybrid-group { margin-bottom: 2rem; }
+        .hybrid-group h3 {
+            font-family: 'EB Garamond', serif; font-size: 1.2rem;
+            color: var(--navy); margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem; border-bottom: 2px solid var(--gold);
+        }
+        .hybrid-item {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem; padding: 0.8rem; border-radius: 8px;
+            margin-bottom: 0.5rem; background: var(--cream);
+        }
+        .hybrid-item:nth-child(odd) { background: var(--white); border: 1px solid var(--border); }
+        .hybrid-el { font-size: 0.85rem; font-weight: 600; color: var(--navy); }
+        .hybrid-el small { display: block; font-weight: 400; color: var(--muted); font-size: 0.75rem; }
+        .hybrid-item select {
+            padding: 0.4rem; border: 1.5px solid var(--border); border-radius: 6px;
+            font-family: inherit; font-size: 0.8rem; background: var(--white);
+        }
+        .hybrid-item select:focus { outline: none; border-color: var(--gold); }
+        .hybrid-item input {
+            padding: 0.4rem; border: 1.5px solid var(--border); border-radius: 6px;
+            font-family: inherit; font-size: 0.8rem;
+        }
+        .hybrid-item input:focus { outline: none; border-color: var(--gold); }
+
+        /* Vision */
+        .vision-q { margin-bottom: 1.5rem; }
+        .vision-q label {
+            display: block; font-size: 0.95rem; font-weight: 600;
+            color: var(--navy); margin-bottom: 0.3rem;
+        }
+        .vision-q .hint {
+            font-size: 0.8rem; color: var(--muted); font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .vision-q textarea {
+            width: 100%; padding: 0.6rem; border: 1.5px solid var(--border);
+            border-radius: 8px; font-family: inherit; font-size: 0.85rem;
+            resize: vertical; min-height: 70px;
+        }
+        .vision-q textarea:focus { outline: none; border-color: var(--gold); }
+
+        /* Top 3 */
+        .top3-row {
+            display: grid; grid-template-columns: 60px 1fr 1fr;
+            gap: 0.8rem; margin-bottom: 0.5rem; align-items: center;
+        }
+        .top3-rank {
+            font-family: 'EB Garamond', serif; font-size: 1.5rem;
+            color: var(--gold); font-weight: 700; text-align: center;
+        }
+
+        /* Nav bottom bar for special sections */
+        .section-nav {
+            display: flex; gap: 0.5rem; margin-top: 2rem;
+            justify-content: flex-end;
+        }
+        .section-nav button {
+            padding: 0.6rem 1.5rem; border-radius: 8px;
+            font-family: inherit; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-secondary { background: var(--light); border: 1px solid var(--border); color: var(--text); }
+        .btn-primary { background: var(--navy); border: none; color: var(--white); }
+        .btn-primary:hover { background: var(--gold); color: var(--navy); }
+
+        /* Evaluateur */
+        .eval-field { margin-bottom: 1rem; }
+        .eval-field label { display: block; font-weight: 600; color: var(--navy); font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .eval-field input {
+            width: 100%; padding: 0.5rem; border: 1.5px solid var(--border);
+            border-radius: 6px; font-family: inherit; font-size: 0.85rem;
+        }
+
+        /* Full-page mode for hybridation/vision */
+        .full-page-mode .iframe-panel { display: none; }
+        .full-page-mode .form-panel { display: none; }
+        .full-page-mode .section-page.active {
+            display: block; width: 100%; height: calc(100vh - 56px); overflow-y: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main { flex-direction: column; }
+            .iframe-panel { height: 50vh; }
+            .form-panel { width: 100%; min-width: 100%; height: 50vh; }
+            :root { --panel-width: 100%; }
+        }
+
+        /* Judge reco box */
+        .judge-reco {
+            background: var(--cream); border: 1px solid var(--gold);
+            border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;
+        }
+        .judge-reco h4 {
+            font-family: 'EB Garamond', serif; color: var(--navy);
+            font-size: 1rem; margin-bottom: 0.5rem;
+        }
+        .judge-reco ul { list-style: none; padding: 0; }
+        .judge-reco li {
+            font-size: 0.78rem; padding: 0.2rem 0;
+            color: var(--text); line-height: 1.4;
+        }
+        .judge-reco li strong { color: var(--navy); }
+
+        /* Progress */
+        .progress-bar {
+            position: fixed; top: 56px; left: 0; right: 0; height: 3px;
+            background: var(--border); z-index: 99;
+        }
+        .progress-fill {
+            height: 100%; background: var(--gold); transition: width 0.3s;
+            width: 0%;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: var(--navy); color: var(--white); padding: 0.8rem 1.5rem;
+            border-radius: 8px; font-size: 0.85rem; z-index: 200;
+            display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .toast.show { display: block; animation: fadeInUp 0.3s; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    </style>
+</head>
+<body>
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-brand">BISP <span>Phase 1</span></div>
+        <div class="tab-bar" id="tabBar"></div>
+        <button class="btn-export" onclick="exportJSON()">Exporter JSON</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <!-- MAIN SPLIT -->
+    <div class="main" id="mainLayout">
+        <div class="iframe-panel" id="iframePanel">
+            <iframe id="mockupFrame" src=""></iframe>
+            <div class="iframe-overlay">
+                <button class="viewport-btn active" onclick="setViewport('100%')">Desktop</button>
+                <button class="viewport-btn" onclick="setViewport('768px')">Tablette</button>
+                <button class="viewport-btn" onclick="setViewport('375px')">Mobile</button>
+            </div>
+        </div>
+        <div class="form-panel" id="formPanel"></div>
+
+        <!-- Special sections (hidden by default) -->
+        <div class="section-page" id="sectionComparison"></div>
+        <div class="section-page" id="sectionHybrid"></div>
+        <div class="section-page" id="sectionVision"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+    const MOCKUPS = [
+        { id: "aiglon", name: "Aiglon", rank: 1, score: "84/100", url: "inspired-aiglon/", style: "Cinématique sombre, mots-clés rouges, or, ombres dramatiques" },
+        { id: "lerosey", name: "Le Rosey", rank: 2, score: "81/100", url: "inspired-lerosey/", style: "Bichromatique old money, serif pur, retenue absolue" },
+        { id: "sevenoaks", name: "Sevenoaks", rank: 3, score: "79/100", url: "inspired-sevenoaks/", style: "Split hero teal, sobriété radicale, mosaïque photo" },
+        { id: "gordonstoun", name: "Gordonstoun", rank: 4, score: "77/100", url: "inspired-gordonstoun/", style: "Pourpre magazine, layout asymétrique, texture grain" },
+        { id: "kentcollege", name: "Kent College", rank: 5, score: "76/100", url: "inspired-kentcollege/", style: "Rouge énergique, formes organiques, anti-scolaire" },
+        { id: "repton", name: "Repton", rank: 6, score: "74/100", url: "inspired-repton/", style: "Navy + or, timeline dorée, quiet luxury" },
+        { id: "ecoledesroches", name: "École des Roches", rank: 7, score: "73/100", url: "inspired-ecoledesroches/", style: "Navy + or vif, ombres cinéma, pills arrondies" },
+        { id: "beausoleil", name: "Beau Soleil", rank: 8, score: "68/100", url: "inspired-beausoleil/", style: "Swiss polish, alternance blanc/navy, boutons pill" },
+        { id: "hautlac", name: "Haut-Lac", rank: 9, score: "67/100", url: "inspired-hautlac/", style: "Teal + rouge, coupes diagonales, photos N&B" },
+    ];
+
+    const CRITERIA = [
+        { cat: "Première impression", items: ["Impact visuel (donne envie de scroller ?)", "Professionnalisme / confiance", "Correspondance image BISP"] },
+        { cat: "Design", items: ["Palette de couleurs", "Typographie (lisibilité + personnalité)", "Photos & vidéo", "Mise en page / rythme"] },
+        { cat: "Contenu & UX", items: ["Hero : titre + message", "Programmes : clarté", "Témoignages : crédibilité", "Navigation : facilité"] },
+        { cat: "Conversion", items: ["Envie de contacter / s'inscrire", "Boutons d'action (visibilité)"] },
+        { cat: "Différenciation", items: ["Originalité / mémorabilité", "Envie de montrer ce site"] },
+    ];
+
+    const HYBRID_SECTIONS = [
+        { title: "Hero / Accueil", items: [
+            { el: "Traitement vidéo / image", desc: "Plein écran ? Split ? Overlay ?" },
+            { el: "Titre et sous-titre", desc: "Police, taille, couleur, animation" },
+            { el: "Badges de preuve", desc: "300 élèves, 32 nationalités..." },
+            { el: "Boutons d'action", desc: "Style, couleur, texte" },
+        ]},
+        { title: "Navigation & Structure", items: [
+            { el: "Menu principal", desc: "Police, espacement, comportement" },
+            { el: "CTA dans la nav", desc: "« Planifier une visite »" },
+            { el: "Structure de la page", desc: "Ordre des sections, rythme" },
+        ]},
+        { title: "Identité visuelle", items: [
+            { el: "Palette de couleurs", desc: "Dominante + accents" },
+            { el: "Typographie titres", desc: "Serif / sans-serif, graisse" },
+            { el: "Typographie corps", desc: "Police, taille, interligne" },
+            { el: "Ambiance / émotion", desc: "Le feeling global" },
+        ]},
+        { title: "Sections clés", items: [
+            { el: "4 Promesses", desc: "Layout, icônes, style" },
+            { el: "Chiffres clés", desc: "Compteurs, fond, présentation" },
+            { el: "Programmes", desc: "Cards, timeline, photos, tarifs" },
+            { el: "Témoignages", desc: "Carrousel, quotes, diversité" },
+            { el: "Mot du directeur", desc: "Photo, citation, mise en valeur" },
+            { el: "Footer", desc: "Colonnes, infos, accréditations" },
+        ]},
+    ];
+
+    // === STATE ===
+    let data = { mockups: {}, comparison: {}, top3: [{},{},{}], hybrid: {}, vision: {}, evaluator: {} };
+    let currentTab = 0;
+
+    // === INIT ===
+    function init() {
+        buildTabs();
+        buildSpecialSections();
+        switchTab(0);
+        updateProgress();
+    }
+
+    function buildTabs() {
+        const bar = document.getElementById('tabBar');
+        MOCKUPS.forEach((m, i) => {
+            const t = document.createElement('button');
+            t.className = 'tab';
+            t.innerHTML = `<span class="rank">#${m.rank}</span> ${m.name} <span class="score">${m.score}</span>`;
+            t.onclick = () => switchTab(i);
+            bar.appendChild(t);
+        });
+        // Special tabs
+        ['Comparaison', 'Hybridation', 'Vision'].forEach((label, i) => {
+            const t = document.createElement('button');
+            t.className = 'tab';
+            t.style.background = 'rgba(196,165,90,0.15)';
+            t.innerHTML = `${label}`;
+            t.onclick = () => switchSpecial(i);
+            bar.appendChild(t);
+        });
+    }
+
+    function switchTab(i) {
+        currentTab = i;
+        const m = MOCKUPS[i];
+        document.getElementById('mockupFrame').src = m.url;
+        document.getElementById('mainLayout').classList.remove('full-page-mode');
+        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === i));
+        buildForm(m);
+    }
+
+    function switchSpecial(idx) {
+        document.getElementById('mainLayout').classList.add('full-page-mode');
+        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+        const ids = ['sectionComparison', 'sectionHybrid', 'sectionVision'];
+        document.getElementById(ids[idx]).classList.add('active');
+        document.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', j === MOCKUPS.length + idx));
+    }
+
+    function setViewport(w) {
+        const frame = document.getElementById('mockupFrame');
+        frame.style.width = w;
+        frame.style.margin = w === '100%' ? '0' : '0 auto';
+        frame.style.display = 'block';
+        document.querySelectorAll('.viewport-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // === BUILD MOCKUP FORM ===
+    function buildForm(m) {
+        if (!data.mockups[m.id]) data.mockups[m.id] = { ratings: {}, keep: '', change: '' };
+        const d = data.mockups[m.id];
+        const panel = document.getElementById('formPanel');
+
+        let html = `<h2>#${m.rank} Inspired ${m.name}</h2>
+            <p class="subtitle">${m.style}</p>
+            <span class="score-badge">Score technique : ${m.score}</span>`;
+
+        CRITERIA.forEach(g => {
+            html += `<div class="rating-group"><div class="rating-group-title">${g.cat}</div>`;
+            g.items.forEach(item => {
+                const key = `${m.id}_${item}`;
+                const val = d.ratings[item] || 0;
+                html += `<div class="rating-item">
+                    <div class="rating-label">${item}</div>
+                    <div class="rating-stars">
+                        ${[1,2,3,4,5].map(n => `<button class="star-btn ${val===n?'selected':''}"
+                            onclick="rate('${m.id}','${item.replace(/'/g,"\\'")}',${n})">${n}</button>`).join('')}
+                    </div>
+                </div>`;
+            });
+            html += '</div>';
+        });
+
+        html += `<div class="text-q">
+            <label>✦ Ce que vous garderiez absolument :</label>
+            <textarea onchange="saveText('${m.id}','keep',this.value)">${d.keep}</textarea>
+        </div>
+        <div class="text-q">
+            <label>✦ Ce que vous changeriez :</label>
+            <textarea onchange="saveText('${m.id}','change',this.value)">${d.change}</textarea>
+        </div>`;
+
+        // Nav
+        const prev = MOCKUPS[MOCKUPS.indexOf(m) - 1];
+        const next = MOCKUPS[MOCKUPS.indexOf(m) + 1];
+        html += `<div style="display:flex;gap:0.5rem;margin-top:1rem;">`;
+        if (prev) html += `<button class="btn-secondary" style="flex:1;padding:0.5rem;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;" onclick="switchTab(${MOCKUPS.indexOf(prev)})">← ${prev.name}</button>`;
+        if (next) html += `<button class="btn-primary" style="flex:1;padding:0.5rem;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;" onclick="switchTab(${MOCKUPS.indexOf(next)})">${next.name} →</button>`;
+        else html += `<button class="btn-primary" style="flex:1;padding:0.5rem;border-radius:6px;cursor:pointer;font-family:inherit;font-size:0.8rem;" onclick="switchSpecial(0)">Comparaison →</button>`;
+        html += `</div>`;
+
+        panel.innerHTML = html;
+        panel.scrollTop = 0;
+    }
+
+    function rate(mockupId, criterion, value) {
+        data.mockups[mockupId].ratings[criterion] = value;
+        buildForm(MOCKUPS.find(m => m.id === mockupId));
+        updateProgress();
+    }
+
+    function saveText(mockupId, field, value) {
+        data.mockups[mockupId][field] = value;
+    }
+
+    // === BUILD SPECIAL SECTIONS ===
+    function buildSpecialSections() {
+        buildComparison();
+        buildHybrid();
+        buildVision();
+    }
+
+    function buildComparison() {
+        const aspects = [
+            "Meilleur hero", "Meilleure navigation", "Meilleures couleurs",
+            "Meilleure typographie", "Meilleur layout", "Meilleure section programmes",
+            "Meilleurs témoignages", "Le plus émotionnel", "Le plus professionnel",
+            "Le plus original", "Le plus adapté à BISP"
+        ];
+        const opts = MOCKUPS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+
+        let html = `<h1>Comparaison directe</h1>
+            <p class="intro">Pour chaque aspect, choisissez la maquette gagnante.</p>`;
+
+        aspects.forEach(a => {
+            html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.6rem;padding:0.6rem;background:${aspects.indexOf(a)%2===0?'var(--cream)':'var(--white)'};border-radius:6px;">
+                <div style="font-size:0.9rem;font-weight:600;color:var(--navy);align-self:center;">${a}</div>
+                <select style="padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem;" onchange="data.comparison['${a.replace(/'/g,"\\'")}']=this.value;updateProgress()">
+                    <option value="">— Choisir —</option>${opts}
+                </select>
+            </div>`;
+        });
+
+        // Top 3
+        html += `<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem;">Votre Top 3</h2>`;
+        ['1er', '2e', '3e'].forEach((r, i) => {
+            html += `<div class="top3-row">
+                <div class="top3-rank">${r}</div>
+                <select style="padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;" onchange="data.top3[${i}].choice=this.value">
+                    <option value="">— Choisir —</option>${opts}
+                </select>
+                <input placeholder="Pourquoi ?" style="padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem;" onchange="data.top3[${i}].why=this.value">
+            </div>`;
+        });
+
+        html += `<div class="section-nav">
+            <button class="btn-secondary" onclick="switchTab(8)">← Retour maquettes</button>
+            <button class="btn-primary" onclick="switchSpecial(1)">Hybridation →</button>
+        </div>`;
+
+        document.getElementById('sectionComparison').innerHTML = html;
+    }
+
+    function buildHybrid() {
+        const opts = MOCKUPS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+
+        let html = `<h1>Hybridation</h1>
+            <p class="intro">C'est la partie la plus importante. Le site final sera un mélange des meilleurs éléments.
+            Pour chaque composant, choisissez la maquette que vous préférez et expliquez pourquoi.</p>`;
+
+        // Judge recommendation box
+        html += `<div class="judge-reco">
+            <h4>💡 Recommandation du Judge (pour référence)</h4>
+            <ul>
+                <li><strong>Hero :</strong> Sevenoaks (split vidéo | couleur)</li>
+                <li><strong>Navigation :</strong> Le Rosey (serif, rectangulaire)</li>
+                <li><strong>Typo titres :</strong> Aiglon (Cabinet Grotesk + mots colorés)</li>
+                <li><strong>Typo corps :</strong> Le Rosey (EB Garamond 17px)</li>
+                <li><strong>Palette :</strong> Navy + blanc/crème + accent teal ou gold</li>
+                <li><strong>Sections sombres :</strong> Aiglon</li>
+                <li><strong>Sections claires :</strong> Le Rosey</li>
+                <li><strong>Mobile :</strong> Aiglon (floating CTA)</li>
+            </ul>
+        </div>`;
+
+        HYBRID_SECTIONS.forEach(s => {
+            html += `<div class="hybrid-group"><h3>${s.title}</h3>`;
+            s.items.forEach(item => {
+                const key = `${s.title}_${item.el}`.replace(/[^a-zA-Z0-9]/g, '_');
+                html += `<div class="hybrid-item">
+                    <div class="hybrid-el">${item.el}<small>${item.desc}</small></div>
+                    <select onchange="data.hybrid['${key}']=this.value;updateProgress()">
+                        <option value="">— Choisir —</option>${opts}
+                    </select>
+                    <input placeholder="Pourquoi ?" onchange="data.hybrid['${key}_why']=this.value">
+                </div>`;
+            });
+            html += '</div>';
+        });
+
+        html += `<div class="section-nav">
+            <button class="btn-secondary" onclick="switchSpecial(0)">← Comparaison</button>
+            <button class="btn-primary" onclick="switchSpecial(2)">Vision →</button>
+        </div>`;
+
+        document.getElementById('sectionHybrid').innerHTML = html;
+    }
+
+    function buildVision() {
+        const questions = [
+            { q: "Quand un parent arrive sur le site, quelle émotion doit-il ressentir ?", hint: "" },
+            { q: "3 adjectifs qui décrivent le site BISP idéal :", hint: "ex. : chaleureux, prestigieux, moderne, intime, international, audacieux, joyeux..." },
+            { q: "Éléments NON-NÉGOCIABLES pour le site final :", hint: "ex. : vidéo en hero, tarifs visibles, accréditations Cambridge, ton chaleureux..." },
+            { q: "Éléments à ÉVITER ABSOLUMENT :", hint: "ex. : trop sombre, couleurs trop vives, trop corporate, trop d'animations..." },
+            { q: "Décrivez librement votre vision du site idéal :", hint: "Imaginez que vous racontez à quelqu'un ce que vous voyez quand vous ouvrez le site parfait de BISP" },
+            { q: "Sites web (d'écoles ou autres) que vous admirez :", hint: "URLs ou noms" },
+        ];
+
+        let html = `<h1>Votre site BISP idéal</h1>
+            <p class="intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait pour BISP.</p>`;
+
+        questions.forEach((q, i) => {
+            html += `<div class="vision-q">
+                <label>${i + 1}. ${q.q}</label>
+                ${q.hint ? `<p class="hint">${q.hint}</p>` : ''}
+                <textarea rows="3" onchange="data.vision['q${i}']=this.value"></textarea>
+            </div>`;
+        });
+
+        // Evaluateur
+        html += `<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem;">Informations</h2>`;
+        ['Nom', 'Rôle / Fonction', 'Date'].forEach(f => {
+            html += `<div class="eval-field">
+                <label>${f}</label>
+                <input onchange="data.evaluator['${f}']=this.value">
+            </div>`;
+        });
+
+        html += `<div class="section-nav">
+            <button class="btn-secondary" onclick="switchSpecial(1)">← Hybridation</button>
+            <button class="btn-primary" onclick="exportJSON()">Exporter mes réponses ✦</button>
+        </div>`;
+
+        document.getElementById('sectionVision').innerHTML = html;
+    }
+
+    // === PROGRESS ===
+    function updateProgress() {
+        let total = MOCKUPS.length * 15 + 11 + 18; // ratings + comparison + hybrid
+        let filled = 0;
+        Object.values(data.mockups).forEach(m => { filled += Object.keys(m.ratings).length; });
+        filled += Object.keys(data.comparison).length;
+        filled += Object.values(data.hybrid).filter(v => v && !v.endsWith('_why')).length;
+        document.getElementById('progressFill').style.width = Math.min(100, Math.round(filled / total * 100)) + '%';
+    }
+
+    // === EXPORT ===
+    function exportJSON() {
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'BISP-evaluation-' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Réponses exportées en JSON !');
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    init();
+    </script>
+</body>
+</html>
