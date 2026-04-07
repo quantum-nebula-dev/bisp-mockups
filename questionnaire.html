@@ -348,10 +348,34 @@ function updateSiteChecks(){
     });
 }
 
+function previewBar(containerId){
+    const tabs=M.map((m,i)=>`<button class="preview-tab" onclick="loadPreview('${containerId}','${m.url}',this)">#${m.rank} ${m.name}</button>`).join('');
+    return `<div class="preview-bar" id="pb_${containerId}">
+        <div class="preview-tabs">${tabs}<button class="preview-tab" onclick="togglePreview('${containerId}')" style="margin-left:auto;background:rgba(255,255,255,0.05)">▼ Réduire</button></div>
+        <div class="preview-frame-wrap"><iframe id="pf_${containerId}" src=""></iframe></div>
+        <div class="preview-collapse-row" style="display:none"><button class="preview-expand" onclick="togglePreview('${containerId}')">▲ Afficher les maquettes</button></div>
+    </div>`;
+}
+function loadPreview(cid,url,btn){
+    document.getElementById('pf_'+cid).src=url;
+    btn.closest('.preview-tabs').querySelectorAll('.preview-tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    // Uncollapse if collapsed
+    const pb=document.getElementById('pb_'+cid);
+    if(pb.classList.contains('collapsed')){togglePreview(cid)}
+}
+function togglePreview(cid){
+    const pb=document.getElementById('pb_'+cid);
+    const collapsed=pb.classList.toggle('collapsed');
+    const row=pb.querySelector('.preview-collapse-row');
+    row.style.display=collapsed?'flex':'none';
+}
+
 // COMPARISON
 function buildCmp(){
     const opts=M.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-    let h=`<h1>Comparaison directe</h1><p class="intro">Pour chaque aspect, choisissez la maquette gagnante.</p>`;
+    let h=previewBar('cmp');
+    h+=`<div style="padding:2.5rem"><h1>Comparaison directe</h1><p class="intro">Pour chaque aspect, choisissez la maquette gagnante. Cliquez sur les onglets ci-dessus pour revoir chaque maquette.</p>`;
     CMP.forEach(a=>{
         h+=`<div class="cr"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${opts}</select></div>`;
     });
