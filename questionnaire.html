@@ -390,7 +390,8 @@ function buildCmp(){
 // HYBRID
 function buildHyb(){
     const opts=M.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-    let h=`<h1>Hybridation</h1><p class="intro">C'est la partie la plus importante. Le site final sera un mélange des meilleurs éléments. Pour chaque composant, choisissez votre préféré et dites pourquoi.</p>`;
+    let h=previewBar('hyb');
+    h+=`<div style="padding:2.5rem"><h1>Hybridation</h1><p class="intro">C'est la partie la plus importante. Le site final sera un mélange des meilleurs éléments. Pour chaque composant, choisissez votre préféré et dites pourquoi. Utilisez les onglets ci-dessus pour comparer les maquettes.</p>`;
     HYB.forEach(s=>{
         h+=`<div class="hbg"><h3>${s.title}</h3>`;
         s.items.forEach(item=>{
