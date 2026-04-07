@@ -225,7 +225,17 @@ function buildNoter(){
 }
 
 function rate(id,crit,val){
-    D.mockups[id].ratings[crit]=val;save();buildNoter();updateProgress();updateSiteChecks();
+    D.mockups[id].ratings[crit]=val;save();
+    // Update just the buttons without rebuilding (avoids scroll reset)
+    document.querySelectorAll('.rs').forEach(row=>{
+        const label=row.previousElementSibling;
+        if(label&&label.textContent===crit){
+            row.querySelectorAll('.sb').forEach(btn=>{
+                btn.classList.toggle('sel',parseInt(btn.textContent)===val);
+            });
+        }
+    });
+    updateProgress();updateSiteChecks();
 }
 
 // === TAB 1: COMPARER ===
