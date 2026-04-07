@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BISP — École Bilingue Internationale de Paris</title>
+<meta name="description" content="École bilingue internationale à Paris. Double curriculum Cambridge et français, 32 nationalités, classes de 12 élèves. De la maternelle au lycée.">
+<link rel="icon" type="image/png" href="../assets/logos/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+
+<style>
+/* =============================================================================
+   BISP Homepage — Inspired by Sevenoaks School
+   =============================================================================
+   Palette: #004f5d (teal) + #ffffff + #0a1628 (deep navy)
+   Font: DM Sans (proxy for Bliss humanist sans-serif)
+   Radius: 0-3px dominant + 9999px pills
+   Shadows: none — flat design
+   H1: 50px bold, uppercase, tight line-height
+   ============================================================================= */
+
+/* ----- Reset ----- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ----- Custom Properties ----- */
+:root {
+  /* Primary */
+  --teal: #004f5d;
+  --teal-light: #00697d;
+  --teal-dark: #003a47;
+  --teal-10: rgba(0, 79, 93, 0.10);
+  --teal-20: rgba(0, 79, 93, 0.20);
+
+  /* Navy / Dark */
+  --navy: #0a1628;
+  --navy-90: rgba(10, 22, 40, 0.92);
+  --navy-70: rgba(10, 22, 40, 0.70);
+
+  /* Warm neutrals */
+  --cream: #f8f6f2;
+  --warm-white: #fdfcfa;
+  --off-white: #f5f3ef;
+  --white: #ffffff;
+
+  /* Text */
+  --text: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-light: #6b6b6b;
+  --text-muted: #8a8a8a;
+
+  /* Borders */
+  --border-subtle: rgba(0, 79, 93, 0.12);
+  --border-light: rgba(0, 0, 0, 0.06);
+
+  /* Accent */
+  --gold-subtle: #c4a35a;
+
+  /* Typography */
+  --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  /* Responsive type scale */
+  --h1: clamp(2.8rem, 5vw, 3.4rem);
+  --h2: clamp(2rem, 3.5vw, 2.6rem);
+  --h3: clamp(1.5rem, 2.5vw, 1.8rem);
+  --h4: clamp(1.15rem, 1.5vw, 1.35rem);
+  --body: clamp(1rem, 1.1vw, 1.125rem);
+  --small: 0.875rem;
+  --xs: 0.8125rem;
+  --xxs: 0.75rem;
+
+  /* Layout */
+  --max-w: 1320px;
+  --max-w-narrow: 900px;
+  --gap: clamp(1.5rem, 3vw, 3rem);
+  --section-pad: clamp(4.5rem, 9vw, 7.5rem);
+  --section-pad-sm: clamp(3rem, 6vw, 5rem);
+}
+
+/* ----- Base ----- */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font);
+  font-size: var(--body);
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+sup {
+  font-size: 0.65em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* ----- Focus Visible ----- */
+*:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+/* ----- Skip link (WCAG) ----- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--teal);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 3px 3px;
+  z-index: 9999;
+  font-weight: 700;
+  font-size: var(--small);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ----- Utility ----- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gap);
+}
+
+.container--narrow {
+  max-width: var(--max-w-narrow);
+  margin: 0 auto;
+  padding: 0 var(--gap);
+}
+
+/* =============================================================================
+   1. NAVIGATION — Sticky, transparent over hero, solid on scroll
+   ============================================================================= */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: background-color 0.4s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.4s cubic-bezier(0.4,0,0.2,1),
+              padding 0.4s cubic-bezier(0.4,0,0.2,1);
+  padding: 1.35rem 0;
+}
+
+.nav.scrolled {
+  background: var(--white);
+  box-shadow: 0 1px 0 var(--border-subtle);
+  padding: 0.7rem 0;
+}
+
+.nav__inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gap);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.nav__logo {
+  flex-shrink: 0;
+}
+.nav__logo img {
+  height: 46px;
+  width: auto;
+  transition: height 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.nav.scrolled .nav__logo img {
+  height: 36px;
+}
+
+/* Links */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav__links a {
+  font-size: var(--small);
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  color: var(--white);
+  transition: color 0.3s ease, opacity 0.3s ease;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.nav__links a:hover::after,
+.nav__links a:focus-visible::after {
+  width: 100%;
+}
+
+.nav.scrolled .nav__links a {
+  color: var(--text);
+}
+
+/* Right side */
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav__lang {
+  font-size: var(--xxs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  transition: color 0.3s ease, border-color 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 0.3rem 0.7rem;
+  border-radius: 3px;
+}
+.nav.scrolled .nav__lang {
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+.nav__lang:hover { opacity: 0.7; }
+
+.nav__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--xxs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--teal);
+  padding: 0.6rem 1.6rem;
+  border-radius: 9999px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.nav__cta-btn:hover {
+  background: var(--teal-light);
+  transform: translateY(-1px);
+}
+.nav.scrolled .nav__cta-btn {
+  background: var(--teal);
+  color: var(--white);
+}
+
+/* Hamburger (mobile) */
+.nav__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: background 0.3s ease, transform 0.3s ease;
+  border-radius: 1px;
+}
+.nav.scrolled .nav__hamburger span {
+  background: var(--text);
+}
+
+/* Mobile menu overlay */
+.nav__mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--navy);
+  z-index: 1001;
+  padding: 0;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.nav__mobile-overlay.open {
+  display: flex;
+}
+
+.nav__mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.35rem var(--gap);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav__mobile-header img {
+  height: 36px;
+  filter: brightness(0) invert(1);
+}
+
+.nav__mobile-close {
+  color: var(--white);
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav__mobile-links {
+  padding: 2rem var(--gap);
+  flex: 1;
+}
+.nav__mobile-links a {
+  display: block;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--white);
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.nav__mobile-links a:last-child {
+  border-bottom: none;
+}
+
+.nav__mobile-footer {
+  padding: 1.5rem var(--gap) 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__mobile-footer a {
+  color: rgba(255,255,255,0.5);
+  font-size: var(--small);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.nav__mobile-footer .nav__cta-btn {
+  font-size: var(--xs);
+}
+
+@media (max-width: 960px) {
+  .nav__links { display: none; }
+  .nav__lang { display: none; }
+  .nav__cta-btn { display: none; }
+  .nav__hamburger { display: flex; }
+}
+
+/* =============================================================================
+   2. HERO — Sevenoaks split (video left | teal right)
+   ============================================================================= */
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  position: relative;
+}
+
+.hero__media {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__poster-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.hero__content {
+  background: var(--teal);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 6vw, 6.5rem);
+  padding-top: clamp(5rem, 10vw, 8rem);
+  position: relative;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 9999px;
+  padding: 0.35rem 1rem;
+  font-size: var(--xxs);
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  width: fit-content;
+}
+.hero__badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #6dd4a0;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hero__title {
+  font-size: var(--h1);
+  font-weight: 700;
+  line-height: 1.06;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  margin-bottom: 1.75rem;
+}
+
+.hero__subtitle {
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.8);
+  max-width: 460px;
+  margin-bottom: 2.25rem;
+}
+
+.hero__proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2rem;
+  margin-bottom: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+.hero__proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.5rem 0;
+}
+
+.hero__proof-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.hero__proof-label {
+  font-size: var(--xxs);
+  font-weight: 400;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font);
+  font-size: var(--xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--white);
+  padding: 0.85rem 2.15rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.25s cubic-bezier(0.4,0,0.2,1);
+  line-height: 1.3;
+}
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+.btn-primary svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font);
+  font-size: var(--xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: transparent;
+  padding: 0.85rem 2.15rem;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  line-height: 1.3;
+}
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.06);
+}
+
+.btn-teal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font);
+  font-size: var(--xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--teal);
+  padding: 0.85rem 2.15rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+  line-height: 1.3;
+}
+.btn-teal:hover,
+.btn-teal:focus-visible {
+  background: var(--teal-light);
+  transform: translateY(-1px);
+}
+.btn-teal svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.btn-outline-teal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font);
+  font-size: var(--xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: transparent;
+  padding: 0.85rem 2.15rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--teal-20);
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  line-height: 1.3;
+}
+.btn-outline-teal:hover,
+.btn-outline-teal:focus-visible {
+  border-color: var(--teal);
+  background: var(--teal-10);
+}
+
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font);
+  font-size: var(--xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--white);
+  padding: 1rem 2.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.25s cubic-bezier(0.4,0,0.2,1);
+  line-height: 1.3;
+}
+.btn-white:hover,
+.btn-white:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+/* Arrow icon for buttons */
+.arrow-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.4);
+  animation: heroScroll 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+.hero__scroll svg {
+  width: 22px;
+  height: 22px;
+}
+
+@keyframes heroScroll {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+  50% { transform: translateX(-50%) translateY(10px); opacity: 0.8; }
+}
+
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .hero__media {
+    min-height: 55vh;
+  }
+  .hero__content {
+    padding: 3rem 1.5rem 4.5rem;
+  }
+  .hero__title {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+  .hero__proof {
+    gap: 0 1.75rem;
+  }
+  .hero__scroll { display: none; }
+}
+
+/* =============================================================================
+   SECTIONS — Common styles
+   ============================================================================= */
+
+.section {
+  padding: var(--section-pad) 0;
+}
+
+.section--sm {
+  padding: var(--section-pad-sm) 0;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: var(--xxs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: var(--h2);
+  font-weight: 700;
+  line-height: 1.12;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.section-title--white {
+  color: var(--white);
+}
+
+.section-title--center {
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =============================================================================
+   3. LES 4 PROMESSES
+   ============================================================================= */
+
+.promises {
+  background: var(--warm-white);
+}
+
+.promises__header {
+  text-align: center;
+  margin-bottom: clamp(3.5rem, 5vw, 5rem);
+}
+
+.promises__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+}
+
+.promise-card {
+  text-align: center;
+  padding: 2.5rem 1.25rem 2rem;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.promise-card:hover {
+  background: var(--white);
+}
+
+.promise-card__icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--teal-10);
+  border-radius: 50%;
+}
+
+.promise-card__icon img {
+  width: 30px;
+  height: 30px;
+  /* Tint to teal */
+  filter: brightness(0) saturate(100%) invert(22%) sepia(60%) saturate(1200%) hue-rotate(160deg) brightness(90%) contrast(105%);
+}
+
+.promise-card__title {
+  font-size: var(--h4);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.65rem;
+  letter-spacing: 0.005em;
+}
+
+.promise-card__text {
+  font-size: var(--small);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.promise-card__proof {
+  font-size: var(--xxs);
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .promises__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .promises__grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .promise-card {
+    border-bottom: 1px solid var(--border-light);
+    border-radius: 0;
+    padding: 2rem 0.5rem;
+  }
+  .promise-card:last-child { border-bottom: none; }
+}
+
+/* =============================================================================
+   EDITORIAL PHOTO MOSAIC (Sevenoaks signature)
+   ============================================================================= */
+
+.mosaic {
+  display: grid;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.mosaic--duo {
+  grid-template-columns: 1.3fr 0.7fr;
+  max-height: 520px;
+}
+.mosaic--duo-reverse {
+  grid-template-columns: 0.7fr 1.3fr;
+  max-height: 520px;
+}
+.mosaic--trio {
+  grid-template-columns: 1fr 1fr 1fr;
+  max-height: 420px;
+}
+
+.mosaic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.mosaic img:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .mosaic--duo,
+  .mosaic--duo-reverse {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+  .mosaic--duo img,
+  .mosaic--duo-reverse img {
+    max-height: 320px;
+  }
+  .mosaic--trio {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+  .mosaic--trio img {
+    max-height: 280px;
+  }
+}
+
+/* =============================================================================
+   4. CHIFFRES CLÉS
+   ============================================================================= */
+
+.stats {
+  position: relative;
+  background: var(--navy);
+  overflow: hidden;
+}
+
+.stats__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.stats__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.22;
+}
+
+.stats__inner {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad) var(--gap);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.stats__header {
+  text-align: center;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+.stats__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--gap);
+  text-align: center;
+}
+
+.stat-item {
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--gap) / 2);
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+.stat-item__number {
+  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
+}
+
+.stat-item__label {
+  font-size: var(--small);
+  color: rgba(255,255,255,0.5);
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .stats__grid {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 3rem;
+  }
+  .stat-item:not(:last-child)::after { display: none; }
+}
+
+@media (max-width: 500px) {
+  .stats__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =============================================================================
+   5. PROGRAMMES — Teal bg, 4 cards
+   ============================================================================= */
+
+.programmes {
+  background: var(--teal);
+}
+
+.programmes__header {
+  text-align: center;
+  margin-bottom: clamp(3.5rem, 6vw, 5rem);
+}
+
+.programmes__subtitle {
+  font-size: var(--body);
+  color: rgba(255,255,255,0.65);
+  margin-top: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.programmes__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.35rem;
+}
+
+.programme-card {
+  background: var(--white);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.programme-card:hover {
+  transform: translateY(-5px);
+}
+
+.programme-card__img {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.programme-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.programme-card:hover .programme-card__img img {
+  transform: scale(1.05);
+}
+
+.programme-card__tag {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  background: var(--teal);
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 3px;
+}
+
+.programme-card__body {
+  padding: 1.75rem 1.5rem 2rem;
+}
+
+.programme-card__level {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.005em;
+}
+
+.programme-card__ages {
+  font-size: var(--xxs);
+  color: var(--teal);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.programme-card__desc {
+  font-size: var(--small);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.programme-card__price {
+  font-size: var(--small);
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+.programme-card__price strong {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.programme-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--xxs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  transition: gap 0.3s ease;
+}
+.programme-card__link:hover {
+  gap: 0.75rem;
+}
+.programme-card__link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1080px) {
+  .programmes__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.35rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .programmes__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================================
+   6. TÉMOIGNAGES
+   ============================================================================= */
+
+.testimonials {
+  background: var(--cream);
+}
+
+.testimonials__header {
+  text-align: center;
+  margin-bottom: clamp(3rem, 5vw, 4rem);
+}
+
+.testimonials__carousel {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.testimonials__track {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+}
+
+.testimonial-slide {
+  min-width: 100%;
+  padding: 0 1.5rem;
+}
+
+.testimonial-slide__inner {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.testimonial-slide__mark {
+  display: block;
+  font-size: 4.5rem;
+  line-height: 0.6;
+  color: var(--teal);
+  opacity: 0.2;
+  font-family: Georgia, 'Times New Roman', serif;
+  margin-bottom: 1.75rem;
+}
+
+.testimonial-slide__text {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--text);
+  max-width: 660px;
+  margin: 0 auto 2rem;
+}
+
+.testimonial-slide__author {
+  font-size: var(--small);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.testimonial-slide__meta {
+  font-size: var(--xs);
+  color: var(--text-light);
+  margin-top: 0.3rem;
+}
+
+.testimonials__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+}
+
+.testimonials__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--teal-20);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.testimonials__dot.active {
+  background: var(--teal);
+  transform: scale(1.25);
+}
+
+.testimonials__arrows {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.testimonials__arrow {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+  color: var(--teal);
+  -webkit-tap-highlight-color: transparent;
+}
+.testimonials__arrow:hover {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: var(--white);
+}
+.testimonials__arrow svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+   7. MOT DU DIRECTEUR
+   ============================================================================= */
+
+.directeur {
+  background: var(--white);
+}
+
+.directeur__grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.directeur__img-wrap {
+  position: relative;
+}
+
+.directeur__img-wrap img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.directeur__accent-block {
+  position: absolute;
+  bottom: -1.25rem;
+  right: -1.25rem;
+  width: 100px;
+  height: 100px;
+  background: var(--teal);
+  border-radius: 3px;
+  z-index: -1;
+}
+
+.directeur__body {
+  max-width: 540px;
+}
+
+.directeur__quote {
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 2.25rem;
+  padding-left: 1.75rem;
+  border-left: 3px solid var(--teal);
+  position: relative;
+}
+
+.directeur__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.directeur__role {
+  font-size: var(--small);
+  color: var(--text-light);
+  margin-bottom: 2.25rem;
+}
+
+@media (max-width: 900px) {
+  .directeur__grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .directeur__img-wrap {
+    max-width: 380px;
+  }
+  .directeur__accent-block { display: none; }
+}
+
+/* =============================================================================
+   INTRO BAND — Short editorial bridge below hero
+   ============================================================================= */
+
+.intro-band {
+  background: var(--white);
+  padding: var(--section-pad-sm) 0;
+}
+
+.intro-band__inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 var(--gap);
+}
+
+.intro-band__text {
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.intro-band__text strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.intro-band__divider {
+  width: 60px;
+  height: 3px;
+  background: var(--teal);
+  margin: 2rem auto 0;
+  border: none;
+  border-radius: 2px;
+}
+
+/* =============================================================================
+   BILINGUAL HIGHLIGHT — Full-width split
+   ============================================================================= */
+
+.bilingual-hl {
+  background: var(--off-white);
+}
+
+.bilingual-hl__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 520px;
+}
+
+.bilingual-hl__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.bilingual-hl__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.bilingual-hl__media:hover img {
+  transform: scale(1.03);
+}
+
+.bilingual-hl__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2.5rem, 5vw, 5rem);
+}
+
+.bilingual-hl__content .section-label {
+  margin-bottom: 1.25rem;
+}
+
+.bilingual-hl__content .section-title {
+  margin-bottom: 1.5rem;
+}
+
+.bilingual-hl__text {
+  font-size: var(--body);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.bilingual-hl__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.25rem;
+}
+
+.bilingual-hl__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--xxs);
+  font-weight: 600;
+  color: var(--teal);
+  background: var(--teal-10);
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  letter-spacing: 0.03em;
+}
+
+.bilingual-hl__badge svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .bilingual-hl__grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .bilingual-hl__media {
+    min-height: 300px;
+  }
+}
+
+/* =============================================================================
+   CAMPUS SECTION — 3 campus cards
+   ============================================================================= */
+
+.campus {
+  background: var(--warm-white);
+}
+
+.campus__header {
+  text-align: center;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+.campus__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.campus-card {
+  background: var(--white);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+.campus-card:hover {
+  transform: translateY(-4px);
+}
+
+.campus-card__img {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.campus-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.campus-card:hover .campus-card__img img {
+  transform: scale(1.04);
+}
+
+.campus-card__body {
+  padding: 1.5rem;
+}
+
+.campus-card__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+.campus-card__address {
+  font-size: var(--small);
+  color: var(--text-light);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.campus-card__levels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.campus-card__level-tag {
+  font-size: var(--xxs);
+  font-weight: 600;
+  color: var(--teal);
+  background: var(--teal-10);
+  padding: 0.25rem 0.65rem;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .campus__grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* =============================================================================
+   VIE SCOLAIRE HIGHLIGHTS — 3 feature cards
+   ============================================================================= */
+
+.vie-highlights {
+  background: var(--white);
+}
+
+.vie-highlights__header {
+  text-align: center;
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+}
+
+.vie-highlights__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.vie-card {
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  cursor: default;
+}
+
+.vie-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.vie-card:hover img {
+  transform: scale(1.04);
+}
+
+.vie-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,22,40,0.85) 0%, rgba(10,22,40,0.2) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 1.75rem;
+}
+
+.vie-card__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.01em;
+}
+
+.vie-card__text {
+  font-size: var(--small);
+  color: rgba(255,255,255,0.7);
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .vie-highlights__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .vie-card {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* =============================================================================
+   8. CTA FINAL + FOOTER
+   ============================================================================= */
+
+.cta-final {
+  background: var(--teal);
+  text-align: center;
+  padding: clamp(4.5rem, 8vw, 6.5rem) var(--gap);
+}
+
+.cta-final__title {
+  font-size: var(--h2);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.cta-final__text {
+  font-size: var(--body);
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2.75rem;
+  font-weight: 300;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.65;
+}
+
+/* Footer */
+.footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.55);
+  padding: clamp(4rem, 7vw, 5.5rem) 0 2rem;
+}
+
+.footer__grid {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gap);
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: var(--gap);
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.footer__brand {
+  padding-right: 2rem;
+}
+.footer__brand-logo {
+  height: 38px;
+  margin-bottom: 1.35rem;
+  filter: brightness(0) invert(1);
+}
+.footer__brand-text {
+  font-size: var(--small);
+  line-height: 1.7;
+  max-width: 340px;
+  margin-bottom: 1.75rem;
+}
+.footer__accreditations {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.footer__accreditations img {
+  height: 34px;
+  opacity: 0.55;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.3s ease;
+}
+.footer__accreditations img:hover {
+  opacity: 1;
+}
+
+.footer__col-heading {
+  font-size: var(--xxs);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.footer__list li {
+  margin-bottom: 0.55rem;
+}
+.footer__list a {
+  font-size: var(--small);
+  color: rgba(255,255,255,0.45);
+  transition: color 0.25s ease;
+}
+.footer__list a:hover {
+  color: var(--white);
+}
+
+.footer__campus-block {
+  font-size: var(--small);
+  margin-bottom: 1rem;
+  line-height: 1.55;
+}
+.footer__campus-block strong {
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.footer__bottom {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem var(--gap) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer__copy {
+  font-size: var(--xxs);
+}
+
+.footer__phone a {
+  font-size: var(--small);
+  color: var(--white);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 900px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .footer__brand { padding-right: 0; }
+}
+
+@media (max-width: 500px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* =============================================================================
+   MOBILE STICKY CTA BAR
+   ============================================================================= */
+
+.mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  padding: 0.65rem var(--gap);
+  box-shadow: 0 -1px 8px rgba(0,0,0,0.07);
+  z-index: 900;
+  gap: 0.6rem;
+}
+.mobile-bar a {
+  flex: 1;
+  text-align: center;
+  font-size: var(--xxs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.8rem;
+  border-radius: 9999px;
+  line-height: 1.3;
+}
+.mobile-bar__call {
+  border: 1.5px solid var(--teal);
+  color: var(--teal);
+}
+.mobile-bar__visit {
+  background: var(--teal);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .mobile-bar { display: flex; }
+  body { padding-bottom: 4.25rem; }
+}
+
+/* =============================================================================
+   CSS SCROLL-TRIGGERED ANIMATIONS
+   ============================================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1),
+                transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-d1 { transition-delay: 0.08s; }
+  .reveal-d2 { transition-delay: 0.16s; }
+  .reveal-d3 { transition-delay: 0.24s; }
+  .reveal-d4 { transition-delay: 0.32s; }
+  .reveal-d5 { transition-delay: 0.40s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero__scroll { animation: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- WCAG: Skip to content -->
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+<!-- ==========================================================================
+     BLOC 1 : NAVIGATION STICKY
+     ========================================================================== -->
+
+<nav class="nav" id="nav" role="navigation" aria-label="Navigation principale">
+  <div class="nav__inner">
+
+    <a href="#" class="nav__logo" aria-label="BISP — Accueil">
+      <img src="../assets/logos/logo-bisp-header.svg" alt="BISP — École Bilingue Internationale de Paris" width="160" height="46">
+    </a>
+
+    <ul class="nav__links" role="list">
+      <li><a href="#ecole">Notre école</a></li>
+      <li><a href="#programmes-section">Programmes</a></li>
+      <li><a href="#admissions">Admissions</a></li>
+      <li><a href="#vie-scolaire">Vie scolaire</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav__right">
+      <a href="#" class="nav__lang" aria-label="Switch to English">EN</a>
+      <a href="#admissions" class="nav__cta-btn">
+        Inscrire mon enfant
+      </a>
+    </div>
+
+    <button class="nav__hamburger" aria-label="Ouvrir le menu" aria-expanded="false" id="nav-hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile overlay menu -->
+<div class="nav__mobile-overlay" id="nav-mobile" role="dialog" aria-modal="true" aria-label="Menu de navigation mobile">
+  <div class="nav__mobile-header">
+    <img src="../assets/logos/logo-bisp-header.svg" alt="BISP" width="120" height="36">
+    <button class="nav__mobile-close" id="nav-mobile-close" aria-label="Fermer le menu">&times;</button>
+  </div>
+  <div class="nav__mobile-links">
+    <a href="#ecole">Notre école</a>
+    <a href="#programmes-section">Programmes</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#vie-scolaire">Vie scolaire</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav__mobile-footer">
+    <a href="#">FR / EN</a>
+    <a href="#admissions" class="nav__cta-btn">Inscrire mon enfant</a>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     BLOC 2 : HERO — Sevenoaks-style split (video | teal)
+     ========================================================================== -->
+
+<section class="hero" id="main-content" aria-label="Accueil">
+
+  <!-- Left: video -->
+  <div class="hero__media">
+    <video
+      class="hero__video"
+      autoplay muted loop playsinline
+      poster="../assets/images/hero-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="../assets/videos/video-presentation-bisp.mp4" type="video/mp4">
+    </video>
+    <img
+      class="hero__poster-fallback"
+      src="../assets/images/hero-poster.jpg"
+      alt="Élèves de BISP dans une classe bilingue à Paris"
+    >
+  </div>
+
+  <!-- Right: teal panel -->
+  <div class="hero__content">
+
+    <div class="hero__badge">
+      <span class="hero__badge-dot"></span>
+      Inscriptions 2026-2027 ouvertes
+    </div>
+
+    <h1 class="hero__title">
+      Deux langues.<br>
+      Douze élèves.<br>
+      Un monde.
+    </h1>
+
+    <p class="hero__subtitle">
+      À Paris, une école bilingue internationale où chaque enfant est connu, accompagné et préparé — en français et en anglais.
+    </p>
+
+    <div class="hero__proof" role="list" aria-label="Chiffres clés BISP">
+      <div class="hero__proof-item" role="listitem">
+        <span class="hero__proof-number">300</span>
+        <span class="hero__proof-label">élèves</span>
+      </div>
+      <div class="hero__proof-item" role="listitem">
+        <span class="hero__proof-number">32</span>
+        <span class="hero__proof-label">nationalités</span>
+      </div>
+      <div class="hero__proof-item" role="listitem">
+        <span class="hero__proof-number">100%</span>
+        <span class="hero__proof-label">bilingue</span>
+      </div>
+    </div>
+
+    <div class="hero__actions">
+      <a href="#admissions" class="btn-primary">
+        Planifier une visite
+        <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#programmes-section" class="btn-secondary">
+        Nos programmes
+      </a>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- Intro editorial band -->
+<section class="intro-band" aria-label="Présentation de BISP">
+  <div class="intro-band__inner">
+    <p class="intro-band__text reveal">
+      L'école BISP propose un programme éducatif <strong>complètement bilingue</strong>, anglais et français, fournissant l'occasion à votre enfant de s'immerger dans deux univers linguistiques. Notre modèle divise la journée scolaire en deux parties : <strong>50% en anglais, 50% en français</strong>, avec des enseignants natifs des deux langues.
+    </p>
+    <hr class="intro-band__divider reveal reveal-d1" aria-hidden="true">
+  </div>
+</section>
+
+<!-- ==========================================================================
+     BLOC 3 : LES 4 PROMESSES
+     ========================================================================== -->
+
+<section class="section promises" id="ecole" aria-labelledby="promises-heading">
+  <div class="container">
+
+    <header class="promises__header">
+      <span class="section-label reveal">Ce qui fait la différence</span>
+      <h2 class="section-title section-title--center reveal reveal-d1" id="promises-heading">
+        Ce qui fait de BISP<br>une école à part.
+      </h2>
+    </header>
+
+    <div class="promises__grid">
+
+      <article class="promise-card reveal reveal-d1">
+        <div class="promise-card__icon">
+          <img src="../assets/pictos/eleves.svg" alt="" aria-hidden="true" width="30" height="30">
+        </div>
+        <h3 class="promise-card__title">Intimité</h3>
+        <p class="promise-card__text">
+          Des classes de 12 élèves où personne ne passe inaperçu. Chaque enfant est connu par son prénom, accompagné chaque semaine.
+        </p>
+        <span class="promise-card__proof">12 élèves par classe</span>
+      </article>
+
+      <article class="promise-card reveal reveal-d2">
+        <div class="promise-card__icon">
+          <img src="../assets/pictos/bilingue.svg" alt="" aria-hidden="true" width="30" height="30">
+        </div>
+        <h3 class="promise-card__title">Double passeport</h3>
+        <p class="promise-card__text">
+          Cambridge Assessment et Éducation Nationale, sans compromis. Deux systèmes, un seul parcours cohérent.
+        </p>
+        <span class="promise-card__proof">Cambridge + Pearson Edexcel</span>
+      </article>
+
+      <article class="promise-card reveal reveal-d3">
+        <div class="promise-card__icon">
+          <img src="../assets/pictos/nationalites.svg" alt="" aria-hidden="true" width="30" height="30">
+        </div>
+        <h3 class="promise-card__title">Monde</h3>
+        <p class="promise-card__text">
+          Une micro-société internationale au coeur du 15<sup>e</sup>. 32 nationalités qui apprennent à vivre et penser ensemble.
+        </p>
+        <span class="promise-card__proof">32 nationalités</span>
+      </article>
+
+      <article class="promise-card reveal reveal-d4">
+        <div class="promise-card__icon">
+          <img src="../assets/pictos/enfants.svg" alt="" aria-hidden="true" width="30" height="30">
+        </div>
+        <h3 class="promise-card__title">Confiance</h3>
+        <p class="promise-card__text">
+          Le bilinguisme comme seconde nature, pas comme matière scolaire. Immersion dès 3 ans avec des enseignants natifs.
+        </p>
+        <span class="promise-card__proof">Immersion dès 3 ans</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Editorial mosaic 1 -->
+<div class="mosaic mosaic--duo" role="img" aria-label="Photographies de la vie scolaire à BISP">
+  <img src="../assets/stock/diverse-students.jpg" alt="Élèves de différentes nationalités à BISP" loading="lazy">
+  <img src="../assets/images/jeux-enfant.png" alt="Enfant jouant en maternelle bilingue" loading="lazy">
+</div>
+
+<!-- ==========================================================================
+     BLOC 4 : CHIFFRES CLÉS
+     ========================================================================== -->
+
+<section class="stats" aria-labelledby="stats-heading">
+  <div class="stats__bg" aria-hidden="true">
+    <img src="../assets/stock/campus-aerial.jpg" alt="" loading="lazy">
+  </div>
+  <div class="stats__inner">
+
+    <header class="stats__header">
+      <span class="section-label reveal" style="color:rgba(255,255,255,0.4);">En un coup d'oeil</span>
+      <h2 class="section-title section-title--white section-title--center reveal reveal-d1" id="stats-heading">
+        BISP en chiffres.
+      </h2>
+    </header>
+
+    <div class="stats__grid">
+      <div class="stat-item reveal reveal-d1">
+        <div class="stat-item__number" data-count="32">0</div>
+        <div class="stat-item__label">Nationalités<br>représentées</div>
+      </div>
+      <div class="stat-item reveal reveal-d2">
+        <div class="stat-item__number" data-count="12">0</div>
+        <div class="stat-item__label">Élèves par classe<br>en moyenne</div>
+      </div>
+      <div class="stat-item reveal reveal-d3">
+        <div class="stat-item__number">50/50</div>
+        <div class="stat-item__label">Français et anglais<br>à parts égales</div>
+      </div>
+      <div class="stat-item reveal reveal-d4">
+        <div class="stat-item__number" data-count="14">0</div>
+        <div class="stat-item__label">Années<br>d'expérience</div>
+      </div>
+      <div class="stat-item reveal reveal-d5">
+        <div class="stat-item__number" data-count="3">0</div>
+        <div class="stat-item__label">Campus dans le<br>15<sup>e</sup> arrondissement</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     BLOC 5 : NOS PROGRAMMES
+     ========================================================================== -->
+
+<section class="section programmes" id="programmes-section" aria-labelledby="programmes-heading">
+  <div class="container">
+
+    <header class="programmes__header">
+      <span class="section-label reveal" style="color:rgba(255,255,255,0.4);">De 3 à 18 ans</span>
+      <h2 class="section-title section-title--white section-title--center reveal reveal-d1" id="programmes-heading">
+        Un parcours complet,<br>de la maternelle au lycée.
+      </h2>
+      <p class="programmes__subtitle reveal reveal-d2">
+        Quatre niveaux, une seule exigence : l'excellence bilingue.
+      </p>
+    </header>
+
+    <div class="programmes__grid">
+
+      <!-- Maternelle -->
+      <article class="programme-card reveal reveal-d1">
+        <div class="programme-card__img">
+          <img src="../assets/stock/preschool-kids.jpg" alt="Enfants en maternelle bilingue BISP" loading="lazy" width="400" height="300">
+          <span class="programme-card__tag">Maternelle</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Maternelle</h3>
+          <p class="programme-card__ages">3 — 6 ans</p>
+          <p class="programme-card__desc">
+            Immersion naturelle dans deux langues et deux cultures. Des enseignants natifs, un cadre bienveillant, l'éveil par le jeu.
+          </p>
+          <p class="programme-card__price">À partir de <strong>13.800 €</strong> / an</p>
+          <a href="#" class="programme-card__link" aria-label="Découvrir le programme maternelle">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Primaire -->
+      <article class="programme-card reveal reveal-d2">
+        <div class="programme-card__img">
+          <img src="../assets/images/activites-enfants.png" alt="Élèves du primaire bilingue BISP" loading="lazy" width="400" height="300">
+          <span class="programme-card__tag">Primaire</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Primaire</h3>
+          <p class="programme-card__ages">6 — 11 ans</p>
+          <p class="programme-card__desc">
+            50% français, 50% anglais. Un double curriculum rigoureux avec des enseignants natifs dans un environnement cosmopolite.
+          </p>
+          <p class="programme-card__price">À partir de <strong>16.800 €</strong> / an</p>
+          <a href="#" class="programme-card__link" aria-label="Découvrir le programme primaire">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Collège -->
+      <article class="programme-card reveal reveal-d3">
+        <div class="programme-card__img">
+          <img src="../assets/images/fille-travaille.png" alt="Collégienne en classe bilingue BISP" loading="lazy" width="400" height="300">
+          <span class="programme-card__tag">Collège</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Collège</h3>
+          <p class="programme-card__ages">11 — 15 ans</p>
+          <p class="programme-card__desc">
+            Pensée critique, projets interdisciplinaires et double méthodologie. L'art d'argumenter avec assurance dans deux langues.
+          </p>
+          <p class="programme-card__price">À partir de <strong>21.800 €</strong> / an</p>
+          <a href="#" class="programme-card__link" aria-label="Découvrir le programme collège">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Lycée -->
+      <article class="programme-card reveal reveal-d4">
+        <div class="programme-card__img">
+          <img src="../assets/images/litterature-francaise-lycee-bilingue.png" alt="Lycéens en classe de littérature bilingue" loading="lazy" width="400" height="300">
+          <span class="programme-card__tag">Lycée</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Lycée</h3>
+          <p class="programme-card__ages">15 — 18 ans</p>
+          <p class="programme-card__desc">
+            Rigueur intellectuelle et polyvalence linguistique. Préparation aux meilleures universités internationales avec confiance.
+          </p>
+          <p class="programme-card__price">À partir de <strong>21.800 €</strong> / an</p>
+          <a href="#" class="programme-card__link" aria-label="Découvrir le programme lycée">
+            Découvrir
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Bilingual education highlight — full-width split -->
+<section class="bilingual-hl" aria-labelledby="bilingual-heading">
+  <div class="bilingual-hl__grid">
+    <div class="bilingual-hl__media">
+      <img src="../assets/stock/classroom-students.jpg" alt="Élèves en classe bilingue à BISP" loading="lazy">
+    </div>
+    <div class="bilingual-hl__content">
+      <span class="section-label reveal">Éducation bilingue</span>
+      <h2 class="section-title reveal reveal-d1" id="bilingual-heading">
+        Deux langues,<br>une seule exigence.
+      </h2>
+      <p class="bilingual-hl__text reveal reveal-d2">
+        Ni l'anglais ni le français n'est considéré comme langue étrangère. Les deux sont des langues principales pour les apprentissages et la communication. Les cours sont dispensés la moitié du temps en anglais par des professeurs natifs anglophones, l'autre moitié par des professeurs natifs francophones.
+      </p>
+      <div class="bilingual-hl__badges reveal reveal-d3">
+        <span class="bilingual-hl__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Cambridge Assessment
+        </span>
+        <span class="bilingual-hl__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Éducation Nationale
+        </span>
+        <span class="bilingual-hl__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Pearson Edexcel
+        </span>
+        <span class="bilingual-hl__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Enseignants natifs
+        </span>
+      </div>
+      <a href="#programmes-section" class="btn-outline-teal reveal reveal-d4">
+        Découvrir nos programmes
+        <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Editorial mosaic 2 -->
+<div class="mosaic mosaic--trio" role="img" aria-label="Activités périscolaires à BISP">
+  <img src="../assets/stock/art-class.jpg" alt="Cours d'arts plastiques" loading="lazy">
+  <img src="../assets/stock/students-sports.jpg" alt="Activités sportives" loading="lazy">
+  <img src="../assets/stock/library.jpg" alt="Bibliothèque de l'école" loading="lazy">
+</div>
+
+<!-- Vie scolaire highlights -->
+<section class="section vie-highlights" aria-labelledby="vie-heading">
+  <div class="container">
+    <header class="vie-highlights__header">
+      <span class="section-label reveal">Au quotidien</span>
+      <h2 class="section-title section-title--center reveal reveal-d1" id="vie-heading">
+        Une vie scolaire riche<br>et épanouissante.
+      </h2>
+    </header>
+    <div class="vie-highlights__grid">
+      <div class="vie-card reveal reveal-d1">
+        <img src="../assets/stock/art-class.jpg" alt="Arts plastiques à BISP" loading="lazy">
+        <div class="vie-card__overlay">
+          <h3 class="vie-card__title">Arts et créativité</h3>
+          <p class="vie-card__text">Ateliers d'arts plastiques, musique et théâtre chaque semaine pour nourrir l'imagination et la confiance en soi.</p>
+        </div>
+      </div>
+      <div class="vie-card reveal reveal-d2">
+        <img src="../assets/stock/students-sports.jpg" alt="Sport à BISP" loading="lazy">
+        <div class="vie-card__overlay">
+          <h3 class="vie-card__title">Sport et bien-être</h3>
+          <p class="vie-card__text">Éducation physique, jeux collectifs et activités en plein air pour un développement harmonieux du corps et de l'esprit.</p>
+        </div>
+      </div>
+      <div class="vie-card reveal reveal-d3">
+        <img src="../assets/stock/students-reading.jpg" alt="Lecture à BISP" loading="lazy">
+        <div class="vie-card__overlay">
+          <h3 class="vie-card__title">Culture et ouverture</h3>
+          <p class="vie-card__text">Bibliothèque bilingue, sorties culturelles à Paris et échanges entre 32 nationalités pour une ouverture naturelle sur le monde.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     BLOC 6 : TÉMOIGNAGES PARENTS
+     ========================================================================== -->
+
+<section class="section testimonials" id="vie-scolaire" aria-labelledby="testimonials-heading">
+  <div class="container">
+
+    <header class="testimonials__header">
+      <span class="section-label reveal">Ils nous font confiance</span>
+      <h2 class="section-title section-title--center reveal reveal-d1" id="testimonials-heading">
+        Ils nous ont confié leurs enfants.<br>Voici ce qu'ils en disent.
+      </h2>
+    </header>
+
+    <div class="testimonials__carousel" role="region" aria-label="Témoignages de parents" aria-live="polite">
+      <div class="testimonials__track" id="carousel-track">
+
+        <!-- Slide 1 -->
+        <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 1 sur 4">
+          <div class="testimonial-slide__inner">
+            <span class="testimonial-slide__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote class="testimonial-slide__text">
+              Nous cherchions une école où notre fille pourrait grandir dans les deux langues sans que l'une prenne le dessus sur l'autre. À BISP, le 50/50 est réel. Après deux ans, elle pense et rêve dans les deux langues. Les classes de 12 élèves font que chaque enseignant connaît vraiment notre enfant.
+            </blockquote>
+            <cite class="testimonial-slide__author">Sophie M.</cite>
+            <p class="testimonial-slide__meta">Mère de Léa, CP — Nationalité française et britannique</p>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 2 sur 4">
+          <div class="testimonial-slide__inner">
+            <span class="testimonial-slide__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote class="testimonial-slide__text">
+              We moved from Tokyo and were worried about the transition. BISP made it seamless. The international community welcomed us immediately — our son found friends from five different countries in his first week. The Cambridge curriculum gives us confidence for the future, wherever we go next.
+            </blockquote>
+            <cite class="testimonial-slide__author">Kenji T.</cite>
+            <p class="testimonial-slide__meta">Père de Hiro, CM2 — Nationalité japonaise</p>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 3 sur 4">
+          <div class="testimonial-slide__inner">
+            <span class="testimonial-slide__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote class="testimonial-slide__text">
+              Ce qui nous a convaincus, c'est la taille humaine. Dans l'école précédente, notre fils était un numéro. Ici, le directeur l'appelle par son prénom. Les progrès en anglais ont été spectaculaires, mais c'est surtout sa confiance en lui qui a changé. Il lève la main, il ose, il s'exprime.
+            </blockquote>
+            <cite class="testimonial-slide__author">Carlos et Maria D.</cite>
+            <p class="testimonial-slide__meta">Parents de Lucas, 6<sup>e</sup> — Nationalité brésilienne</p>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 4 sur 4">
+          <div class="testimonial-slide__inner">
+            <span class="testimonial-slide__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote class="testimonial-slide__text">
+              As diplomats, we've moved our children through six different school systems. BISP is the first school where they didn't want to leave. The dual curriculum means they're always prepared for both French and international paths. That flexibility is invaluable for families like ours.
+            </blockquote>
+            <cite class="testimonial-slide__author">Amara K.</cite>
+            <p class="testimonial-slide__meta">Mère de Nia et Kofi, CE2 et 4<sup>e</sup> — Nationalité ghanéenne</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dots -->
+      <div class="testimonials__dots" role="tablist" aria-label="Sélectionner un témoignage">
+        <button class="testimonials__dot active" role="tab" aria-selected="true" aria-label="Témoignage 1" data-idx="0"></button>
+        <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 2" data-idx="1"></button>
+        <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 3" data-idx="2"></button>
+        <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 4" data-idx="3"></button>
+      </div>
+
+      <!-- Arrows -->
+      <div class="testimonials__arrows">
+        <button class="testimonials__arrow" id="carousel-prev" aria-label="Témoignage précédent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="testimonials__arrow" id="carousel-next" aria-label="Témoignage suivant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     BLOC 7 : MOT DU DIRECTEUR
+     ========================================================================== -->
+
+<section class="section directeur" aria-labelledby="directeur-heading">
+  <div class="container">
+    <div class="directeur__grid">
+
+      <div class="directeur__img-wrap reveal">
+        <img src="../assets/stock/school-building.jpg" alt="L'un des campus BISP dans le 15e arrondissement de Paris" loading="lazy" width="500" height="667">
+        <div class="directeur__accent-block" aria-hidden="true"></div>
+      </div>
+
+      <div class="directeur__body">
+        <span class="section-label reveal">Mot du directeur</span>
+        <h2 class="section-title reveal reveal-d1" id="directeur-heading" style="margin-bottom:2rem;">
+          Une école où chaque<br>enfant trouve sa voix.
+        </h2>
+
+        <blockquote class="directeur__quote reveal reveal-d2">
+          À BISP, nous croyons que le bilinguisme n'est pas une compétence — c'est une manière de voir le monde. Depuis quatorze ans, nous construisons un environnement où chaque enfant, quelle que soit son origine, développe la confiance de s'exprimer dans deux langues et la curiosité de comprendre toutes les autres.<br><br>
+          Notre force, c'est l'intimité. Dans nos classes de douze élèves, chaque enseignant connaît chaque enfant. Chaque progrès est vu, chaque difficulté est accompagnée. C'est ce qui permet à nos élèves de grandir avec assurance — et de quitter BISP prêts pour le monde qui les attend.
+        </blockquote>
+
+        <p class="directeur__name reveal reveal-d3">Le Directeur</p>
+        <p class="directeur__role reveal reveal-d3">Directeur général, BISP</p>
+
+        <a href="#admissions" class="btn-teal reveal reveal-d4">
+          Planifier votre visite
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Campus section -->
+<section class="section--sm campus" aria-labelledby="campus-heading">
+  <div class="container">
+    <header class="campus__header">
+      <span class="section-label reveal">Nos espaces</span>
+      <h2 class="section-title section-title--center reveal reveal-d1" id="campus-heading">
+        Trois campus au coeur<br>du 15<sup>e</sup> arrondissement.
+      </h2>
+    </header>
+    <div class="campus__grid">
+
+      <article class="campus-card reveal reveal-d1">
+        <div class="campus-card__img">
+          <img src="../assets/stock/school-building.jpg" alt="Campus Entrepreneurs BISP" loading="lazy">
+        </div>
+        <div class="campus-card__body">
+          <h3 class="campus-card__name">Campus Entrepreneurs</h3>
+          <p class="campus-card__address">61-63 rue des Entrepreneurs<br>75015 Paris</p>
+          <div class="campus-card__levels">
+            <span class="campus-card__level-tag">Maternelle</span>
+            <span class="campus-card__level-tag">Primaire</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="campus-card reveal reveal-d2">
+        <div class="campus-card__img">
+          <img src="../assets/stock/school-campus.jpg" alt="Campus Letellier I BISP" loading="lazy">
+        </div>
+        <div class="campus-card__body">
+          <h3 class="campus-card__name">Campus Letellier I</h3>
+          <p class="campus-card__address">10-14 rue Letellier<br>75015 Paris</p>
+          <div class="campus-card__levels">
+            <span class="campus-card__level-tag">Collège</span>
+            <span class="campus-card__level-tag">Lycée</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="campus-card reveal reveal-d3">
+        <div class="campus-card__img">
+          <img src="../assets/stock/campus-aerial.jpg" alt="Campus Letellier II BISP" loading="lazy">
+        </div>
+        <div class="campus-card__body">
+          <h3 class="campus-card__name">Campus Letellier II</h3>
+          <p class="campus-card__address">17-21 rue Letellier<br>75015 Paris</p>
+          <div class="campus-card__levels">
+            <span class="campus-card__level-tag">Activités</span>
+            <span class="campus-card__level-tag">Administration</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Editorial mosaic 3 -->
+<div class="mosaic mosaic--duo-reverse" role="img" aria-label="BISP au coeur de Paris">
+  <img src="../assets/stock/paris-cityscape.jpg" alt="Paris, la ville de BISP" loading="lazy">
+  <img src="../assets/images/ecole-bisp.jpg" alt="Les élèves de BISP en activité" loading="lazy">
+</div>
+
+<!-- ==========================================================================
+     BLOC 8 : CTA FINAL + FOOTER
+     ========================================================================== -->
+
+<section class="cta-final" id="admissions" aria-labelledby="cta-heading">
+  <h2 class="cta-final__title reveal" id="cta-heading">
+    Prêt à découvrir BISP ?
+  </h2>
+  <p class="cta-final__text reveal reveal-d1">
+    Rencontrez notre équipe, visitez nos campus et découvrez comment BISP peut accompagner votre enfant.
+  </p>
+  <a href="#contact" class="btn-white reveal reveal-d2">
+    Planifier ma visite
+    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</section>
+
+<footer class="footer" id="contact" role="contentinfo">
+  <div class="footer__grid">
+
+    <!-- Brand column -->
+    <div class="footer__brand">
+      <img class="footer__brand-logo" src="../assets/logos/logo-bisp-header.svg" alt="BISP" width="140" height="38">
+      <p class="footer__brand-text">
+        École Bilingue Internationale de Paris. Double curriculum Cambridge et français, de la maternelle au lycée. 32 nationalités dans le 15<sup>e</sup> arrondissement.
+      </p>
+      <div class="footer__accreditations">
+        <img src="../assets/logos/cambridge.png" alt="Cambridge Assessment International Education" height="34">
+        <img src="../assets/logos/pearson-edexcel.png" alt="Pearson Edexcel" height="34">
+      </div>
+    </div>
+
+    <!-- Navigation column -->
+    <div>
+      <h3 class="footer__col-heading">Navigation</h3>
+      <ul class="footer__list">
+        <li><a href="#ecole">Notre école</a></li>
+        <li><a href="#programmes-section">Programmes</a></li>
+        <li><a href="#admissions">Admissions</a></li>
+        <li><a href="#vie-scolaire">Vie scolaire</a></li>
+        <li><a href="#">Actualités</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+
+    <!-- Programmes column -->
+    <div>
+      <h3 class="footer__col-heading">Programmes</h3>
+      <ul class="footer__list">
+        <li><a href="#">Maternelle 3-6 ans</a></li>
+        <li><a href="#">Primaire 6-11 ans</a></li>
+        <li><a href="#">Collège 11-15 ans</a></li>
+        <li><a href="#">Lycée 15-18 ans</a></li>
+        <li><a href="#">Club du mercredi</a></li>
+        <li><a href="#">Stages vacances</a></li>
+      </ul>
+    </div>
+
+    <!-- Campus column -->
+    <div>
+      <h3 class="footer__col-heading">Nos campus</h3>
+      <div class="footer__campus-block">
+        <strong>Campus Entrepreneurs</strong>
+        61-63 rue des Entrepreneurs<br>75015 Paris
+      </div>
+      <div class="footer__campus-block">
+        <strong>Campus Letellier I</strong>
+        10-14 rue Letellier<br>75015 Paris
+      </div>
+      <div class="footer__campus-block">
+        <strong>Campus Letellier II</strong>
+        17-21 rue Letellier<br>75015 Paris
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer__bottom">
+    <span class="footer__copy">&copy; 2026 BISP — École Bilingue Internationale de Paris. Tous droits réservés.</span>
+    <span class="footer__phone">
+      <a href="tel:+33144189483" aria-label="Appeler BISP au +33 1 44 18 94 83">+33 1 44 18 94 83</a>
+    </span>
+  </div>
+</footer>
+
+<!-- Mobile sticky CTA bar -->
+<div class="mobile-bar" aria-label="Actions rapides">
+  <a href="tel:+33144189483" class="mobile-bar__call">Appeler</a>
+  <a href="#admissions" class="mobile-bar__visit">Planifier une visite</a>
+</div>
+
+<!-- ============================================================================
+     JAVASCRIPT — Minimal, progressive enhancement only
+     ============================================================================ -->
+
+<script>
+(function() {
+  'use strict';
+
+  /* ========== NAV: transparent -> solid on scroll ========== */
+  var nav = document.getElementById('nav');
+
+  function handleNavScroll() {
+    if (window.pageYOffset > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
+  handleNavScroll();
+
+  /* ========== MOBILE MENU ========== */
+  var hamburger = document.getElementById('nav-hamburger');
+  var mobileMenu = document.getElementById('nav-mobile');
+  var mobileClose = document.getElementById('nav-mobile-close');
+
+  function openMobile() {
+    mobileMenu.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    mobileClose.focus();
+  }
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    hamburger.focus();
+  }
+
+  hamburger.addEventListener('click', openMobile);
+  mobileClose.addEventListener('click', closeMobile);
+
+  // Close on link click
+  var mobileLinks = mobileMenu.querySelectorAll('a');
+  for (var i = 0; i < mobileLinks.length; i++) {
+    mobileLinks[i].addEventListener('click', closeMobile);
+  }
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMobile();
+    }
+  });
+
+  /* ========== SCROLL-TRIGGERED REVEAL ANIMATIONS ========== */
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    var reveals = document.querySelectorAll('.reveal');
+    var revealObserver = new IntersectionObserver(function(entries) {
+      for (var j = 0; j < entries.length; j++) {
+        if (entries[j].isIntersecting) {
+          entries[j].target.classList.add('visible');
+          revealObserver.unobserve(entries[j].target);
+        }
+      }
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -30px 0px'
+    });
+
+    for (var k = 0; k < reveals.length; k++) {
+      revealObserver.observe(reveals[k]);
+    }
+  }
+
+  /* ========== COUNTER ANIMATION ========== */
+  if (!prefersReduced) {
+    var counters = document.querySelectorAll('[data-count]');
+    var counterObserver = new IntersectionObserver(function(entries) {
+      for (var c = 0; c < entries.length; c++) {
+        if (entries[c].isIntersecting) {
+          animateCounter(entries[c].target);
+          counterObserver.unobserve(entries[c].target);
+        }
+      }
+    }, { threshold: 0.5 });
+
+    for (var m = 0; m < counters.length; m++) {
+      counterObserver.observe(counters[m]);
+    }
+
+    function animateCounter(el) {
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var duration = 1600;
+      var startTime = null;
+
+      function tick(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Ease out cubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target);
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = target;
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+  } else {
+    // No animation: show final values immediately
+    var staticCounters = document.querySelectorAll('[data-count]');
+    for (var s = 0; s < staticCounters.length; s++) {
+      staticCounters[s].textContent = staticCounters[s].getAttribute('data-count');
+    }
+  }
+
+  /* ========== TESTIMONIAL CAROUSEL ========== */
+  var track = document.getElementById('carousel-track');
+  var dots = document.querySelectorAll('.testimonials__dot');
+  var prevBtn = document.getElementById('carousel-prev');
+  var nextBtn = document.getElementById('carousel-next');
+  var current = 0;
+  var total = dots.length;
+  var autoTimer;
+
+  function goTo(idx) {
+    if (idx < 0) idx = total - 1;
+    if (idx >= total) idx = 0;
+    current = idx;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+
+    for (var d = 0; d < dots.length; d++) {
+      var isActive = d === current;
+      dots[d].classList.toggle('active', isActive);
+      dots[d].setAttribute('aria-selected', isActive ? 'true' : 'false');
+    }
+  }
+
+  for (var di = 0; di < dots.length; di++) {
+    dots[di].addEventListener('click', function() {
+      goTo(parseInt(this.getAttribute('data-idx'), 10));
+      restartAuto();
+    });
+  }
+
+  prevBtn.addEventListener('click', function() { goTo(current - 1); restartAuto(); });
+  nextBtn.addEventListener('click', function() { goTo(current + 1); restartAuto(); });
+
+  // Keyboard arrows
+  var carouselEl = document.querySelector('.testimonials__carousel');
+  carouselEl.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') { goTo(current - 1); restartAuto(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1); restartAuto(); }
+  });
+
+  function restartAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(function() { goTo(current + 1); }, 7000);
+  }
+  restartAuto();
+
+  // Pause autoplay on hover
+  carouselEl.addEventListener('mouseenter', function() { clearInterval(autoTimer); });
+  carouselEl.addEventListener('mouseleave', restartAuto);
+
+  /* ========== VIDEO FALLBACK ========== */
+  var heroVideo = document.querySelector('.hero__video');
+  var heroPoster = document.querySelector('.hero__poster-fallback');
+
+  if (heroVideo && heroPoster) {
+    heroVideo.addEventListener('error', function() {
+      heroVideo.style.display = 'none';
+      heroPoster.style.display = 'block';
+    });
+    // Also handle source error
+    var source = heroVideo.querySelector('source');
+    if (source) {
+      source.addEventListener('error', function() {
+        heroVideo.style.display = 'none';
+        heroPoster.style.display = 'block';
+      });
+    }
+  }
+
+})();
+</script>
+
+</body>
+</html>

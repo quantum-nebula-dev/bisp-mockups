@@ -1,0 +1,2615 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BISP — École Bilingue Internationale de Paris</title>
+  <meta name="description" content="École bilingue internationale à Paris. Double curriculum Cambridge et français, 12 élèves par classe, 32 nationalités. De la maternelle au lycée.">
+
+  <!-- Fonts: EB Garamond (serif display) + Playfair Display (serif accent) — Le Rosey tokens -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       CSS CUSTOM PROPERTIES — Anchored on Le Rosey tokens
+       Bichromatique: blanc + navy #182f66
+       Spacing scale: 7-72px (Rosey)
+       Border-radius: 0 (Rosey pure rectangulaire)
+       Shadows: 0 (Rosey flat design)
+       ========================================================= */
+    :root {
+      /* Palette — bichromatique Le Rosey */
+      --navy: #182f66;
+      --navy-deep: #0f1f45;
+      --navy-90: rgba(24, 47, 102, 0.9);
+      --navy-70: rgba(24, 47, 102, 0.7);
+      --navy-60: rgba(24, 47, 102, 0.6);
+      --navy-40: rgba(24, 47, 102, 0.4);
+      --navy-15: rgba(24, 47, 102, 0.15);
+      --navy-08: rgba(24, 47, 102, 0.08);
+      --white: #ffffff;
+      --white-90: rgba(255, 255, 255, 0.9);
+      --white-70: rgba(255, 255, 255, 0.7);
+      --white-50: rgba(255, 255, 255, 0.5);
+      --white-20: rgba(255, 255, 255, 0.2);
+      --cream: #f8f6f2;
+      --cream-warm: #f5f0eb;
+
+      /* Typography — Le Rosey tokens */
+      --font-display: 'EB Garamond', 'Georgia', serif;
+      --font-accent: 'Playfair Display', 'Georgia', serif;
+      --font-body: 'EB Garamond', 'Georgia', serif;
+
+      /* Spacing scale — Le Rosey (7 to 72px) */
+      --sp-1: 7px;
+      --sp-2: 9px;
+      --sp-3: 10px;
+      --sp-4: 15px;
+      --sp-5: 19px;
+      --sp-6: 25px;
+      --sp-7: 39px;
+      --sp-8: 40px;
+      --sp-9: 45px;
+      --sp-10: 52px;
+      --sp-11: 60px;
+      --sp-12: 72px;
+
+      /* Extended spacing for section rhythm */
+      --section-gap: 120px;
+      --section-gap-sm: 80px;
+
+      /* Border — Le Rosey: 0 radius, 0 shadow */
+      --radius: 0;
+      --shadow: none;
+
+      /* Transitions */
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --duration: 0.6s;
+      --duration-fast: 0.3s;
+    }
+
+    /* =========================================================
+       RESET & BASE
+       ========================================================= */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 17px; /* Le Rosey base: 17px */
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.57; /* Le Rosey token: lh 1.57 */
+      color: var(--navy);
+      background-color: var(--white);
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul, ol {
+      list-style: none;
+    }
+
+    /* Focus visible — WCAG AA */
+    :focus-visible {
+      outline: 3px solid var(--navy);
+      outline-offset: 3px;
+    }
+
+    /* Skip to content — WCAG */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--navy);
+      color: var(--white);
+      padding: var(--sp-3) var(--sp-6);
+      font-size: 0.875rem;
+      font-family: var(--font-body);
+      z-index: 10000;
+      transition: top var(--duration-fast) var(--ease-out);
+    }
+
+    .skip-link:focus {
+      top: var(--sp-3);
+    }
+
+    /* Prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* =========================================================
+       LAYOUT UTILITIES
+       ========================================================= */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--sp-8);
+    }
+
+    .container--narrow {
+      max-width: 960px;
+    }
+
+    .container--wide {
+      max-width: 1440px;
+    }
+
+    /* =========================================================
+       TYPOGRAPHY — Le Rosey: EB Garamond 700, Playfair Display
+       ========================================================= */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    }
+
+    h3 {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+    }
+
+    h4 {
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+    }
+
+    .section-label {
+      font-family: var(--font-accent);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: var(--sp-5);
+    }
+
+    .lead {
+      font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+      line-height: 1.65;
+    }
+
+    /* =========================================================
+       BUTTONS — Le Rosey: rectangulaire pur, 0 radius, 0 shadow
+       ========================================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      padding: var(--sp-4) var(--sp-7);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+      min-height: 48px; /* WCAG touch target */
+      min-width: 48px;
+    }
+
+    .btn--primary {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    .btn--primary:hover {
+      background: var(--navy-deep);
+      border-color: var(--navy-deep);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--navy);
+      border-color: var(--navy);
+    }
+
+    .btn--outline:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .btn--white {
+      background: var(--white);
+      color: var(--navy);
+      border-color: var(--white);
+    }
+
+    .btn--white:hover {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .btn--outline-white {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .btn--outline-white:hover {
+      background: var(--white);
+      color: var(--navy);
+    }
+
+    .btn-arrow {
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      position: relative;
+      transition: width var(--duration-fast) var(--ease-out);
+    }
+
+    .btn-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      border-right: 1.5px solid currentColor;
+      border-top: 1.5px solid currentColor;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .btn:hover .btn-arrow {
+      width: 26px;
+    }
+
+    /* =========================================================
+       NAVIGATION — Le Rosey style: horizontal, blanc + navy
+       ========================================================= */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: background var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
+    }
+
+    .nav--transparent {
+      background: transparent;
+    }
+
+    .nav--solid {
+      background: var(--white);
+      box-shadow: 0 1px 0 var(--navy-15);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 85px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 var(--sp-8);
+      transition: height var(--duration-fast) var(--ease-out);
+    }
+
+    .nav--solid .nav__inner {
+      height: 72px;
+    }
+
+    .nav__logo img {
+      height: 52px;
+      width: auto;
+      transition: height var(--duration-fast) var(--ease-out);
+    }
+
+    .nav--solid .nav__logo img {
+      height: 42px;
+    }
+
+    .nav--transparent .nav__logo img {
+      filter: brightness(0) invert(1);
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-7);
+    }
+
+    .nav__link {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--navy);
+      position: relative;
+      padding: var(--sp-1) 0;
+      transition: color var(--duration-fast);
+    }
+
+    .nav--transparent .nav__link {
+      color: var(--white);
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: currentColor;
+      transition: width var(--duration-fast) var(--ease-out);
+    }
+
+    .nav__link:hover::after {
+      width: 100%;
+    }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-6);
+    }
+
+    .nav__lang {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      cursor: pointer;
+      display: flex;
+      gap: 2px;
+    }
+
+    .nav--transparent .nav__lang {
+      color: var(--white);
+    }
+
+    .nav__lang-active {
+      font-weight: 700;
+      border-bottom: 1.5px solid currentColor;
+    }
+
+    .nav__lang-sep {
+      opacity: 0.4;
+      margin: 0 4px;
+    }
+
+    .nav__cta {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: var(--sp-2) var(--sp-5);
+      border: 2px solid var(--navy);
+      color: var(--navy);
+      background: transparent;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .nav--transparent .nav__cta {
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .nav__cta:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .nav--transparent .nav__cta:hover {
+      background: var(--white);
+      color: var(--navy);
+    }
+
+    /* Mobile hamburger */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      padding: 12px;
+    }
+
+    .nav__hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--navy);
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .nav--transparent .nav__hamburger span {
+      background: var(--white);
+    }
+
+    .nav__hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .nav__hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav__hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Mobile menu overlay */
+    .nav__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--white);
+      z-index: 999;
+      padding-top: 100px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-8);
+    }
+
+    .nav__mobile-menu.active {
+      display: flex;
+    }
+
+    .nav__mobile-link {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--navy);
+      padding: var(--sp-3) 0;
+    }
+
+    .nav__mobile-cta {
+      margin-top: var(--sp-6);
+    }
+
+    /* =========================================================
+       HERO — Video background, Le Rosey overlay style
+       ========================================================= */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      max-height: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .hero__video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero__poster {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--navy-60);
+      z-index: 2;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: var(--white);
+      max-width: 900px;
+      padding: 0 var(--sp-8);
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--font-accent);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white-90);
+      border: 1px solid var(--white-50);
+      padding: var(--sp-2) var(--sp-5);
+      margin-bottom: var(--sp-8);
+      opacity: 0;
+      animation: fadeSlideUp 0.8s var(--ease-out) 0.2s forwards;
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: var(--sp-6);
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 0.4s forwards;
+    }
+
+    .hero__title em {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero__subtitle {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--white-90);
+      max-width: 680px;
+      margin: 0 auto var(--sp-8);
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 0.6s forwards;
+    }
+
+    .hero__ctas {
+      display: flex;
+      gap: var(--sp-4);
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeSlideUp 1s var(--ease-out) 0.8s forwards;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: var(--sp-8);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      color: var(--white-70);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: 0.75rem;
+      font-family: var(--font-accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: bounceDown 2s ease-in-out infinite;
+    }
+
+    .hero__scroll-line {
+      width: 1px;
+      height: 40px;
+      background: var(--white-50);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+
+    /* =========================================================
+       SECTION: PROMESSES (4 pillars)
+       ========================================================= */
+    .promesses {
+      padding: var(--section-gap) 0;
+      background: var(--cream);
+    }
+
+    .promesses__header {
+      text-align: center;
+      margin-bottom: var(--sp-12);
+    }
+
+    .promesses__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-8);
+    }
+
+    .promesse {
+      text-align: center;
+      padding: var(--sp-8) var(--sp-6);
+      border: 1px solid var(--navy-15);
+      background: var(--white);
+      transition: border-color var(--duration-fast) var(--ease-out);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .promesse.is-visible {
+      animation: fadeSlideUp 0.7s var(--ease-out) forwards;
+    }
+
+    .promesse:nth-child(2).is-visible { animation-delay: 0.1s; }
+    .promesse:nth-child(3).is-visible { animation-delay: 0.2s; }
+    .promesse:nth-child(4).is-visible { animation-delay: 0.3s; }
+
+    .promesse:hover {
+      border-color: var(--navy-40);
+    }
+
+    .promesse__icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto var(--sp-6);
+    }
+
+    .promesse__icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .promesse__title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--sp-4);
+    }
+
+    .promesse__text {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--navy);
+      opacity: 0.75;
+      margin-bottom: var(--sp-4);
+    }
+
+    .promesse__proof {
+      font-family: var(--font-accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--navy);
+      opacity: 0.6;
+      padding-top: var(--sp-4);
+      border-top: 1px solid var(--navy-15);
+    }
+
+    /* =========================================================
+       SECTION: CHIFFRES
+       ========================================================= */
+    .chiffres {
+      position: relative;
+      padding: var(--section-gap) 0;
+      overflow: hidden;
+    }
+
+    .chiffres__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .chiffres__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .chiffres__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--navy-90);
+      z-index: 2;
+    }
+
+    .chiffres__content {
+      position: relative;
+      z-index: 3;
+    }
+
+    .chiffres__header {
+      text-align: center;
+      color: var(--white);
+      margin-bottom: var(--sp-12);
+    }
+
+    .chiffres__header .section-label {
+      color: var(--white-70);
+    }
+
+    .chiffres__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--sp-8);
+    }
+
+    .chiffre {
+      text-align: center;
+      color: var(--white);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .chiffre.is-visible {
+      animation: fadeSlideUp 0.7s var(--ease-out) forwards;
+    }
+
+    .chiffre:nth-child(2).is-visible { animation-delay: 0.1s; }
+    .chiffre:nth-child(3).is-visible { animation-delay: 0.2s; }
+    .chiffre:nth-child(4).is-visible { animation-delay: 0.3s; }
+    .chiffre:nth-child(5).is-visible { animation-delay: 0.4s; }
+
+    .chiffre__number {
+      font-family: var(--font-accent);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: var(--sp-3);
+      display: block;
+    }
+
+    .chiffre__sep {
+      width: 40px;
+      height: 2px;
+      background: var(--white-50);
+      margin: var(--sp-4) auto;
+    }
+
+    .chiffre__label {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--white-70);
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       SECTION: PROGRAMMES
+       ========================================================= */
+    .programmes {
+      padding: var(--section-gap) 0;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .programmes__header {
+      text-align: center;
+      margin-bottom: var(--sp-12);
+    }
+
+    .programmes__header .section-label {
+      color: var(--white-70);
+    }
+
+    .programmes__subtitle {
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      color: var(--white-70);
+      max-width: 600px;
+      margin: var(--sp-5) auto 0;
+    }
+
+    .programmes__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-6);
+    }
+
+    .programme-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--white-20);
+      transition: border-color var(--duration-fast) var(--ease-out);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .programme-card.is-visible {
+      animation: fadeSlideUp 0.7s var(--ease-out) forwards;
+    }
+
+    .programme-card:nth-child(2).is-visible { animation-delay: 0.1s; }
+    .programme-card:nth-child(3).is-visible { animation-delay: 0.15s; }
+    .programme-card:nth-child(4).is-visible { animation-delay: 0.2s; }
+
+    .programme-card:hover {
+      border-color: var(--white-50);
+    }
+
+    .programme-card__image {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+    }
+
+    .programme-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--duration) var(--ease-out);
+    }
+
+    .programme-card:hover .programme-card__image img {
+      transform: scale(1.04);
+    }
+
+    .programme-card__body {
+      padding: var(--sp-6) var(--sp-5);
+    }
+
+    .programme-card__level {
+      font-family: var(--font-accent);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-70);
+      margin-bottom: var(--sp-2);
+    }
+
+    .programme-card__title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: var(--sp-3);
+    }
+
+    .programme-card__desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--white-70);
+      margin-bottom: var(--sp-5);
+    }
+
+    .programme-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+      border-bottom: 1px solid var(--white-50);
+      padding-bottom: 2px;
+      transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .programme-card__link:hover {
+      border-color: var(--white);
+    }
+
+    /* =========================================================
+       SECTION: TEMOIGNAGES
+       ========================================================= */
+    .temoignages {
+      padding: var(--section-gap) 0;
+      background: var(--white);
+    }
+
+    .temoignages__header {
+      text-align: center;
+      margin-bottom: var(--sp-12);
+    }
+
+    .temoignages__carousel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .temoignages__track {
+      display: flex;
+      transition: transform var(--duration) var(--ease-in-out);
+    }
+
+    .temoignage {
+      min-width: 100%;
+      padding: 0 var(--sp-8);
+    }
+
+    .temoignage__inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .temoignage__quote-mark {
+      font-family: var(--font-accent);
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--navy-15);
+      margin-bottom: var(--sp-6);
+      display: block;
+      user-select: none;
+    }
+
+    .temoignage__text {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--navy);
+      margin-bottom: var(--sp-8);
+    }
+
+    .temoignage__author {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+
+    .temoignage__name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .temoignage__detail {
+      font-family: var(--font-accent);
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.6;
+      letter-spacing: 0.05em;
+    }
+
+    .temoignages__nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-4);
+      margin-top: var(--sp-8);
+    }
+
+    .temoignages__dot {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .temoignages__dot-inner {
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--navy);
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .temoignages__dot.active .temoignages__dot-inner {
+      background: var(--navy);
+    }
+
+    .temoignages__arrows {
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-4);
+      margin-top: var(--sp-5);
+    }
+
+    .temoignages__arrow {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .temoignages__arrow:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .temoignages__arrow svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* =========================================================
+       SECTION: MOT DU DIRECTEUR
+       ========================================================= */
+    .directeur {
+      padding: var(--section-gap) 0;
+      background: var(--cream);
+    }
+
+    .directeur__grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--sp-12);
+      align-items: center;
+    }
+
+    .directeur__image {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+    }
+
+    .directeur__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .directeur__image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(to top, var(--navy-40), transparent);
+    }
+
+    .directeur__content {
+      padding: var(--sp-8) 0;
+    }
+
+    .directeur__quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--navy);
+      margin-bottom: var(--sp-8);
+      position: relative;
+      padding-left: var(--sp-7);
+      border-left: 3px solid var(--navy);
+    }
+
+    .directeur__sig {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
+      padding-left: var(--sp-7);
+    }
+
+    .directeur__name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .directeur__role {
+      font-family: var(--font-accent);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--navy);
+      opacity: 0.6;
+    }
+
+    .directeur__cta {
+      margin-top: var(--sp-8);
+      padding-left: var(--sp-7);
+    }
+
+    /* =========================================================
+       SECTION: CTA FINAL
+       ========================================================= */
+    .cta-final {
+      padding: var(--section-gap) 0;
+      background: var(--navy);
+      text-align: center;
+      color: var(--white);
+    }
+
+    .cta-final__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      margin-bottom: var(--sp-5);
+    }
+
+    .cta-final__subtitle {
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      color: var(--white-70);
+      max-width: 560px;
+      margin: 0 auto var(--sp-8);
+    }
+
+    .cta-final__phone {
+      display: block;
+      font-family: var(--font-accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--white-70);
+      margin-top: var(--sp-6);
+    }
+
+    /* =========================================================
+       FOOTER — Le Rosey style: navy fond, accreditations, sobre
+       ========================================================= */
+    .footer {
+      background: var(--navy-deep);
+      color: var(--white);
+      padding: var(--sp-12) 0 var(--sp-8);
+    }
+
+    .footer__top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: var(--sp-8);
+      padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--white-20);
+    }
+
+    .footer__brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-5);
+    }
+
+    .footer__logo img {
+      height: 48px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer__tagline {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--white-70);
+      line-height: 1.6;
+      max-width: 300px;
+    }
+
+    .footer__accreditations {
+      display: flex;
+      gap: var(--sp-5);
+      align-items: center;
+      margin-top: var(--sp-3);
+    }
+
+    .footer__accreditations img {
+      height: 40px;
+      width: auto;
+      opacity: 0.8;
+      filter: brightness(0) invert(1);
+      transition: opacity var(--duration-fast);
+    }
+
+    .footer__accreditations img:hover {
+      opacity: 1;
+    }
+
+    .footer__col-title {
+      font-family: var(--font-accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white-70);
+      margin-bottom: var(--sp-5);
+    }
+
+    .footer__col ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+
+    .footer__col a {
+      font-size: 0.9rem;
+      color: var(--white-70);
+      transition: color var(--duration-fast);
+    }
+
+    .footer__col a:hover {
+      color: var(--white);
+    }
+
+    .footer__campus {
+      font-size: 0.85rem;
+      color: var(--white-70);
+      line-height: 1.6;
+      margin-bottom: var(--sp-4);
+    }
+
+    .footer__campus strong {
+      color: var(--white);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .footer__phone {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-top: var(--sp-4);
+    }
+
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--sp-6);
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+    }
+
+    .footer__legal {
+      font-size: 0.8rem;
+      color: var(--white-50);
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: var(--sp-4);
+    }
+
+    .footer__social {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--white-20);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white-70);
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .footer__social:hover {
+      color: var(--white);
+      border-color: var(--white-50);
+    }
+
+    .footer__social svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* =========================================================
+       ANIMATIONS
+       ========================================================= */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    @keyframes scrollLine {
+      0% { top: -100%; }
+      50% { top: 100%; }
+      100% { top: 100%; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* =========================================================
+       RESPONSIVE — 1024px, 768px, 480px (covers 375px target)
+       ========================================================= */
+    @media (max-width: 1024px) {
+      :root {
+        --section-gap: 90px;
+      }
+
+      .nav__links {
+        display: none;
+      }
+
+      .nav__hamburger {
+        display: flex;
+      }
+
+      .nav__lang {
+        display: none;
+      }
+
+      .promesses__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .chiffres__grid {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: var(--sp-10);
+      }
+
+      .programmes__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .directeur__grid {
+        grid-template-columns: 1fr 1.2fr;
+        gap: var(--sp-8);
+      }
+
+      .footer__top {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-gap: 72px;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      .container {
+        padding: 0 var(--sp-6);
+      }
+
+      .hero {
+        min-height: 600px;
+      }
+
+      .hero__title {
+        font-size: clamp(2.2rem, 8vw, 3rem);
+      }
+
+      .promesses__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-5);
+      }
+
+      .chiffres__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp-5);
+      }
+
+      .programmes__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-5);
+      }
+
+      .directeur__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .directeur__image {
+        aspect-ratio: 16 / 9;
+        max-height: 400px;
+      }
+
+      .footer__top {
+        grid-template-columns: 1fr;
+        gap: var(--sp-8);
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --section-gap: 60px;
+      }
+
+      .hero {
+        min-height: 550px;
+      }
+
+      .hero__badge {
+        font-size: 0.7rem;
+        padding: var(--sp-1) var(--sp-4);
+      }
+
+      .hero__ctas {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero__ctas .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .promesses__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chiffres__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .programmes__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .temoignage {
+        padding: 0 var(--sp-4);
+      }
+    }
+
+    /* =========================================================
+       SECTION: INTRO STRIP (between hero and promesses)
+       ========================================================= */
+    .intro-strip {
+      padding: var(--sp-11) 0;
+      background: var(--white);
+      text-align: center;
+    }
+
+    .intro-strip__text {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--navy);
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .intro-strip__sep {
+      width: 60px;
+      height: 2px;
+      background: var(--navy);
+      margin: var(--sp-8) auto 0;
+    }
+
+    /* =========================================================
+       PRINT STYLES
+       ========================================================= */
+    @media print {
+      .nav,
+      .hero__scroll,
+      .mobile-cta,
+      .temoignages__arrows,
+      .temoignages__nav,
+      .hero__video {
+        display: none !important;
+      }
+
+      body {
+        color: #000;
+        background: #fff;
+        font-size: 12pt;
+        padding: 0;
+      }
+
+      .hero {
+        height: auto;
+        min-height: 0;
+        padding: 40px 20px;
+        background: var(--navy) !important;
+        color: var(--white) !important;
+      }
+
+      .hero__overlay {
+        background: var(--navy) !important;
+      }
+
+      .hero__poster {
+        display: none;
+      }
+
+      section {
+        page-break-inside: avoid;
+        padding: 30px 20px;
+      }
+
+      .programmes,
+      .cta-final {
+        background: var(--navy) !important;
+        color: var(--white) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .footer {
+        background: var(--navy-deep) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      a[href]::after {
+        content: none;
+      }
+    }
+
+    /* =========================================================
+       HIGH CONTRAST MODE
+       ========================================================= */
+    @media (forced-colors: active) {
+      .btn {
+        border: 2px solid ButtonText;
+      }
+
+      .nav__link::after {
+        background: LinkText;
+      }
+
+      .promesse {
+        border: 1px solid ButtonText;
+      }
+
+      .chiffre__sep {
+        background: ButtonText;
+      }
+
+      .temoignages__dot-inner {
+        border-color: ButtonText;
+      }
+
+      .temoignages__dot.active .temoignages__dot-inner {
+        background: ButtonText;
+      }
+
+      .temoignages__arrow {
+        border-color: ButtonText;
+      }
+
+      .footer__social {
+        border-color: ButtonText;
+      }
+
+      .directeur__quote {
+        border-left-color: ButtonText;
+      }
+    }
+
+    /* =========================================================
+       ADDITIONAL RESPONSIVE FINE-TUNING
+       ========================================================= */
+    /* Large desktop (1440+) */
+    @media (min-width: 1440px) {
+      :root {
+        --section-gap: 140px;
+      }
+
+      .hero__title {
+        font-size: 4.8rem;
+      }
+
+      .container {
+        padding: 0 var(--sp-11);
+      }
+
+      .promesses__grid {
+        gap: var(--sp-10);
+      }
+
+      .programmes__grid {
+        gap: var(--sp-8);
+      }
+    }
+
+    /* Tablet landscape */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .directeur__quote {
+        font-size: 1.1rem;
+      }
+
+      .directeur__image {
+        aspect-ratio: 2 / 3;
+      }
+
+      .programme-card__desc {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Small mobile (375px and below) */
+    @media (max-width: 375px) {
+      .container {
+        padding: 0 var(--sp-4);
+      }
+
+      .hero__content {
+        padding: 0 var(--sp-4);
+      }
+
+      .hero__title {
+        font-size: 2rem;
+      }
+
+      .hero__subtitle {
+        font-size: 0.9rem;
+      }
+
+      .promesse {
+        padding: var(--sp-6) var(--sp-4);
+      }
+
+      .chiffre__number {
+        font-size: 2.2rem;
+      }
+
+      .programme-card__body {
+        padding: var(--sp-5) var(--sp-4);
+      }
+
+      .temoignage__text {
+        font-size: 1.05rem;
+      }
+
+      .directeur__quote {
+        padding-left: var(--sp-5);
+        font-size: 0.95rem;
+      }
+
+      .directeur__sig {
+        padding-left: var(--sp-5);
+      }
+
+      .directeur__cta {
+        padding-left: var(--sp-5);
+      }
+
+      .footer__campus {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* =========================================================
+       SELECTION STYLING
+       ========================================================= */
+    ::selection {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    ::-moz-selection {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* =========================================================
+       SMOOTH SCROLLBAR (webkit)
+       ========================================================= */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--cream);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--navy-40);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--navy-70);
+    }
+
+    /* =========================================================
+       PHONE STICKY CTA (mobile)
+       ========================================================= */
+    .mobile-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      background: var(--navy);
+      padding: var(--sp-3) var(--sp-5);
+    }
+
+    .mobile-cta__inner {
+      display: flex;
+      gap: var(--sp-3);
+    }
+
+    .mobile-cta__call,
+    .mobile-cta__visit {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      min-height: 48px;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .mobile-cta__call {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+      text-decoration: none;
+    }
+
+    .mobile-cta__visit {
+      background: var(--white);
+      color: var(--navy);
+      border: 2px solid var(--white);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-cta {
+        display: block;
+      }
+
+      body {
+        padding-bottom: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip to content — WCAG AA -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- ============================================================
+       BLOC 1 : NAVIGATION STICKY
+       Le Rosey style: horizontal, 5 items, blanc + navy, sobre
+       ============================================================ -->
+  <nav class="nav nav--transparent" id="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="BISP — Accueil">
+        <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP — École Bilingue Internationale de Paris" width="160" height="52">
+      </a>
+
+      <ul class="nav__links">
+        <li><a href="#ecole" class="nav__link">Notre école</a></li>
+        <li><a href="#programmes" class="nav__link">Programmes</a></li>
+        <li><a href="#admissions" class="nav__link">Admissions</a></li>
+        <li><a href="#vie-scolaire" class="nav__link">Vie scolaire</a></li>
+        <li><a href="#actualites" class="nav__link">Actualités</a></li>
+      </ul>
+
+      <div class="nav__right">
+        <span class="nav__lang" aria-label="Changer de langue">
+          <span class="nav__lang-active">FR</span>
+          <span class="nav__lang-sep">/</span>
+          <span>EN</span>
+        </span>
+
+        <a href="#admissions" class="nav__cta">Inscrire mon enfant</a>
+      </div>
+
+      <button class="nav__hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav__mobile-menu" id="mobile-menu" role="dialog" aria-label="Menu de navigation">
+      <a href="#ecole" class="nav__mobile-link">Notre école</a>
+      <a href="#programmes" class="nav__mobile-link">Programmes</a>
+      <a href="#admissions" class="nav__mobile-link">Admissions</a>
+      <a href="#vie-scolaire" class="nav__mobile-link">Vie scolaire</a>
+      <a href="#actualites" class="nav__mobile-link">Actualités</a>
+      <div class="nav__mobile-cta">
+        <a href="#admissions" class="btn btn--primary">Inscrire mon enfant <span class="btn-arrow"></span></a>
+      </div>
+      <span class="nav__lang" style="margin-top: 20px;">
+        <span class="nav__lang-active">FR</span>
+        <span class="nav__lang-sep">/</span>
+        <span>EN</span>
+      </span>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- ============================================================
+         BLOC 2 : HERO
+         Video background + overlay navy 60% + titre serif magistral
+         ============================================================ -->
+    <section class="hero" aria-label="Présentation de BISP">
+      <div class="hero__media">
+        <video
+          class="hero__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="../assets/images/hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source src="../assets/videos/video-presentation-bisp.mp4" type="video/mp4">
+        </video>
+        <img
+          class="hero__poster"
+          src="../assets/images/hero-poster.jpg"
+          alt=""
+          aria-hidden="true"
+        >
+      </div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <span class="hero__badge">Cambridge International &middot; Pearson Edexcel</span>
+
+        <h1 class="hero__title">
+          Deux langues. Douze élèves.<br><em>Un monde.</em>
+        </h1>
+
+        <p class="hero__subtitle">
+          À Paris, une école bilingue internationale où chaque enfant
+          est connu, accompagné et préparé — en français et en anglais.
+        </p>
+
+        <div class="hero__ctas">
+          <a href="#admissions" class="btn btn--white">
+            Planifier une visite <span class="btn-arrow"></span>
+          </a>
+          <a href="#programmes" class="btn btn--outline-white">
+            Découvrir nos programmes
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Découvrir</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         INTRO STRIP — Transition from hero
+         ============================================================ -->
+    <section class="intro-strip" aria-label="Introduction">
+      <div class="container container--narrow">
+        <p class="intro-strip__text">
+          Depuis 2012, BISP accueille des familles du monde entier dans le 15<sup>e</sup>
+          arrondissement de Paris. Notre programme bilingue, adossé au curriculum Cambridge
+          et à l'Éducation Nationale, offre à chaque enfant un double parcours académique
+          d'exception — dans l'intimité de classes à taille humaine.
+        </p>
+        <div class="intro-strip__sep" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 3 : LES 4 PROMESSES
+         Fond crème, icônes SVG, preuves chiffrées
+         ============================================================ -->
+    <section class="promesses" id="ecole" aria-label="Les promesses de BISP">
+      <div class="container">
+        <div class="promesses__header">
+          <span class="section-label">Ce qui nous définit</span>
+          <h2>Ce qui fait de BISP une école à part.</h2>
+        </div>
+
+        <div class="promesses__grid" role="list">
+          <article class="promesse" role="listitem">
+            <div class="promesse__icon">
+              <img src="../assets/pictos/eleves.svg" alt="" aria-hidden="true">
+            </div>
+            <h3 class="promesse__title">Intimité</h3>
+            <p class="promesse__text">
+              Des classes de 12 élèves où personne ne passe inaperçu. Chaque enfant est
+              connu par son prénom, accompagné chaque semaine, dans un cocon à échelle humaine.
+            </p>
+            <p class="promesse__proof">12 à 14 élèves par classe</p>
+          </article>
+
+          <article class="promesse" role="listitem">
+            <div class="promesse__icon">
+              <img src="../assets/pictos/bilingue.svg" alt="" aria-hidden="true">
+            </div>
+            <h3 class="promesse__title">Double passeport</h3>
+            <p class="promesse__text">
+              Deux systèmes, un seul parcours. Cambridge Assessment et Éducation Nationale,
+              enseignés 50/50 par des professeurs natifs — sans compromis.
+            </p>
+            <p class="promesse__proof">50 % français &middot; 50 % anglais</p>
+          </article>
+
+          <article class="promesse" role="listitem">
+            <div class="promesse__icon">
+              <img src="../assets/pictos/nationalites.svg" alt="" aria-hidden="true">
+            </div>
+            <h3 class="promesse__title">Monde</h3>
+            <p class="promesse__text">
+              32 nationalités réunies au coeur du 15e arrondissement. Une micro-société
+              internationale où chaque culture enrichit le quotidien.
+            </p>
+            <p class="promesse__proof">32 nationalités représentées</p>
+          </article>
+
+          <article class="promesse" role="listitem">
+            <div class="promesse__icon">
+              <img src="../assets/pictos/mission.svg" alt="" aria-hidden="true">
+            </div>
+            <h3 class="promesse__title">Confiance</h3>
+            <p class="promesse__text">
+              Le bilinguisme comme seconde nature. Dès 3 ans, les enfants pensent dans deux
+              langues, gagnent en assurance et grandissent entre les possibles.
+            </p>
+            <p class="promesse__proof">Immersion dès la maternelle</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 4 : CHIFFRES CLÉS
+         Photo parallax + overlay sombre 90% + compteurs
+         ============================================================ -->
+    <section class="chiffres" aria-label="Chiffres clés de BISP">
+      <div class="chiffres__bg" aria-hidden="true">
+        <img src="../assets/stock/diverse-students.jpg" alt="" loading="lazy">
+      </div>
+      <div class="chiffres__overlay" aria-hidden="true"></div>
+
+      <div class="chiffres__content container">
+        <div class="chiffres__header">
+          <span class="section-label">En quelques chiffres</span>
+          <h2>BISP en un regard.</h2>
+        </div>
+
+        <div class="chiffres__grid" role="list">
+          <div class="chiffre" role="listitem">
+            <span class="chiffre__number" data-target="32">0</span>
+            <div class="chiffre__sep" aria-hidden="true"></div>
+            <span class="chiffre__label">Nationalités<br>représentées</span>
+          </div>
+
+          <div class="chiffre" role="listitem">
+            <span class="chiffre__number" data-target="12">0</span>
+            <div class="chiffre__sep" aria-hidden="true"></div>
+            <span class="chiffre__label">Élèves par classe<br>en moyenne</span>
+          </div>
+
+          <div class="chiffre" role="listitem">
+            <span class="chiffre__number" data-target="50" data-suffix="/50">0</span>
+            <div class="chiffre__sep" aria-hidden="true"></div>
+            <span class="chiffre__label">Français et anglais<br>à parts égales</span>
+          </div>
+
+          <div class="chiffre" role="listitem">
+            <span class="chiffre__number" data-target="14">0</span>
+            <div class="chiffre__sep" aria-hidden="true"></div>
+            <span class="chiffre__label">Années<br>d'expérience</span>
+          </div>
+
+          <div class="chiffre" role="listitem">
+            <span class="chiffre__number" data-target="3">0</span>
+            <div class="chiffre__sep" aria-hidden="true"></div>
+            <span class="chiffre__label">Campus dans le<br>15<sup>e</sup> arrondissement</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 5 : NOS PROGRAMMES
+         Fond navy, 4 cards photo, Le Rosey rectangulaire
+         ============================================================ -->
+    <section class="programmes" id="programmes" aria-label="Programmes scolaires">
+      <div class="container">
+        <div class="programmes__header">
+          <span class="section-label">De la maternelle au lycée</span>
+          <h2>Un parcours complet, de 3 à 18 ans.</h2>
+          <p class="programmes__subtitle">
+            Quatre niveaux, une même exigence bilingue. Chaque programme
+            allie le curriculum Cambridge et l'Éducation Nationale française.
+          </p>
+        </div>
+
+        <div class="programmes__grid" role="list">
+          <article class="programme-card" role="listitem">
+            <div class="programme-card__image">
+              <img src="../assets/stock/preschool-kids.jpg" alt="Enfants en classe de maternelle bilingue" loading="lazy">
+            </div>
+            <div class="programme-card__body">
+              <span class="programme-card__level">3 — 6 ans</span>
+              <h3 class="programme-card__title">Maternelle</h3>
+              <p class="programme-card__desc">
+                Immersion naturelle dès le plus jeune âge. Les enfants apprennent
+                en jouant, moitié en français, moitié en anglais, avec des enseignants natifs.
+              </p>
+              <a href="#" class="programme-card__link">
+                Découvrir <span class="btn-arrow"></span>
+              </a>
+            </div>
+          </article>
+
+          <article class="programme-card" role="listitem">
+            <div class="programme-card__image">
+              <img src="../assets/images/jeux-enfant.png" alt="Élève de primaire en activité à BISP" loading="lazy">
+            </div>
+            <div class="programme-card__body">
+              <span class="programme-card__level">6 — 11 ans</span>
+              <h3 class="programme-card__title">Primaire</h3>
+              <p class="programme-card__desc">
+                Lecture, écriture, sciences dans les deux langues. L'ambiance cosmopolite
+                de BISP ouvre des horizons habituellement acquis au fil des voyages.
+              </p>
+              <a href="#" class="programme-card__link">
+                Découvrir <span class="btn-arrow"></span>
+              </a>
+            </div>
+          </article>
+
+          <article class="programme-card" role="listitem">
+            <div class="programme-card__image">
+              <img src="../assets/images/fille-travaille.png" alt="Collégienne de BISP travaillant en classe" loading="lazy">
+            </div>
+            <div class="programme-card__body">
+              <span class="programme-card__level">11 — 15 ans</span>
+              <h3 class="programme-card__title">Collège</h3>
+              <p class="programme-card__desc">
+                Pensée critique et double méthodologie. Les élèves apprennent
+                à argumenter, débattre et présenter en français comme en anglais.
+              </p>
+              <a href="#" class="programme-card__link">
+                Découvrir <span class="btn-arrow"></span>
+              </a>
+            </div>
+          </article>
+
+          <article class="programme-card" role="listitem">
+            <div class="programme-card__image">
+              <img src="../assets/images/litterature-francaise-lycee-bilingue.png" alt="Lycéens de BISP en cours de littérature" loading="lazy">
+            </div>
+            <div class="programme-card__body">
+              <span class="programme-card__level">15 — 18 ans</span>
+              <h3 class="programme-card__title">Lycée</h3>
+              <p class="programme-card__desc">
+                Maturité intellectuelle et préparation aux universités internationales.
+                Rigueur, leadership et polyvalence linguistique.
+              </p>
+              <a href="#" class="programme-card__link">
+                Découvrir <span class="btn-arrow"></span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 6 : TÉMOIGNAGES PARENTS
+         Carrousel, guillemets typographiques, Le Rosey editorial
+         ============================================================ -->
+    <section class="temoignages" id="vie-scolaire" aria-label="Témoignages de parents">
+      <div class="container">
+        <div class="temoignages__header">
+          <span class="section-label">Témoignages</span>
+          <h2>Ils nous ont confié leurs enfants.</h2>
+        </div>
+
+        <div class="temoignages__carousel" aria-roledescription="carousel" aria-label="Témoignages de parents d'élèves">
+          <div class="temoignages__track" id="testimonial-track">
+
+            <div class="temoignage" role="group" aria-roledescription="slide" aria-label="Témoignage 1 sur 3">
+              <div class="temoignage__inner">
+                <span class="temoignage__quote-mark" aria-hidden="true">&ldquo;</span>
+                <blockquote class="temoignage__text">
+                  Quand nous sommes arrivés de Londres, notre fille ne parlait pas un mot de français.
+                  En six mois à BISP, elle lisait Petit Nicolas en version originale. Ce qui nous a conquis,
+                  c'est la taille des classes : sa maîtresse connaît ses forces, ses doutes, ses rêves.
+                  Ce n'est pas une école, c'est un village.
+                </blockquote>
+                <div class="temoignage__author">
+                  <span class="temoignage__name">Sarah M.</span>
+                  <span class="temoignage__detail">Mère britannique &middot; Enfant en CE2</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="temoignage" role="group" aria-roledescription="slide" aria-label="Témoignage 2 sur 3">
+              <div class="temoignage__inner">
+                <span class="temoignage__quote-mark" aria-hidden="true">&ldquo;</span>
+                <blockquote class="temoignage__text">
+                  Nos enfants sont nés à Tokyo, ont grandi à Dubaï et étudient maintenant à Paris.
+                  BISP comprend ce que signifie être un enfant du monde. Le double curriculum
+                  nous donne la flexibilité dont notre famille a besoin — sans jamais sacrifier
+                  la rigueur académique.
+                </blockquote>
+                <div class="temoignage__author">
+                  <span class="temoignage__name">Kenji &amp; Amira T.</span>
+                  <span class="temoignage__detail">Parents japonais-marocain &middot; Enfants en CM1 et 6<sup>e</sup></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="temoignage" role="group" aria-roledescription="slide" aria-label="Témoignage 3 sur 3">
+              <div class="temoignage__inner">
+                <span class="temoignage__quote-mark" aria-hidden="true">&ldquo;</span>
+                <blockquote class="temoignage__text">
+                  Notre fils avait des difficultés dans le système classique. À BISP, avec 12 élèves
+                  par classe, les professeurs ont eu le temps de comprendre comment il apprenait.
+                  Aujourd'hui il est bilingue, confiant, et il adore aller à l'école. C'est tout
+                  ce qu'un parent peut espérer.
+                </blockquote>
+                <div class="temoignage__author">
+                  <span class="temoignage__name">Pierre-Alexandre D.</span>
+                  <span class="temoignage__detail">Père français &middot; Enfant en 4<sup>e</sup></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="temoignages__arrows" aria-label="Navigation du carrousel">
+          <button class="temoignages__arrow" id="prev-testimonial" aria-label="Témoignage précédent">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button class="temoignages__arrow" id="next-testimonial" aria-label="Témoignage suivant">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>
+          </button>
+        </div>
+
+        <div class="temoignages__nav" role="tablist" aria-label="Sélection de témoignage">
+          <button class="temoignages__dot active" data-index="0" role="tab" aria-selected="true" aria-label="Témoignage 1">
+            <span class="temoignages__dot-inner"></span>
+          </button>
+          <button class="temoignages__dot" data-index="1" role="tab" aria-selected="false" aria-label="Témoignage 2">
+            <span class="temoignages__dot-inner"></span>
+          </button>
+          <button class="temoignages__dot" data-index="2" role="tab" aria-selected="false" aria-label="Témoignage 3">
+            <span class="temoignages__dot-inner"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 7 : MOT DU DIRECTEUR
+         2 colonnes, photo + texte, Le Rosey editorial
+         ============================================================ -->
+    <section class="directeur" aria-label="Mot du directeur">
+      <div class="container">
+        <div class="directeur__grid">
+          <div class="directeur__image">
+            <img src="../assets/stock/school-building.jpg" alt="Campus de l'école bilingue BISP dans le 15e arrondissement de Paris" loading="lazy">
+          </div>
+
+          <div class="directeur__content">
+            <span class="section-label">Mot du directeur</span>
+            <h2 style="margin-bottom: var(--sp-8);">Une école où chaque enfant<br>trouve <em style="font-family: var(--font-accent); font-style: italic; font-weight: 400;">sa voix.</em></h2>
+
+            <blockquote class="directeur__quote">
+              Depuis quatorze ans, nous accueillons des familles du monde entier avec une conviction
+              simple : le bilinguisme n'est pas une matière, c'est une manière de penser. Nos classes
+              de douze élèves ne sont pas un argument marketing — c'est la condition pour que chaque
+              enfant soit vu, entendu, accompagné.<br><br>
+              À BISP, vos enfants ne choisissent pas entre le français et l'anglais. Ils possèdent
+              les deux. Ils n'apprennent pas la diversité dans un manuel — ils la vivent chaque jour
+              avec 32 nationalités. C'est cette alchimie qui construit leur confiance et prépare
+              leur avenir.
+            </blockquote>
+
+            <div class="directeur__sig">
+              <span class="directeur__name">La Direction de BISP</span>
+              <span class="directeur__role">Bilingual International School of Paris</span>
+            </div>
+
+            <div class="directeur__cta">
+              <a href="#admissions" class="btn btn--primary">
+                Planifier votre visite <span class="btn-arrow"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 8 : CTA FINAL + FOOTER
+         Bandeau navy, puis footer structuré
+         ============================================================ -->
+    <section class="cta-final" id="admissions" aria-label="Inscription et contact">
+      <div class="container">
+        <span class="section-label" style="color: var(--white-70);">Admissions</span>
+        <h2 class="cta-final__title">Prêt à découvrir BISP ?</h2>
+        <p class="cta-final__subtitle">
+          Visitez nos campus, rencontrez nos enseignants et découvrez
+          comment BISP peut accompagner votre enfant.
+        </p>
+        <div style="display: flex; gap: var(--sp-4); justify-content: center; flex-wrap: wrap;">
+          <a href="#" class="btn btn--white">
+            Planifier ma visite <span class="btn-arrow"></span>
+          </a>
+          <a href="#" class="btn btn--outline-white">
+            Demander une brochure
+          </a>
+        </div>
+        <a href="tel:+33144189483" class="cta-final__phone">+33 1 44 18 94 83</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container container--wide">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo" aria-label="BISP — Accueil">
+            <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP" width="160" height="48">
+          </a>
+          <p class="footer__tagline">
+            École bilingue internationale à Paris.<br>
+            De la maternelle au lycée, depuis 2012.
+          </p>
+          <div class="footer__accreditations">
+            <img src="../assets/logos/cambridge.png" alt="Cambridge Assessment International Education" height="40">
+            <img src="../assets/logos/pearson-edexcel.png" alt="Pearson Edexcel" height="40">
+          </div>
+        </div>
+
+        <div class="footer__col">
+          <h4 class="footer__col-title">L'école</h4>
+          <ul>
+            <li><a href="#">Notre école</a></li>
+            <li><a href="#">Valeurs et méthodes</a></li>
+            <li><a href="#">Nos campus</a></li>
+            <li><a href="#">Éducation bilingue</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4 class="footer__col-title">Programmes</h4>
+          <ul>
+            <li><a href="#">Maternelle (3-6 ans)</a></li>
+            <li><a href="#">Primaire (6-11 ans)</a></li>
+            <li><a href="#">Collège (11-15 ans)</a></li>
+            <li><a href="#">Lycée (15-18 ans)</a></li>
+            <li><a href="#">Stages vacances</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4 class="footer__col-title">Nos campus</h4>
+          <div class="footer__campus">
+            <strong>Campus Entrepreneurs</strong>
+            61-63 rue des Entrepreneurs, 75015
+          </div>
+          <div class="footer__campus">
+            <strong>Campus Letellier I</strong>
+            10-14 rue Letellier, 75015
+          </div>
+          <div class="footer__campus">
+            <strong>Campus Letellier II</strong>
+            17-21 rue Letellier, 75015
+          </div>
+          <a href="tel:+33144189483" class="footer__phone">+33 1 44 18 94 83</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span class="footer__legal">
+          &copy; 2026 Bilingual International School of Paris. Tous droits réservés.
+        </span>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile sticky CTA -->
+  <div class="mobile-cta" aria-label="Actions rapides">
+    <div class="mobile-cta__inner">
+      <a href="tel:+33144189483" class="mobile-cta__call">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Appeler
+      </a>
+      <a href="#admissions" class="mobile-cta__visit">
+        Planifier une visite
+      </a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT — Animations & interactions
+       ============================================================ -->
+  <script>
+    /* ----- Navigation: transparent to solid on scroll ----- */
+    (function() {
+      var nav = document.getElementById('navbar');
+      var lastScroll = 0;
+
+      function updateNav() {
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollY > 80) {
+          nav.classList.remove('nav--transparent');
+          nav.classList.add('nav--solid');
+        } else {
+          nav.classList.remove('nav--solid');
+          nav.classList.add('nav--transparent');
+        }
+        lastScroll = scrollY;
+      }
+
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+
+    /* ----- Mobile hamburger ----- */
+    (function() {
+      var hamburger = document.getElementById('hamburger');
+      var mobileMenu = document.getElementById('mobile-menu');
+
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function() {
+          var isOpen = mobileMenu.classList.contains('active');
+          mobileMenu.classList.toggle('active');
+          hamburger.classList.toggle('active');
+          hamburger.setAttribute('aria-expanded', !isOpen);
+          document.body.style.overflow = isOpen ? '' : 'hidden';
+        });
+
+        /* Close mobile menu on link click */
+        var mobileLinks = mobileMenu.querySelectorAll('.nav__mobile-link');
+        mobileLinks.forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    })();
+
+    /* ----- Scroll-triggered fade-in animations ----- */
+    (function() {
+      var observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -60px 0px',
+        threshold: 0.15
+      };
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      var animatedElements = document.querySelectorAll('.promesse, .chiffre, .programme-card');
+      animatedElements.forEach(function(el) {
+        observer.observe(el);
+      });
+    })();
+
+    /* ----- Counter animation for chiffres ----- */
+    (function() {
+      var counters = document.querySelectorAll('.chiffre__number');
+      var hasAnimated = {};
+
+      var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var id = Array.from(counters).indexOf(el);
+            if (hasAnimated[id]) return;
+            hasAnimated[id] = true;
+
+            var target = parseInt(el.getAttribute('data-target'));
+            var suffix = el.getAttribute('data-suffix') || '';
+            var duration = 1800;
+            var start = performance.now();
+
+            function easeOutQuart(t) {
+              return 1 - Math.pow(1 - t, 4);
+            }
+
+            function animate(now) {
+              var elapsed = now - start;
+              var progress = Math.min(elapsed / duration, 1);
+              var eased = easeOutQuart(progress);
+              var current = Math.round(eased * target);
+              el.textContent = current + suffix;
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            }
+
+            requestAnimationFrame(animate);
+            counterObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(function(counter) {
+        counterObserver.observe(counter);
+      });
+    })();
+
+    /* ----- Testimonial carousel ----- */
+    (function() {
+      var track = document.getElementById('testimonial-track');
+      var prevBtn = document.getElementById('prev-testimonial');
+      var nextBtn = document.getElementById('next-testimonial');
+      var dots = document.querySelectorAll('.temoignages__dot');
+      var currentIndex = 0;
+      var totalSlides = 3;
+
+      function goTo(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+        currentIndex = index;
+        track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle('active', i === currentIndex);
+          dot.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
+        });
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', function() { goTo(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { goTo(currentIndex + 1); });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goTo(parseInt(dot.getAttribute('data-index')));
+        });
+      });
+
+      /* Auto-advance every 7 seconds */
+      var autoPlay = setInterval(function() { goTo(currentIndex + 1); }, 7000);
+
+      /* Pause on interaction */
+      [prevBtn, nextBtn].concat(Array.from(dots)).forEach(function(el) {
+        if (el) {
+          el.addEventListener('click', function() {
+            clearInterval(autoPlay);
+          });
+        }
+      });
+    })();
+
+    /* ----- Smooth scroll for anchor links ----- */
+    (function() {
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            var navHeight = document.getElementById('navbar').offsetHeight;
+            var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({ top: targetPos, behavior: 'smooth' });
+          }
+        });
+      });
+    })();
+
+    /* ----- Parallax effect on chiffres background ----- */
+    (function() {
+      var chiffresSection = document.querySelector('.chiffres');
+      var chiffresBg = document.querySelector('.chiffres__bg img');
+      if (!chiffresSection || !chiffresBg) return;
+
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      function updateParallax() {
+        var rect = chiffresSection.getBoundingClientRect();
+        var windowHeight = window.innerHeight;
+
+        if (rect.top < windowHeight && rect.bottom > 0) {
+          var progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+          var translateY = (progress - 0.5) * 60;
+          chiffresBg.style.transform = 'translateY(' + translateY + 'px) scale(1.15)';
+        }
+      }
+
+      window.addEventListener('scroll', updateParallax, { passive: true });
+      updateParallax();
+    })();
+
+    /* ----- Keyboard navigation for carousel ----- */
+    (function() {
+      var carousel = document.querySelector('.temoignages__carousel');
+      if (!carousel) return;
+
+      carousel.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+          document.getElementById('prev-testimonial').click();
+        } else if (e.key === 'ArrowRight') {
+          document.getElementById('next-testimonial').click();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

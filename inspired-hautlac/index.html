@@ -1,0 +1,3029 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BISP — École Bilingue Internationale de Paris</title>
+  <meta name="description" content="École bilingue internationale à Paris. Double curriculum Cambridge et français, 12 élèves par classe, 32 nationalités. De la maternelle au lycée.">
+  <link rel="icon" type="image/png" href="../assets/logos/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       BISP — Inspired by Haut-Lac Style
+       Teal #348397 + Red #ed3122 + multi-accent
+       Diagonal cuts, B&W photography, energetic layout
+       ========================================================= */
+
+    /* --- CSS Custom Properties (Haut-Lac tokens) --- */
+    :root {
+      /* Primary palette */
+      --teal: #348397;
+      --teal-dark: #1e6070;
+      --teal-light: #4da8bd;
+      --teal-bg: #eaf5f7;
+      --red: #ed3122;
+      --red-dark: #c8261a;
+      --red-light: #ff5a4d;
+
+      /* Multi-accent (Haut-Lac signature) */
+      --green: #429e7b;
+      --orange: #d89137;
+      --navy: #1a2744;
+
+      /* Neutrals */
+      --white: #ffffff;
+      --offwhite: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #adb5bd;
+      --gray-500: #595959;
+      --gray-600: #495057;
+      --gray-700: #343a40;
+      --gray-800: #212529;
+      --black: #111111;
+
+      /* Typography */
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Be Vietnam Pro', sans-serif;
+
+      /* Spacing scale (Haut-Lac inspired) */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 40px;
+      --space-2xl: 64px;
+      --space-3xl: 96px;
+      --space-4xl: 128px;
+
+      /* Radius (angular, Haut-Lac uses 0-12px) */
+      --radius-sm: 3px;
+      --radius-md: 5px;
+      --radius-lg: 12px;
+      --radius-pill: 50px;
+
+      /* Borders (Haut-Lac 5px thick border) */
+      --border-thick: 5px;
+      --border-thin: 2px;
+
+      /* Shadows (minimal like Haut-Lac) */
+      --shadow-subtle: 0 2px 20px rgba(0,0,0,0.06);
+      --shadow-card: 0 8px 40px rgba(0,0,0,0.08);
+      --shadow-elevated: 0 16px 60px rgba(0,0,0,0.12);
+
+      /* Transitions */
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Z-index */
+      --z-nav: 1000;
+      --z-overlay: 900;
+      --z-modal: 1100;
+    }
+
+    /* --- Reset & Base --- */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      color: var(--gray-500);
+      background: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* --- Skip Link (WCAG) --- */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 16px;
+      background: var(--teal);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 14px;
+      z-index: var(--z-modal);
+      text-decoration: none;
+      transition: top var(--transition-fast);
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    /* --- Typography --- */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--gray-800);
+    }
+
+    h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); letter-spacing: -0.01em; }
+    h3 { font-size: clamp(1.3rem, 2.5vw, 1.7rem); }
+    h4 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
+
+    p {
+      font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+      line-height: 1.75;
+      max-width: 65ch;
+    }
+
+    a {
+      color: var(--teal);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    a:hover { color: var(--teal-dark); }
+
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--teal-light);
+      outline-offset: 3px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* --- Container --- */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .container--narrow {
+      max-width: 960px;
+    }
+
+    .container--wide {
+      max-width: 1440px;
+    }
+
+    /* --- Buttons (Haut-Lac style: bold, angular, colored) --- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      border: var(--border-thin) solid transparent;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      line-height: 1.2;
+      min-height: 48px;
+      min-width: 48px;
+    }
+
+    .btn--primary {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+    }
+
+    .btn--primary:hover {
+      background: var(--red-dark);
+      border-color: var(--red-dark);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(237, 49, 34, 0.3);
+    }
+
+    .btn--secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .btn--secondary:hover {
+      background: var(--white);
+      color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+    .btn--teal {
+      background: var(--teal);
+      color: var(--white);
+      border-color: var(--teal);
+    }
+
+    .btn--teal:hover {
+      background: var(--teal-dark);
+      border-color: var(--teal-dark);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(52, 131, 151, 0.3);
+    }
+
+    .btn--outline-teal {
+      background: transparent;
+      color: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .btn--outline-teal:hover {
+      background: var(--teal);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline-red {
+      background: transparent;
+      color: var(--red);
+      border-color: var(--red);
+    }
+
+    .btn--outline-red:hover {
+      background: var(--red);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn__arrow {
+      display: inline-block;
+      transition: transform var(--transition-fast);
+    }
+
+    .btn:hover .btn__arrow {
+      transform: translateX(4px);
+    }
+
+    /* =========================================================
+       BLOC 1 : NAVIGATION STICKY
+       ========================================================= */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: var(--z-nav);
+      transition: all var(--transition-smooth);
+    }
+
+    .nav--transparent {
+      background: transparent;
+    }
+
+    .nav--solid {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 var(--space-xl);
+      max-width: 1440px;
+      margin: 0 auto;
+      transition: height var(--transition-smooth);
+    }
+
+    .nav--solid .nav__inner {
+      height: 68px;
+    }
+
+    .nav__logo img {
+      height: 44px;
+      width: auto;
+      transition: all var(--transition-smooth);
+    }
+
+    .nav--solid .nav__logo img {
+      height: 38px;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+
+    .nav__link {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      text-decoration: none;
+      position: relative;
+      padding: 4px 0;
+      transition: color var(--transition-fast);
+    }
+
+    .nav--solid .nav__link {
+      color: var(--gray-700);
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      transition: width var(--transition-fast);
+    }
+
+    .nav__link:hover::after,
+    .nav__link--active::after {
+      width: 100%;
+    }
+
+    .nav__link:hover {
+      color: var(--white);
+    }
+
+    .nav--solid .nav__link:hover {
+      color: var(--teal);
+    }
+
+    .nav__lang {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--white);
+      opacity: 0.8;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .nav--solid .nav__lang {
+      color: var(--gray-500);
+    }
+
+    .nav__lang:hover,
+    .nav__lang--active {
+      opacity: 1;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .nav--solid .nav__lang:hover,
+    .nav--solid .nav__lang--active {
+      background: var(--teal-bg);
+      color: var(--teal);
+    }
+
+    .nav__cta {
+      padding: 10px 24px;
+      font-size: 0.85rem;
+    }
+
+    .nav--solid .nav__cta {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+    }
+
+    /* Mobile hamburger */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px;
+      min-height: 48px;
+      min-width: 48px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav__hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all var(--transition-fast);
+    }
+
+    .nav--solid .nav__hamburger span {
+      background: var(--gray-700);
+    }
+
+    /* Mobile menu */
+    .nav__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--white);
+      z-index: calc(var(--z-nav) + 1);
+      padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+      flex-direction: column;
+      gap: var(--space-lg);
+      overflow-y: auto;
+    }
+
+    .nav__mobile-menu.is-open {
+      display: flex;
+    }
+
+    .nav__mobile-close {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-xl);
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--gray-700);
+      cursor: pointer;
+      min-height: 48px;
+      min-width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav__mobile-link {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--gray-800);
+      text-decoration: none;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--gray-200);
+      display: block;
+    }
+
+    .nav__mobile-link:hover {
+      color: var(--teal);
+    }
+
+    /* =========================================================
+       BLOC 2 : HERO
+       Haut-Lac: diagonal teal band, B&W photo, rotating text
+       ========================================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .hero__video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .hero__video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45) saturate(0.6);
+    }
+
+    .hero__poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45) saturate(0.6);
+      display: none;
+    }
+
+    /* Haut-Lac diagonal overlay */
+    .hero__diagonal {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .hero__diagonal::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 55%;
+      height: 130%;
+      background: var(--teal);
+      opacity: 0.88;
+      transform: skewX(-8deg);
+    }
+
+    .hero__diagonal::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(to top, rgba(26, 39, 68, 0.6), transparent);
+    }
+
+    /* Dotted pattern (Haut-Lac signature) */
+    .hero__dots {
+      position: absolute;
+      top: 15%;
+      left: 38%;
+      width: 200px;
+      height: 200px;
+      z-index: 3;
+      opacity: 0.25;
+      background-image: radial-gradient(circle, var(--white) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 4;
+      padding: 140px var(--space-xl) 100px;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+
+    .hero__text {
+      max-width: 600px;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-pill);
+      padding: 8px 20px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .hero__badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+
+    .hero__badge-text {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: var(--white);
+      letter-spacing: 0.03em;
+    }
+
+    .hero__title {
+      color: var(--white);
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: var(--space-md);
+      letter-spacing: -0.03em;
+    }
+
+    .hero__title-static {
+      display: block;
+    }
+
+    .hero__title-rotate {
+      display: inline-block;
+      color: var(--red);
+      position: relative;
+      min-width: 280px;
+      min-height: 1.2em;
+    }
+
+    .hero__title-word {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+    }
+
+    .hero__title-word.is-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero__subtitle {
+      color: rgba(255,255,255,0.85);
+      font-size: clamp(1rem, 1.3vw, 1.2rem);
+      line-height: 1.7;
+      margin-bottom: var(--space-xl);
+      max-width: 500px;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    /* Hero right side: B&W photo collage (Haut-Lac signature) */
+    .hero__photos {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero__photo-main {
+      width: 380px;
+      height: 480px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      border: var(--border-thick) solid var(--white);
+      filter: grayscale(100%) contrast(1.1);
+      position: relative;
+      z-index: 2;
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .hero__photo-accent {
+      position: absolute;
+      width: 200px;
+      height: 260px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      border: 4px solid var(--red);
+      filter: grayscale(100%) contrast(1.1);
+      z-index: 3;
+      box-shadow: var(--shadow-card);
+    }
+
+    .hero__photo-accent--1 {
+      bottom: -30px;
+      right: -30px;
+    }
+
+    .hero__photo-accent--2 {
+      top: -20px;
+      left: -40px;
+      width: 180px;
+      height: 220px;
+      border-color: var(--teal-light);
+    }
+
+    /* Hero scroll indicator */
+    .hero__scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.6);
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero__scroll-chevron {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid rgba(255,255,255,0.6);
+      border-bottom: 2px solid rgba(255,255,255,0.6);
+      transform: rotate(45deg);
+      animation: bounce-chevron 2s infinite;
+    }
+
+    @keyframes bounce-chevron {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(8px); }
+    }
+
+    /* =========================================================
+       SECTION TRANSITIONS: DIAGONAL CUTS (Haut-Lac signature)
+       ========================================================= */
+    .section-wave {
+      width: 100%;
+      display: block;
+      line-height: 0;
+    }
+
+    .section-wave svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Diagonal clippath sections */
+    .diagonal-top {
+      clip-path: polygon(0 60px, 100% 0, 100% 100%, 0 100%);
+      margin-top: -60px;
+    }
+
+    .diagonal-bottom {
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 60px), 0 100%);
+    }
+
+    .diagonal-both {
+      clip-path: polygon(0 60px, 100% 0, 100% calc(100% - 60px), 0 100%);
+      margin-top: -60px;
+    }
+
+    /* =========================================================
+       BLOC 3 : LES 4 PROMESSES
+       ========================================================= */
+    .promises {
+      padding: var(--space-4xl) 0 var(--space-3xl);
+      background: var(--white);
+      position: relative;
+    }
+
+    .promises__header {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .promises__label {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: var(--teal-bg);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-md);
+    }
+
+    .promises__title {
+      color: var(--gray-800);
+      margin-bottom: var(--space-md);
+    }
+
+    .promises__title span {
+      color: var(--teal);
+    }
+
+    .promises__subtitle {
+      color: var(--gray-500);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    .promises__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .promise-card {
+      position: relative;
+      padding: var(--space-xl) var(--space-lg);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      transition: all var(--transition-smooth);
+      text-align: left;
+    }
+
+    .promise-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-card);
+      border-color: transparent;
+    }
+
+    .promise-card__number {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 3rem;
+      color: var(--gray-100);
+      line-height: 1;
+    }
+
+    .promise-card__icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .promise-card__icon--teal { background: var(--teal-bg); }
+    .promise-card__icon--red { background: rgba(237, 49, 34, 0.08); }
+    .promise-card__icon--green { background: rgba(66, 158, 123, 0.1); }
+    .promise-card__icon--orange { background: rgba(216, 145, 55, 0.1); }
+
+    .promise-card__icon img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .promise-card__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      color: var(--gray-800);
+    }
+
+    .promise-card__text {
+      font-size: 0.92rem;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: var(--space-md);
+    }
+
+    .promise-card__proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .promise-card__proof--teal {
+      background: var(--teal-bg);
+      color: var(--teal);
+    }
+    .promise-card__proof--red {
+      background: rgba(237, 49, 34, 0.08);
+      color: var(--red);
+    }
+    .promise-card__proof--green {
+      background: rgba(66, 158, 123, 0.1);
+      color: var(--green);
+    }
+    .promise-card__proof--orange {
+      background: rgba(216, 145, 55, 0.1);
+      color: var(--orange);
+    }
+
+    /* Decorative thick border accent (Haut-Lac 5px border) */
+    .promise-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--border-thick);
+      height: 0;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      transition: height var(--transition-smooth);
+    }
+
+    .promise-card:hover::before {
+      height: 100%;
+    }
+
+    .promise-card:nth-child(1)::before { background: var(--teal); }
+    .promise-card:nth-child(2)::before { background: var(--red); }
+    .promise-card:nth-child(3)::before { background: var(--green); }
+    .promise-card:nth-child(4)::before { background: var(--orange); }
+
+    /* =========================================================
+       BLOC 4 : CHIFFRES CLÉS
+       Haut-Lac: red numbered pastilles, teal background
+       ========================================================= */
+    .stats {
+      position: relative;
+      padding: var(--space-4xl) 0;
+      background: var(--teal);
+      overflow: hidden;
+    }
+
+    .stats__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .stats__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.05);
+      opacity: 0.12;
+    }
+
+    /* Diagonal cuts on stats */
+    .stats::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--white);
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+      z-index: 1;
+    }
+
+    .stats::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--navy);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+      z-index: 1;
+    }
+
+    /* Dotted pattern decoration */
+    .stats__dots {
+      position: absolute;
+      top: 20%;
+      right: 5%;
+      width: 160px;
+      height: 160px;
+      z-index: 1;
+      opacity: 0.15;
+      background-image: radial-gradient(circle, var(--white) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
+    }
+
+    .stats__dots--left {
+      right: auto;
+      left: 3%;
+      top: auto;
+      bottom: 25%;
+      width: 120px;
+      height: 120px;
+    }
+
+    .stats__content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats__header {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .stats__label {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: rgba(255,255,255,0.15);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-md);
+    }
+
+    .stats__title {
+      color: var(--white);
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .stat-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .stat-item__number {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: var(--space-sm);
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Red pastille behind number (Haut-Lac signature) */
+    .stat-item__number::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--red);
+      opacity: 0.2;
+      z-index: -1;
+    }
+
+    .stat-item__label {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.02em;
+    }
+
+    .stat-item__divider {
+      width: 40px;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      margin: var(--space-sm) auto var(--space-sm);
+    }
+
+    /* =========================================================
+       BLOC 5 : NOS PROGRAMMES
+       ========================================================= */
+    .programs {
+      padding: var(--space-4xl) 0 var(--space-3xl);
+      background: var(--navy);
+      position: relative;
+    }
+
+    .programs__header {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .programs__label {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      background: rgba(77, 168, 189, 0.12);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-md);
+    }
+
+    .programs__title {
+      color: var(--white);
+    }
+
+    .programs__subtitle {
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: var(--space-md) auto 0;
+    }
+
+    .programs__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .program-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .program-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--teal);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .program-card__image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .program-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      transition: all var(--transition-slow);
+    }
+
+    .program-card:hover .program-card__image img {
+      filter: grayscale(0%) contrast(1);
+      transform: scale(1.05);
+    }
+
+    .program-card__image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(to top, var(--navy), transparent);
+    }
+
+    .program-card__age-badge {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      z-index: 2;
+    }
+
+    .program-card__body {
+      padding: var(--space-lg);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .program-card__level {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--white);
+      margin-bottom: var(--space-xs);
+    }
+
+    .program-card__desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+      margin-bottom: var(--space-md);
+      flex: 1;
+    }
+
+    .program-card__price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: var(--space-md);
+    }
+
+    .program-card__price-amount {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--teal-light);
+    }
+
+    .program-card__price-period {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .program-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--teal-light);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      padding: 10px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .program-card__cta:hover {
+      color: var(--white);
+      gap: 12px;
+    }
+
+    /* Thick left border on cards (Haut-Lac signature) */
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--border-thick);
+      height: 100%;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+    }
+
+    .program-card:hover::before {
+      opacity: 1;
+    }
+
+    .program-card:nth-child(1)::before { background: var(--red); }
+    .program-card:nth-child(2)::before { background: var(--teal-light); }
+    .program-card:nth-child(3)::before { background: var(--green); }
+    .program-card:nth-child(4)::before { background: var(--orange); }
+
+    /* =========================================================
+       BLOC 6 : TÉMOIGNAGES
+       ========================================================= */
+    .testimonials {
+      padding: var(--space-4xl) 0;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal top cut */
+    .testimonials::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--navy);
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+      z-index: 1;
+    }
+
+    .testimonials__header {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+      padding-top: var(--space-xl);
+    }
+
+    .testimonials__label {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+      background: rgba(237, 49, 34, 0.06);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-md);
+    }
+
+    .testimonials__title {
+      color: var(--gray-800);
+    }
+
+    .testimonials__carousel {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonials__track {
+      display: flex;
+      transition: transform var(--transition-slow);
+      will-change: transform;
+    }
+
+    .testimonial-slide {
+      min-width: 100%;
+      padding: 0 var(--space-xl);
+    }
+
+    .testimonial-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-xl);
+      align-items: start;
+      background: var(--offwhite);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      position: relative;
+      border-left: var(--border-thick) solid var(--teal);
+    }
+
+    .testimonial-card__photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--teal);
+      filter: grayscale(100%) contrast(1.1);
+    }
+
+    .testimonial-card__content {
+      position: relative;
+    }
+
+    .testimonial-card__quote-mark {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--teal);
+      opacity: 0.2;
+      position: absolute;
+      top: -20px;
+      left: -10px;
+    }
+
+    .testimonial-card__text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--gray-700);
+      font-style: italic;
+      margin-bottom: var(--space-lg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-card__author {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gray-800);
+    }
+
+    .testimonial-card__info {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-top: 4px;
+    }
+
+    .testimonial-card__info span {
+      color: var(--teal);
+      font-weight: 500;
+    }
+
+    /* Carousel navigation */
+    .testimonials__nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .testimonials__nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: var(--border-thin) solid var(--teal);
+      background: var(--white);
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-size: 1.2rem;
+    }
+
+    .testimonials__nav-btn:hover {
+      background: var(--teal);
+      color: var(--white);
+    }
+
+    .testimonials__dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: var(--space-md);
+    }
+
+    .testimonials__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gray-300);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      padding: 0;
+    }
+
+    .testimonials__dot.is-active {
+      background: var(--teal);
+      width: 28px;
+      border-radius: 5px;
+    }
+
+    /* =========================================================
+       BLOC 7 : MOT DU DIRECTEUR
+       ========================================================= */
+    .director {
+      position: relative;
+      padding: var(--space-4xl) 0;
+      background: var(--teal-bg);
+      overflow: hidden;
+    }
+
+    /* Diagonal cut */
+    .director::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--white);
+      clip-path: polygon(0 0, 100% 0, 0 100%, 0 0);
+      z-index: 1;
+    }
+
+    .director__dots {
+      position: absolute;
+      bottom: 10%;
+      right: 5%;
+      width: 140px;
+      height: 140px;
+      opacity: 0.08;
+      background-image: radial-gradient(circle, var(--teal) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
+    }
+
+    .director__grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .director__photo-wrap {
+      position: relative;
+    }
+
+    .director__photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      filter: grayscale(100%) contrast(1.1);
+      border: var(--border-thick) solid var(--teal);
+    }
+
+    .director__photo-accent {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 100px;
+      height: 100px;
+      background: var(--red);
+      border-radius: var(--radius-lg);
+      z-index: -1;
+    }
+
+    .director__content {
+      padding-top: var(--space-xl);
+    }
+
+    .director__label {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: rgba(52, 131, 151, 0.12);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-lg);
+    }
+
+    .director__title {
+      margin-bottom: var(--space-lg);
+    }
+
+    .director__quote {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--gray-600);
+      font-style: italic;
+      margin-bottom: var(--space-lg);
+      padding-left: var(--space-lg);
+      border-left: var(--border-thick) solid var(--teal);
+    }
+
+    .director__signature {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: var(--space-xl);
+    }
+
+    .director__name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--gray-800);
+    }
+
+    .director__role {
+      font-size: 0.9rem;
+      color: var(--teal);
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       BLOC 8 : CTA FINAL + FOOTER
+       ========================================================= */
+    .cta-final {
+      position: relative;
+      padding: var(--space-3xl) 0;
+      background: var(--teal);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .cta-final::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--teal-bg);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);
+      z-index: 1;
+    }
+
+    .cta-final__dots {
+      position: absolute;
+      top: 20%;
+      left: 5%;
+      width: 140px;
+      height: 100px;
+      opacity: 0.12;
+      background-image: radial-gradient(circle, var(--white) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
+    }
+
+    .cta-final__content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-final__title {
+      color: var(--white);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .cta-final__text {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1rem;
+      margin: 0 auto var(--space-xl);
+      max-width: 500px;
+    }
+
+    .cta-final__actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: var(--space-3xl) 0 var(--space-lg);
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: var(--space-2xl);
+      margin-bottom: var(--space-3xl);
+    }
+
+    .footer__brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .footer__logo img {
+      height: 48px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .footer__desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      max-width: 320px;
+    }
+
+    .footer__accreditations {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer__accreditation-img {
+      height: 40px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.7;
+      transition: opacity var(--transition-fast);
+    }
+
+    .footer__accreditation-img:hover {
+      opacity: 1;
+    }
+
+    .footer__col-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-lg);
+    }
+
+    .footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .footer__link {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      display: inline-block;
+      padding: 2px 0;
+    }
+
+    .footer__link:hover {
+      color: var(--teal-light);
+    }
+
+    .footer__campus-item {
+      margin-bottom: var(--space-md);
+    }
+
+    .footer__campus-name {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 4px;
+    }
+
+    .footer__campus-address {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    .footer__phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--teal-light);
+      text-decoration: none;
+      margin-top: var(--space-md);
+      transition: color var(--transition-fast);
+    }
+
+    .footer__phone:hover {
+      color: var(--white);
+    }
+
+    .footer__social {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+    }
+
+    .footer__social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all var(--transition-fast);
+    }
+
+    .footer__social-link:hover {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: var(--white);
+    }
+
+    .footer__divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin-bottom: var(--space-lg);
+    }
+
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .footer__copy {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer__legal {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .footer__legal-link {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .footer__legal-link:hover {
+      color: var(--teal-light);
+    }
+
+    /* =========================================================
+       ANIMATIONS — Scroll-driven reveals
+       ========================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal--left {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+
+    .reveal--left.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal--right {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+
+    .reveal--right.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal--scale {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    .reveal--scale.is-visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Stagger children */
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stagger.is-visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+    .stagger.is-visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+    .stagger.is-visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+    .stagger.is-visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+    .stagger.is-visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+
+    /* Counter animation */
+    .stat-item__number[data-count] {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    /* Tablet: 1024px */
+    @media (max-width: 1024px) {
+      .hero__content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--space-xl);
+      }
+
+      .hero__text {
+        max-width: 100%;
+      }
+
+      .hero__subtitle {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero__actions {
+        justify-content: center;
+      }
+
+      .hero__photos {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .hero__photo-main {
+        width: 280px;
+        height: 360px;
+      }
+
+      .hero__photo-accent {
+        width: 150px;
+        height: 190px;
+      }
+
+      .hero__diagonal::before {
+        width: 100%;
+        transform: none;
+        opacity: 0.75;
+      }
+
+      .promises__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-xl) var(--space-lg);
+      }
+
+      .stat-item:nth-child(4),
+      .stat-item:nth-child(5) {
+        grid-column: span 1;
+      }
+
+      .programs__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .director__grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .director__photo-wrap {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .director__quote {
+        padding-left: 0;
+        border-left: none;
+        border-top: var(--border-thick) solid var(--teal);
+        padding-top: var(--space-lg);
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-xl);
+      }
+
+      .nav__links {
+        display: none;
+      }
+
+      .nav__hamburger {
+        display: flex;
+      }
+    }
+
+    /* Tablet small: 768px */
+    @media (max-width: 768px) {
+      .promises__grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .programs__grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .testimonial-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: var(--space-xl);
+      }
+
+      .testimonial-card__photo {
+        margin: 0 auto;
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* Mobile: 375px */
+    @media (max-width: 480px) {
+      :root {
+        --space-xl: 28px;
+        --space-2xl: 48px;
+        --space-3xl: 64px;
+        --space-4xl: 80px;
+      }
+
+      .hero {
+        min-height: 100svh;
+      }
+
+      .hero__content {
+        padding: 120px var(--space-md) 80px;
+      }
+
+      .hero__photos {
+        display: none;
+      }
+
+      .hero__photo-accent--2 {
+        display: none;
+      }
+
+      .hero__diagonal::before {
+        width: 100%;
+        height: 100%;
+        transform: none;
+        opacity: 0.8;
+      }
+
+      .hero__dots {
+        display: none;
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-lg);
+      }
+
+      .stat-item:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .stat-item__number::before {
+        width: 70px;
+        height: 70px;
+      }
+
+      .nav__inner {
+        padding: 0 var(--space-md);
+        height: 64px;
+      }
+
+      .nav__cta {
+        display: none;
+      }
+
+      .container {
+        padding: 0 var(--space-md);
+      }
+
+      .testimonial-slide {
+        padding: 0 var(--space-sm);
+      }
+
+      .cta-final__actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer__legal {
+        flex-direction: column;
+        gap: var(--space-sm);
+        align-items: center;
+      }
+    }
+
+    /* =========================================================
+       REDUCED MOTION (WCAG)
+       ========================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal, .reveal--left, .reveal--right, .reveal--scale {
+        opacity: 1;
+        transform: none;
+      }
+
+      .stagger > * {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0s !important;
+      }
+
+      .hero__title-word {
+        opacity: 1;
+        transform: none;
+        position: relative;
+      }
+
+      .hero__title-word:not(:first-child) {
+        display: none;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* =========================================================
+       MOBILE STICKY CTA
+       ========================================================= */
+    .mobile-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: var(--z-overlay);
+      background: var(--white);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .mobile-cta__inner {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .mobile-cta__btn {
+      flex: 1;
+      text-align: center;
+      padding: 12px 16px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-cta__btn--primary {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .mobile-cta__btn--secondary {
+      background: var(--teal);
+      color: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .mobile-cta {
+        display: block;
+      }
+
+      body {
+        padding-bottom: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip Navigation (WCAG) -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- =========================================================
+       BLOC 1 : NAVIGATION STICKY
+       ========================================================= -->
+  <nav class="nav nav--transparent" id="mainNav" role="navigation" aria-label="Navigation principale">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" aria-label="BISP — Accueil">
+        <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP — École Bilingue Internationale de Paris" width="140" height="44">
+      </a>
+
+      <ul class="nav__links" role="menubar">
+        <li role="none"><a href="#" class="nav__link nav__link--active" role="menuitem">Notre école</a></li>
+        <li role="none"><a href="#programmes" class="nav__link" role="menuitem">Programmes</a></li>
+        <li role="none"><a href="#" class="nav__link" role="menuitem">Admissions</a></li>
+        <li role="none"><a href="#" class="nav__link" role="menuitem">Vie scolaire</a></li>
+        <li role="none"><a href="#" class="nav__link" role="menuitem">Actualités</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; gap: 4px;">
+          <button class="nav__lang nav__lang--active" aria-label="Version française">FR</button>
+          <button class="nav__lang" aria-label="English version">EN</button>
+        </div>
+        <a href="#" class="btn btn--primary nav__cta">
+          Inscrire mon enfant
+        </a>
+      </div>
+
+      <button class="nav__hamburger" id="navHamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="nav__mobile-menu" id="mobileMenu" role="dialog" aria-label="Menu de navigation">
+      <button class="nav__mobile-close" id="mobileClose" aria-label="Fermer le menu">&times;</button>
+      <a href="#" class="nav__mobile-link">Notre école</a>
+      <a href="#programmes" class="nav__mobile-link">Programmes</a>
+      <a href="#" class="nav__mobile-link">Admissions</a>
+      <a href="#" class="nav__mobile-link">Vie scolaire</a>
+      <a href="#" class="nav__mobile-link">Actualités</a>
+      <a href="#" class="btn btn--primary" style="margin-top: auto; text-align: center; justify-content: center;">Inscrire mon enfant</a>
+      <div style="display: flex; gap: 8px; justify-content: center;">
+        <button class="nav__lang nav__lang--active" style="color: var(--teal);">FR</button>
+        <button class="nav__lang" style="color: var(--gray-500);">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       BLOC 2 : HERO
+       Video bg + diagonal teal overlay + rotating text + B&W photos
+       ========================================================= -->
+  <section class="hero" id="main-content" aria-label="Présentation BISP">
+    <div class="hero__video-wrap">
+      <video class="hero__video" autoplay muted loop playsinline poster="../assets/images/hero-poster.jpg" aria-hidden="true">
+        <source src="../assets/videos/video-presentation-bisp.mp4" type="video/mp4">
+      </video>
+      <noscript>
+        <img src="../assets/images/hero-poster.jpg" alt="" class="hero__poster" style="display:block;">
+      </noscript>
+    </div>
+
+    <div class="hero__diagonal" aria-hidden="true"></div>
+    <div class="hero__dots" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <div class="hero__text">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span class="hero__badge-text">Cambridge &amp; Éducation Nationale</span>
+        </div>
+
+        <h1 class="hero__title">
+          <span class="hero__title-static">Une école</span>
+          <span class="hero__title-rotate" id="heroRotate" aria-live="polite" aria-atomic="true">
+            <span class="hero__title-word is-active">Bilingue.</span>
+            <span class="hero__title-word">Intime.</span>
+            <span class="hero__title-word">Internationale.</span>
+            <span class="hero__title-word">Exigeante.</span>
+            <span class="hero__title-word">Bienveillante.</span>
+            <span class="hero__title-word">La leur.</span>
+          </span>
+        </h1>
+
+        <p class="hero__subtitle">
+          À Paris, une école bilingue internationale où chaque enfant est connu, accompagné et préparé — en français et en anglais. De la maternelle au lycée.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#" class="btn btn--primary">
+            Planifier une visite
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="#programmes" class="btn btn--secondary">
+            Découvrir nos programmes
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__photos" aria-hidden="true">
+        <img src="../assets/images/ecole-bisp.jpg" alt="" class="hero__photo-main" loading="lazy">
+        <img src="../assets/images/jeux-enfant.png" alt="" class="hero__photo-accent hero__photo-accent--1" loading="lazy">
+        <img src="../assets/images/fille-travaille.png" alt="" class="hero__photo-accent hero__photo-accent--2" loading="lazy">
+      </div>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Découvrir</span>
+      <div class="hero__scroll-chevron"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BLOC 3 : LES 4 PROMESSES
+       ========================================================= -->
+  <section class="promises" aria-label="Nos engagements">
+    <div class="container">
+      <div class="promises__header reveal">
+        <span class="promises__label">Nos engagements</span>
+        <h2 class="promises__title">Ce qui fait de BISP une école <span>à part</span>.</h2>
+        <p class="promises__subtitle">
+          Dans l'intimité de classes de 12 élèves, nous donnons à chaque enfant un double passeport académique et la confiance de grandir entre les langues.
+        </p>
+      </div>
+
+      <div class="promises__grid stagger">
+        <!-- Promesse 1: Intimité -->
+        <div class="promise-card">
+          <span class="promise-card__number" aria-hidden="true">01</span>
+          <div class="promise-card__icon promise-card__icon--teal">
+            <img src="../assets/pictos/eleves.svg" alt="" aria-hidden="true" width="28" height="28">
+          </div>
+          <h3 class="promise-card__title">Intimité</h3>
+          <p class="promise-card__text">
+            Des classes de 12 élèves où chaque enfant est connu par son prénom, accompagné individuellement chaque semaine. Personne ne passe inaperçu.
+          </p>
+          <span class="promise-card__proof promise-card__proof--teal">12 élèves par classe</span>
+        </div>
+
+        <!-- Promesse 2: Double Passeport -->
+        <div class="promise-card">
+          <span class="promise-card__number" aria-hidden="true">02</span>
+          <div class="promise-card__icon promise-card__icon--red">
+            <img src="../assets/pictos/bilingue.svg" alt="" aria-hidden="true" width="28" height="28">
+          </div>
+          <h3 class="promise-card__title">Double passeport</h3>
+          <p class="promise-card__text">
+            Cambridge Assessment et Éducation Nationale, sans compromis. Deux systèmes, un seul parcours fluide avec des enseignants natifs des deux langues.
+          </p>
+          <span class="promise-card__proof promise-card__proof--red">50/50 français-anglais</span>
+        </div>
+
+        <!-- Promesse 3: Monde -->
+        <div class="promise-card">
+          <span class="promise-card__number" aria-hidden="true">03</span>
+          <div class="promise-card__icon promise-card__icon--green">
+            <img src="../assets/pictos/nationalites.svg" alt="" aria-hidden="true" width="28" height="28">
+          </div>
+          <h3 class="promise-card__title">Monde</h3>
+          <p class="promise-card__text">
+            Une micro-société internationale au coeur du 15e arrondissement. Des enfants du monde entier qui grandissent ensemble, naturellement.
+          </p>
+          <span class="promise-card__proof promise-card__proof--green">32 nationalités</span>
+        </div>
+
+        <!-- Promesse 4: Confiance -->
+        <div class="promise-card">
+          <span class="promise-card__number" aria-hidden="true">04</span>
+          <div class="promise-card__icon promise-card__icon--orange">
+            <img src="../assets/pictos/enfants.svg" alt="" aria-hidden="true" width="28" height="28">
+          </div>
+          <h3 class="promise-card__title">Confiance</h3>
+          <p class="promise-card__text">
+            Le bilinguisme comme seconde nature, pas comme matière scolaire. L'immersion dès 3 ans pour penser dans deux langues avec la même aisance.
+          </p>
+          <span class="promise-card__proof promise-card__proof--orange">Immersion dès 3 ans</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BLOC 4 : CHIFFRES CLÉS
+       Teal background + red pastilles + diagonal cuts
+       ========================================================= -->
+  <section class="stats" aria-label="Chiffres clés">
+    <div class="stats__bg" aria-hidden="true">
+      <img src="../assets/stock/diverse-students.jpg" alt="" loading="lazy">
+    </div>
+    <div class="stats__dots" aria-hidden="true"></div>
+    <div class="stats__dots stats__dots--left" aria-hidden="true"></div>
+
+    <div class="container stats__content">
+      <div class="stats__header reveal">
+        <span class="stats__label">BISP en chiffres</span>
+        <h2 class="stats__title">Les preuves d'une école pas comme les autres.</h2>
+      </div>
+
+      <div class="stats__grid stagger">
+        <div class="stat-item">
+          <div class="stat-item__number" data-count="32" aria-label="32 nationalités">0</div>
+          <div class="stat-item__divider" aria-hidden="true"></div>
+          <div class="stat-item__label">Nationalités<br>représentées</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__number" data-count="12" aria-label="12 élèves par classe">0</div>
+          <div class="stat-item__divider" aria-hidden="true"></div>
+          <div class="stat-item__label">Élèves par classe<br>en moyenne</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__number" data-count="50" data-suffix="/50" aria-label="50/50 français et anglais">0</div>
+          <div class="stat-item__divider" aria-hidden="true"></div>
+          <div class="stat-item__label">Français et anglais<br>à parts égales</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__number" data-count="14" aria-label="14 années d'expérience">0</div>
+          <div class="stat-item__divider" aria-hidden="true"></div>
+          <div class="stat-item__label">Années<br>d'expérience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-item__number" data-count="3" aria-label="3 campus dans le 15e">0</div>
+          <div class="stat-item__divider" aria-hidden="true"></div>
+          <div class="stat-item__label">Campus dans<br>le 15<sup>e</sup></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BLOC 5 : NOS PROGRAMMES
+       ========================================================= -->
+  <section class="programs" id="programmes" aria-label="Nos programmes">
+    <div class="container">
+      <div class="programs__header reveal">
+        <span class="programs__label">De 3 à 18 ans</span>
+        <h2 class="programs__title">Un parcours complet, de la maternelle au lycée.</h2>
+        <p class="programs__subtitle">
+          Quatre niveaux, un seul fil rouge : l'excellence bilingue dans l'intimité de classes à taille humaine.
+        </p>
+      </div>
+
+      <div class="programs__grid stagger">
+        <!-- Maternelle -->
+        <div class="program-card">
+          <div class="program-card__image">
+            <img src="../assets/stock/preschool-kids.jpg" alt="Enfants en maternelle bilingue à BISP" loading="lazy">
+            <span class="program-card__age-badge">3 — 6 ans</span>
+          </div>
+          <div class="program-card__body">
+            <h3 class="program-card__level">Maternelle</h3>
+            <p class="program-card__desc">
+              L'immersion naturelle dès 3 ans. Les enfants acquièrent un accent natif dans les deux langues grâce à des enseignants de langue maternelle.
+            </p>
+            <div class="program-card__price">
+              <span class="program-card__price-amount">13.800 €</span>
+              <span class="program-card__price-period">/ an</span>
+            </div>
+            <a href="#" class="program-card__cta">
+              Découvrir la maternelle <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Primaire -->
+        <div class="program-card">
+          <div class="program-card__image">
+            <img src="../assets/stock/classroom-students.jpg" alt="Élèves en classe primaire bilingue" loading="lazy">
+            <span class="program-card__age-badge">6 — 11 ans</span>
+          </div>
+          <div class="program-card__body">
+            <h3 class="program-card__level">Primaire</h3>
+            <p class="program-card__desc">
+              Ambiance cosmopolite, double curriculum Cambridge et français. Échanges multiculturels qui ouvrent l'esprit bien au-delà des manuels.
+            </p>
+            <div class="program-card__price">
+              <span class="program-card__price-amount">16.800 €</span>
+              <span class="program-card__price-period">/ an</span>
+            </div>
+            <a href="#" class="program-card__cta">
+              Découvrir le primaire <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Collège -->
+        <div class="program-card">
+          <div class="program-card__image">
+            <img src="../assets/stock/students-reading.jpg" alt="Collégiens étudiant en anglais et français" loading="lazy">
+            <span class="program-card__age-badge">11 — 15 ans</span>
+          </div>
+          <div class="program-card__body">
+            <h3 class="program-card__level">Collège</h3>
+            <p class="program-card__desc">
+              Analyse approfondie, esprit critique, culture digitale. Un programme conçu pour des esprits bilingues du 21e siècle. Musique et théâtre chaque semaine.
+            </p>
+            <div class="program-card__price">
+              <span class="program-card__price-amount">21.800 €</span>
+              <span class="program-card__price-period">/ an</span>
+            </div>
+            <a href="#" class="program-card__cta">
+              Découvrir le collège <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Lycée -->
+        <div class="program-card">
+          <div class="program-card__image">
+            <img src="../assets/stock/graduation.jpg" alt="Lycéens BISP préparant leur avenir" loading="lazy">
+            <span class="program-card__age-badge">15 — 18 ans</span>
+          </div>
+          <div class="program-card__body">
+            <h3 class="program-card__level">Lycée</h3>
+            <p class="program-card__desc">
+              Préparation aux examens Cambridge et français. La maîtrise écrite et orale des deux langues ouvre les portes des universités du monde entier.
+            </p>
+            <div class="program-card__price">
+              <span class="program-card__price-amount">21.800 €</span>
+              <span class="program-card__price-period">/ an</span>
+            </div>
+            <a href="#" class="program-card__cta">
+              Découvrir le lycée <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BLOC 6 : TÉMOIGNAGES
+       ========================================================= -->
+  <section class="testimonials" aria-label="Témoignages de parents">
+    <div class="container">
+      <div class="testimonials__header reveal">
+        <span class="testimonials__label">Témoignages</span>
+        <h2 class="testimonials__title">Ils nous ont confié leurs enfants.</h2>
+      </div>
+
+      <div class="testimonials__carousel reveal--scale" role="region" aria-label="Carrousel de témoignages" aria-roledescription="carrousel">
+        <div class="testimonials__track" id="testimonialTrack">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide" role="group" aria-roledescription="diapositive" aria-label="Témoignage 1 sur 3">
+            <div class="testimonial-card">
+              <img src="../assets/stock/student-portrait1.jpg" alt="Parent d'élève BISP" class="testimonial-card__photo" loading="lazy">
+              <div class="testimonial-card__content">
+                <span class="testimonial-card__quote-mark" aria-hidden="true">"</span>
+                <p class="testimonial-card__text">
+                  « Quand nous sommes arrivés du Japon, notre fille ne parlait ni français ni anglais couramment. En six mois à BISP, elle alternait naturellement entre les deux langues. L'attention individualisée dans des classes de 12 élèves a fait toute la différence. Elle a trouvé sa place immédiatement. »
+                </p>
+                <p class="testimonial-card__author">Yuki T.</p>
+                <p class="testimonial-card__info"><span>Japon</span> — Mère de Hana, CM2</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="testimonial-slide" role="group" aria-roledescription="diapositive" aria-label="Témoignage 2 sur 3">
+            <div class="testimonial-card">
+              <img src="../assets/stock/student-portrait2.jpg" alt="Parent d'élève BISP" class="testimonial-card__photo" loading="lazy">
+              <div class="testimonial-card__content">
+                <span class="testimonial-card__quote-mark" aria-hidden="true">"</span>
+                <p class="testimonial-card__text">
+                  « Ce qui nous a convaincus, c'est le vrai 50/50. Pas un programme anglais avec un peu de français, ni l'inverse. Nos deux enfants pensent désormais dans les deux langues, et les résultats Cambridge le confirment chaque année. Le cadre intime de l'école nous rassure. »
+                </p>
+                <p class="testimonial-card__author">Sarah &amp; Marc D.</p>
+                <p class="testimonial-card__info"><span>France / Royaume-Uni</span> — Parents de Léo, 3e, et Emma, CE1</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="testimonial-slide" role="group" aria-roledescription="diapositive" aria-label="Témoignage 3 sur 3">
+            <div class="testimonial-card">
+              <img src="../assets/stock/students-group.jpg" alt="Parent d'élève BISP" class="testimonial-card__photo" loading="lazy">
+              <div class="testimonial-card__content">
+                <span class="testimonial-card__quote-mark" aria-hidden="true">"</span>
+                <p class="testimonial-card__text">
+                  « Nous avons déménagé trois fois en cinq ans. À chaque nouvelle école, nos enfants perdaient leurs repères. À BISP, avec 32 nationalités, ils ont trouvé une communauté où être "de partout" est la norme. Le directeur connaît chaque élève par son prénom. C'est rare et précieux. »
+                </p>
+                <p class="testimonial-card__author">Amara K.</p>
+                <p class="testimonial-card__info"><span>Nigéria / États-Unis</span> — Père de trois enfants, maternelle à 4e</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonials__nav">
+          <button class="testimonials__nav-btn" id="prevTestimonial" aria-label="Témoignage précédent">&larr;</button>
+          <button class="testimonials__nav-btn" id="nextTestimonial" aria-label="Témoignage suivant">&rarr;</button>
+        </div>
+
+        <div class="testimonials__dots" role="tablist" aria-label="Navigation des témoignages">
+          <button class="testimonials__dot is-active" role="tab" aria-selected="true" aria-label="Témoignage 1" data-slide="0"></button>
+          <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 2" data-slide="1"></button>
+          <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 3" data-slide="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BLOC 7 : MOT DU DIRECTEUR
+       ========================================================= -->
+  <section class="director" aria-label="Mot du directeur">
+    <div class="director__dots" aria-hidden="true"></div>
+    <div class="container">
+      <div class="director__grid">
+        <div class="director__photo-wrap reveal--left">
+          <img src="../assets/images/ecole-bisp.jpg" alt="Le directeur de BISP dans les locaux de l'école" class="director__photo" loading="lazy">
+          <div class="director__photo-accent" aria-hidden="true"></div>
+        </div>
+
+        <div class="director__content reveal--right">
+          <span class="director__label">Mot du directeur</span>
+          <h2 class="director__title">« Chaque enfant mérite d'être vu. »</h2>
+
+          <blockquote class="director__quote">
+            Quand j'ai fondé BISP il y a quatorze ans, j'avais une conviction simple : une école bilingue ne doit pas choisir entre l'excellence académique et le bien-être de l'enfant. Elle doit offrir les deux, sans compromis.
+            <br><br>
+            Nos classes de douze élèves ne sont pas un argument marketing — c'est le fondement de tout ce que nous faisons. Quand un enseignant connaît chaque enfant, ses forces, ses doutes, sa langue du coeur, il peut véritablement enseigner. Pas transmettre un programme, mais accompagner un parcours.
+            <br><br>
+            Avec 32 nationalités et un vrai 50/50 entre français et anglais, nos élèves ne deviennent pas seulement bilingues. Ils deviennent des citoyens du monde qui se sentent chez eux dans plusieurs cultures. C'est le plus beau cadeau que nous puissions leur faire.
+          </blockquote>
+
+          <div class="director__signature">
+            <span class="director__name">Le Directeur</span>
+            <span class="director__role">Fondateur de BISP</span>
+          </div>
+
+          <a href="#" class="btn btn--teal">
+            Planifier votre visite
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BLOC 8 : CTA FINAL + FOOTER
+       ========================================================= -->
+  <section class="cta-final" aria-label="Prenez contact">
+    <div class="cta-final__dots" aria-hidden="true"></div>
+    <div class="container cta-final__content">
+      <h2 class="cta-final__title reveal">Prêt à découvrir BISP ?</h2>
+      <p class="cta-final__text reveal">
+        Venez visiter nos campus, rencontrer nos enseignants et découvrir pourquoi 32 nationalités nous font confiance.
+      </p>
+      <div class="cta-final__actions reveal">
+        <a href="#" class="btn btn--primary">
+          Planifier ma visite
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="tel:+33144189483" class="btn btn--secondary">
+          <span aria-hidden="true">&#9742;</span>
+          +33 1 44 18 94 83
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Brand column -->
+        <div class="footer__brand">
+          <a href="#" class="footer__logo" aria-label="BISP — Accueil">
+            <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP" width="140" height="48">
+          </a>
+          <p class="footer__desc">
+            École Bilingue Internationale de Paris. Double curriculum Cambridge et Éducation Nationale, de la maternelle au lycée.
+          </p>
+          <div class="footer__accreditations">
+            <img src="../assets/logos/cambridge.png" alt="Cambridge Assessment International Education" class="footer__accreditation-img" loading="lazy">
+            <img src="../assets/logos/pearson-edexcel.png" alt="Pearson Edexcel" class="footer__accreditation-img" loading="lazy">
+          </div>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="Facebook BISP">f</a>
+            <a href="#" class="footer__social-link" aria-label="Instagram BISP">in</a>
+            <a href="#" class="footer__social-link" aria-label="LinkedIn BISP">Li</a>
+          </div>
+        </div>
+
+        <!-- Links column -->
+        <div>
+          <h4 class="footer__col-title">L'école</h4>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Notre école</a></li>
+            <li><a href="#" class="footer__link">Valeurs et méthodes</a></li>
+            <li><a href="#" class="footer__link">Éducation bilingue</a></li>
+            <li><a href="#" class="footer__link">Nos locaux</a></li>
+            <li><a href="#" class="footer__link">Actualités</a></li>
+            <li><a href="#" class="footer__link">Recrutement</a></li>
+          </ul>
+        </div>
+
+        <!-- Programs column -->
+        <div>
+          <h4 class="footer__col-title">Programmes</h4>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Maternelle (3-6 ans)</a></li>
+            <li><a href="#" class="footer__link">Primaire (6-11 ans)</a></li>
+            <li><a href="#" class="footer__link">Collège (11-15 ans)</a></li>
+            <li><a href="#" class="footer__link">Lycée (15-18 ans)</a></li>
+            <li><a href="#" class="footer__link">Club du mercredi</a></li>
+            <li><a href="#" class="footer__link">Stages vacances</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact column -->
+        <div>
+          <h4 class="footer__col-title">Nos campus</h4>
+          <div class="footer__campus-item">
+            <div class="footer__campus-name">Campus Entrepreneurs</div>
+            <div class="footer__campus-address">61-63 rue des Entrepreneurs<br>75015 Paris</div>
+          </div>
+          <div class="footer__campus-item">
+            <div class="footer__campus-name">Campus Letellier I</div>
+            <div class="footer__campus-address">10-14 rue Letellier<br>75015 Paris</div>
+          </div>
+          <div class="footer__campus-item">
+            <div class="footer__campus-name">Campus Letellier II</div>
+            <div class="footer__campus-address">17-21 rue Letellier<br>75015 Paris</div>
+          </div>
+          <a href="tel:+33144189483" class="footer__phone">
+            <span aria-hidden="true">&#9742;</span>
+            +33 (0) 1 44 18 94 83
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__divider"></div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2026 BISP — École Bilingue Internationale de Paris. Tous droits réservés.</p>
+        <div class="footer__legal">
+          <a href="#" class="footer__legal-link">Mentions légales</a>
+          <a href="#" class="footer__legal-link">Politique de confidentialité</a>
+          <a href="#" class="footer__legal-link">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Sticky CTA -->
+  <div class="mobile-cta" aria-label="Actions rapides">
+    <div class="mobile-cta__inner">
+      <a href="tel:+33144189483" class="mobile-cta__btn mobile-cta__btn--secondary">Appeler</a>
+      <a href="#" class="mobile-cta__btn mobile-cta__btn--primary">Inscrire mon enfant</a>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
+  <script>
+    /* =============================================================
+       Navigation: transparent → solid on scroll
+       ============================================================= */
+    (function() {
+      var nav = document.getElementById('mainNav');
+      var scrollThreshold = 80;
+
+      function updateNav() {
+        if (window.scrollY > scrollThreshold) {
+          nav.classList.remove('nav--transparent');
+          nav.classList.add('nav--solid');
+        } else {
+          nav.classList.remove('nav--solid');
+          nav.classList.add('nav--transparent');
+        }
+      }
+
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    })();
+
+    /* =============================================================
+       Mobile menu toggle
+       ============================================================= */
+    (function() {
+      var hamburger = document.getElementById('navHamburger');
+      var menu = document.getElementById('mobileMenu');
+      var closeBtn = document.getElementById('mobileClose');
+
+      if (!hamburger || !menu || !closeBtn) return;
+
+      hamburger.addEventListener('click', function() {
+        menu.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        closeBtn.focus();
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn.addEventListener('click', function() {
+        menu.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.focus();
+        document.body.style.overflow = '';
+      });
+
+      /* Close on ESC */
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+          closeBtn.click();
+        }
+      });
+
+      /* Close on mobile link click */
+      var mobileLinks = menu.querySelectorAll('.nav__mobile-link');
+      mobileLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+          closeBtn.click();
+        });
+      });
+    })();
+
+    /* =============================================================
+       Hero rotating text
+       ============================================================= */
+    (function() {
+      var container = document.getElementById('heroRotate');
+      if (!container) return;
+
+      var words = container.querySelectorAll('.hero__title-word');
+      if (words.length === 0) return;
+
+      var current = 0;
+      var interval = 2800;
+
+      /* Check reduced motion */
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      setInterval(function() {
+        words[current].classList.remove('is-active');
+        current = (current + 1) % words.length;
+        words[current].classList.add('is-active');
+      }, interval);
+    })();
+
+    /* =============================================================
+       Scroll reveal (IntersectionObserver)
+       ============================================================= */
+    (function() {
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      var reveals = document.querySelectorAll('.reveal, .reveal--left, .reveal--right, .reveal--scale, .stagger');
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.15,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        reveals.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        /* Fallback for old browsers */
+        reveals.forEach(function(el) {
+          el.classList.add('is-visible');
+        });
+      }
+    })();
+
+    /* =============================================================
+       Counter animation
+       ============================================================= */
+    (function() {
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var counters = document.querySelectorAll('[data-count]');
+
+      function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-count'), 10);
+        var suffix = el.getAttribute('data-suffix') || '';
+        var duration = 2000;
+        var startTime = null;
+
+        if (prefersReducedMotion) {
+          el.textContent = target + suffix;
+          return;
+        }
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+
+          /* Ease-out */
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var current = Math.round(eased * target);
+
+          el.textContent = current + suffix;
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        counters.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        counters.forEach(animateCounter);
+      }
+    })();
+
+    /* =============================================================
+       Testimonials carousel
+       ============================================================= */
+    (function() {
+      var track = document.getElementById('testimonialTrack');
+      var prevBtn = document.getElementById('prevTestimonial');
+      var nextBtn = document.getElementById('nextTestimonial');
+      var dots = document.querySelectorAll('.testimonials__dot');
+
+      if (!track || !prevBtn || !nextBtn) return;
+
+      var slides = track.querySelectorAll('.testimonial-slide');
+      var totalSlides = slides.length;
+      var currentSlide = 0;
+      var autoplayInterval;
+
+      function goToSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+
+        currentSlide = index;
+        track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle('is-active', i === currentSlide);
+          dot.setAttribute('aria-selected', i === currentSlide ? 'true' : 'false');
+        });
+
+        /* Update ARIA live region */
+        slides.forEach(function(slide, i) {
+          slide.setAttribute('aria-hidden', i !== currentSlide ? 'true' : 'false');
+        });
+      }
+
+      prevBtn.addEventListener('click', function() {
+        goToSlide(currentSlide - 1);
+        resetAutoplay();
+      });
+
+      nextBtn.addEventListener('click', function() {
+        goToSlide(currentSlide + 1);
+        resetAutoplay();
+      });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goToSlide(parseInt(this.getAttribute('data-slide'), 10));
+          resetAutoplay();
+        });
+      });
+
+      /* Keyboard navigation */
+      track.parentElement.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+          goToSlide(currentSlide - 1);
+          resetAutoplay();
+        } else if (e.key === 'ArrowRight') {
+          goToSlide(currentSlide + 1);
+          resetAutoplay();
+        }
+      });
+
+      /* Autoplay */
+      function startAutoplay() {
+        autoplayInterval = setInterval(function() {
+          goToSlide(currentSlide + 1);
+        }, 6000);
+      }
+
+      function resetAutoplay() {
+        clearInterval(autoplayInterval);
+        startAutoplay();
+      }
+
+      /* Init */
+      goToSlide(0);
+      startAutoplay();
+
+      /* Pause on hover */
+      track.parentElement.addEventListener('mouseenter', function() {
+        clearInterval(autoplayInterval);
+      });
+      track.parentElement.addEventListener('mouseleave', function() {
+        startAutoplay();
+      });
+    })();
+
+    /* =============================================================
+       Smooth scroll for anchor links
+       ============================================================= */
+    (function() {
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          var href = this.getAttribute('href');
+          if (href === '#') return;
+
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            var navHeight = document.getElementById('mainNav').offsetHeight;
+            var targetPos = target.getBoundingClientRect().top + window.scrollY - navHeight;
+            window.scrollTo({ top: targetPos, behavior: 'smooth' });
+          }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

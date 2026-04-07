@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BISP — Phase 1 : 9 Maquettes Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --navy: #1a2744;
+            --gold: #c4a35a;
+            --cream: #f5f0eb;
+            --white: #ffffff;
+            --text: #2d2d2d;
+            --muted: #6b7280;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        .header {
+            background: var(--navy);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'EB Garamond', serif;
+            color: var(--white);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: var(--gold);
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem 2rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--white);
+            border: 1px solid #e5e1dc;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(26,39,68,0.12);
+        }
+        .card-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+        .badge-gold { background: var(--gold); color: var(--white); }
+        .badge-silver { background: #94a3b8; color: var(--white); }
+        .badge-bronze { background: #b87333; color: var(--white); }
+        .card-top {
+            padding: 1.5rem 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .card-rank {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.5rem;
+            color: #e5e1dc;
+            line-height: 1;
+        }
+        .card-body {
+            padding: 1rem 1.5rem 1.5rem;
+        }
+        .card-body h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 0.3rem;
+        }
+        .card-body .style {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .card-body .score {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .card-body .score span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--muted);
+        }
+        .card-link {
+            display: block;
+            text-align: center;
+            padding: 1rem;
+            background: var(--navy);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: background 0.3s ease;
+        }
+        .card-link:hover { background: var(--gold); }
+        .reports {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .report-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--navy);
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .report-link:hover {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.8rem;
+            border-top: 1px solid #e5e1dc;
+        }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; padding: 1rem; }
+            .header { padding: 2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>BISP — Maquettes Homepage</h1>
+        <p>Phase 1 &middot; 9 directions &middot; Avril 2026</p>
+    </header>
+    <p class="subtitle">
+        9 maquettes homepage pour la Bilingual International School of Paris, chacune inspirée d'un site d'école premium de référence. Ouvrez chaque maquette, parcourez-la en desktop et mobile, puis donnez votre avis.
+    </p>
+    <div class="grid">
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#1</span>
+                <span class="card-badge badge-gold">Top 3</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Aiglon</h2>
+                <p class="style">Cinématique sombre, accents rouges, ombres dramatiques</p>
+                <p class="score">84 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-aiglon/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#2</span>
+                <span class="card-badge badge-silver">Top 3</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Le Rosey</h2>
+                <p class="style">Bichromatique old money, serif pur, zéro ornement</p>
+                <p class="score">81 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-lerosey/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#3</span>
+                <span class="card-badge badge-bronze">Top 3</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Sevenoaks</h2>
+                <p class="style">Split hero teal, sobriété radicale, mosaïque éditoriale</p>
+                <p class="score">79 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-sevenoaks/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#4</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Gordonstoun</h2>
+                <p class="style">Pourpre magazine, layout asymétrique, texture grain</p>
+                <p class="score">77 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-gordonstoun/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#5</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Kent College</h2>
+                <p class="style">Rouge énergique, formes organiques, anti-scolaire</p>
+                <p class="score">76 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-kentcollege/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#6</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Repton</h2>
+                <p class="style">Navy + or, timeline dorée, quiet luxury typographique</p>
+                <p class="score">74 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-repton/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#7</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired École des Roches</h2>
+                <p class="style">Navy profond + or, ombres cinéma, pills arrondies</p>
+                <p class="score">73 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-ecoledesroches/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#8</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Beau Soleil</h2>
+                <p class="style">Swiss polish, alternance blanc/navy, boutons pill</p>
+                <p class="score">68 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-beausoleil/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+        <article class="card">
+            <div class="card-top">
+                <span class="card-rank">#9</span>
+            </div>
+            <div class="card-body">
+                <h2>Inspired Haut-Lac</h2>
+                <p class="style">Teal + rouge, coupes diagonales, photos N&amp;B</p>
+                <p class="score">67 <span>/ 100</span></p>
+            </div>
+            <a href="inspired-hautlac/" class="card-link">Voir la maquette &rarr;</a>
+        </article>
+    </div>
+    <div class="reports">
+        <a href="critic-audit.md" class="report-link">Rapport Critic (Audit)</a>
+        <a href="scoring-report.md" class="report-link">Rapport Judge (Scoring)</a>
+    </div>
+    <footer class="footer">
+        BISP &middot; Bilingual International School of Paris &middot; Phase 1 &middot; Avril 2026
+    </footer>
+</body>
+</html>

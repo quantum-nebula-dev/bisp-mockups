@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BISP — École Bilingue Internationale de Paris</title>
+<meta name="description" content="École bilingue internationale à Paris. 32 nationalités, 12 élèves par classe, double curriculum Cambridge et français. De la maternelle au lycée.">
+<link rel="icon" type="image/png" href="../assets/logos/favicon.png">
+
+<!-- Fonts: Satoshi (Calibre proxy) + Cabinet Grotesk for display + Instrument Serif for editorial quotes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   BISP HOMEPAGE — AIGLON-INSPIRED CINEMATIC DESIGN
+   Design tokens anchored on aiglon.ch Dembrandt extraction
+   Calibre proxy: Satoshi > DM Sans fallback
+   Single border-radius: 3px | Shadows: 29px dramatic | Line-height: 1.0
+   ==========================================================================
+
+   TABLE OF CONTENTS
+   1.  Reset & Custom Properties
+   2.  Base Styles
+   3.  Typography System
+   4.  Button System
+   5.  Layout Utilities
+   6.  Navigation (Bloc 1)
+   7.  Hero (Bloc 2)
+   8.  Promises — Les 4 Promesses (Bloc 3)
+   9.  Stats — Chiffres Clés (Bloc 4)
+   10. Programs (Bloc 5)
+   11. Testimonials (Bloc 6)
+   12. Director — Mot du Directeur (Bloc 7)
+   13. CTA Final + Footer (Bloc 8)
+   14. Scroll Reveal Animations
+   15. Counter Animation
+   16. Responsive — Tablet (1024px)
+   17. Responsive — Mobile (767px & 375px)
+   18. Decorative Elements
+   19. Accessibility (Focus, Skip-link, WCAG)
+   20. Floating CTA Mobile
+   ========================================================================== */
+
+/* ==========================================================================
+   1. RESET & CUSTOM PROPERTIES
+   ========================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* --- Aiglon-derived palette, adapted for BISP --- */
+  --bg-deep:          #0d1117;
+  --bg-section:       #111820;
+  --bg-section-alt:   #0f141c;
+  --bg-card:          #161d28;
+  --bg-card-hover:    #1c2535;
+  --bg-elevated:      #1f2937;
+
+  --text-primary:     #ffffff;
+  --text-secondary:   #b0bec9;
+  --text-muted:       #5e6e80;
+  --text-dim:         #3e4c5e;
+
+  /* Aiglon accents */
+  --accent-red:       #b11d23;
+  --accent-red-light: #c42228;
+  --accent-red-glow:  rgba(177, 29, 35, 0.35);
+  --accent-gold:      #ceab52;
+  --accent-gold-dim:  rgba(206, 171, 82, 0.12);
+  --accent-gold-glow: rgba(206, 171, 82, 0.25);
+
+  /* Borders — Aiglon tokens */
+  --border-subtle:    rgba(255, 255, 255, 0.06);
+  --border-medium:    rgba(255, 255, 255, 0.1);
+  --border-accent:    rgba(206, 171, 82, 0.25);
+  --border-red:       rgba(177, 29, 35, 0.4);
+
+  /* Aiglon: radius-1 = 3px ONLY */
+  --radius:           3px;
+  --radius-pill:      999px;
+
+  /* Aiglon: shadow-4/5 = offsetY 29px, blur 35px */
+  --shadow-dramatic:  0 29px 35px 3px rgba(0, 0, 0, 0.45);
+  --shadow-deep:      0 29px 35px 0px rgba(0, 0, 0, 0.30);
+  --shadow-medium:    0 12px 28px rgba(0, 0, 0, 0.35);
+  --shadow-soft:      0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-glow-red:  0 8px 32px rgba(177, 29, 35, 0.3);
+  --shadow-glow-gold: 0 8px 32px rgba(206, 171, 82, 0.2);
+
+  /* Typography — Satoshi as Calibre proxy, DM Sans fallback */
+  --font-primary:    'Satoshi', 'DM Sans', system-ui, Helvetica, sans-serif;
+  --font-display:    'Cabinet Grotesk', 'DM Sans', system-ui, sans-serif;
+  --font-editorial:  'Instrument Serif', Georgia, 'Times New Roman', serif;
+
+  /* Spacing scale (Aiglon: tight 1-15px, extended for sections) */
+  --sp-1: 0.125rem;   /* 2px */
+  --sp-2: 0.25rem;    /* 4px */
+  --sp-3: 0.5rem;     /* 8px */
+  --sp-4: 0.75rem;    /* 12px */
+  --sp-5: 1rem;       /* 16px */
+  --sp-6: 1.5rem;     /* 24px */
+  --sp-7: 2rem;       /* 32px */
+  --sp-8: 2.5rem;     /* 40px */
+  --sp-9: 3rem;       /* 48px */
+  --sp-10: 4rem;      /* 64px */
+  --sp-11: 5rem;      /* 80px */
+  --sp-12: 6rem;      /* 96px */
+  --sp-section: 7.5rem; /* 120px */
+  --sp-hero: 10rem;   /* 160px */
+
+  /* Layout */
+  --max-width: 1440px;
+  --content-width: 1200px;
+  --narrow-width: 800px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   2. BASE STYLES
+   ========================================================================== */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-primary);
+  background: var(--bg-deep);
+  overflow-x: hidden;
+  position: relative;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--accent-red);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY SYSTEM
+   Aiglon: Calibre 26px / weight 500 / line-height 1.0
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+h2 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  letter-spacing: -0.03em;
+}
+h3 {
+  font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+  letter-spacing: -0.02em;
+}
+h4 {
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  letter-spacing: -0.015em;
+}
+
+/* Aiglon signature: red accent words in headings */
+.accent {
+  color: var(--accent-red);
+}
+.gold {
+  color: var(--accent-gold);
+}
+.italic-serif {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Section label — small gold uppercase with rule */
+.section-label {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-7);
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--accent-gold);
+}
+
+/* Paragraph styles */
+.lead {
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 640px;
+}
+.body-text {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+/* ==========================================================================
+   4. BUTTON SYSTEM
+   Aiglon: radius 3px, Calibre weight 700
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  font-family: var(--font-primary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.875rem 1.875rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-height: 48px;
+  min-width: 48px;
+  line-height: 1;
+}
+.btn::after {
+  content: '\2192';
+  font-size: 1.1em;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn:hover::after {
+  transform: translateX(5px);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--accent-red);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-soft);
+}
+.btn-primary:hover {
+  background: var(--accent-red-light);
+  box-shadow: var(--shadow-glow-red);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+.btn-outline:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  background: var(--accent-gold);
+  color: var(--bg-deep);
+}
+.btn-gold:hover {
+  background: #dfc063;
+  box-shadow: var(--shadow-glow-gold);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--accent-red);
+  padding: 0;
+  min-height: auto;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+.btn-ghost:hover {
+  color: var(--accent-red-light);
+}
+
+/* ==========================================================================
+   5. LAYOUT UTILITIES
+   ========================================================================== */
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.container-wide {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.container-narrow {
+  max-width: var(--narrow-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ==========================================================================
+   6. NAVIGATION (Bloc 1)
+   Logo BISP + 5 items + CTA "Planifier une visite" + FR/EN toggle
+   Sticky, transparent on hero, solid on scroll
+   ========================================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: var(--sp-5) 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.nav.scrolled {
+  background: rgba(13, 17, 23, 0.92);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  padding: var(--sp-3) 0;
+}
+.nav.scrolled::after {
+  opacity: 1;
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-7);
+}
+
+/* Logo */
+.nav-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.nav-logo img {
+  height: 42px;
+  width: auto;
+  transition: all 0.4s ease;
+}
+.nav.scrolled .nav-logo img {
+  height: 34px;
+}
+
+/* Desktop nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--sp-6), 2.5vw, var(--sp-8));
+  list-style: none;
+}
+.nav-links li {
+  position: relative;
+}
+.nav-links a {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s ease;
+  padding: var(--sp-3) 0;
+  display: block;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-red);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--text-primary);
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  width: 100%;
+}
+
+/* Right side: lang toggle + CTA */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  flex-shrink: 0;
+}
+
+.nav-lang {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  padding: 2px;
+}
+.nav-lang a {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 6px 10px;
+  border-radius: 2px;
+  color: var(--text-muted);
+  transition: all 0.25s ease;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+.nav-lang a.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+.nav-lang a:hover:not(.active) {
+  color: var(--text-secondary);
+}
+
+.nav-cta-btn {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  background: var(--accent-red);
+  color: var(--text-primary);
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.nav-cta-btn:hover {
+  background: var(--accent-red-light);
+  box-shadow: var(--shadow-glow-red);
+  transform: translateY(-1px);
+}
+
+/* Mobile hamburger */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--sp-3);
+  min-height: 48px;
+  min-width: 48px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1001;
+}
+.hamburger-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 22px;
+}
+.hamburger-bars span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 1px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+.nav-hamburger.active .hamburger-bars span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.active .hamburger-bars span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav-hamburger.active .hamburger-bars span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile overlay menu */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(13, 17, 23, 0.97);
+  backdrop-filter: blur(30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--sp-12) var(--gutter);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.mobile-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-overlay-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-10);
+}
+.mobile-overlay-links a {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+  padding: var(--sp-3) 0;
+}
+.mobile-overlay-links a:hover {
+  color: var(--text-primary);
+}
+.mobile-overlay-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-5);
+}
+.mobile-overlay-lang {
+  display: flex;
+  gap: var(--sp-5);
+  margin-top: var(--sp-7);
+}
+.mobile-overlay-lang a {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+.mobile-overlay-lang a.active {
+  color: var(--accent-gold);
+}
+
+/* ==========================================================================
+   7. HERO (Bloc 2)
+   Video BG + Aiglon-style H1 with red accent words + badge + 2 CTAs
+   ========================================================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Video / poster background */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-media video,
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Cinematic overlay — deep, moody, Aiglon-inspired */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(13,17,23,0.15) 0%, rgba(13,17,23,0.5) 50%, rgba(13,17,23,0.9) 100%),
+    linear-gradient(180deg, rgba(13,17,23,0.3) 0%, rgba(13,17,23,0.1) 25%, rgba(13,17,23,0.25) 55%, rgba(13,17,23,0.92) 100%);
+}
+
+/* Hero content */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 960px;
+  padding: var(--sp-hero) var(--gutter) var(--sp-12);
+}
+
+/* Badge above title */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-6);
+  background: var(--accent-gold-dim);
+  border: 1px solid var(--accent-gold-glow);
+  border-radius: var(--radius);
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: var(--sp-9);
+  animation: heroFadeDown 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+.hero-badge-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+}
+
+/* H1: Aiglon treatment — line-height: 1.0, red accent words */
+.hero h1 {
+  margin-bottom: var(--sp-7);
+  animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both;
+}
+.hero h1 .hero-line {
+  display: block;
+  margin-bottom: 0.15em;
+}
+.hero h1 .hero-line:last-child {
+  margin-bottom: 0;
+}
+
+/* Subtext */
+.hero-sub {
+  font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 620px;
+  margin: 0 auto var(--sp-9);
+  animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.45s both;
+}
+
+/* CTA buttons */
+.hero-actions {
+  display: flex;
+  gap: var(--sp-5);
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+}
+
+/* Scroll indicator */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: var(--sp-9);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  animation: heroFadeUp 1s ease 1.2s both;
+}
+.hero-scroll-text {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--accent-gold));
+  animation: scrollDrop 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes heroFadeDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollDrop {
+  0%   { top: -100%; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ==========================================================================
+   8. PROMISES — Les 4 Promesses (Bloc 3)
+   Intimité, Double passeport, Monde, Confiance + Pictos SVG
+   ========================================================================== */
+.promises {
+  padding: var(--sp-section) 0;
+  background: var(--bg-section);
+  position: relative;
+}
+.promises::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.promises-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto var(--sp-11);
+}
+.promises-header .lead {
+  margin: var(--sp-6) auto 0;
+}
+
+.promises-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-6);
+}
+
+.promise-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: var(--sp-9) var(--sp-7) var(--sp-7);
+  text-align: center;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.promise-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.promise-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-dramatic);
+  border-color: var(--border-red);
+  background: var(--bg-card-hover);
+}
+.promise-card:hover::before {
+  transform: scaleX(1);
+}
+
+.promise-icon-wrap {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--sp-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-gold-dim);
+  border: 1px solid var(--accent-gold-glow);
+  border-radius: 50%;
+  transition: all 0.4s ease;
+}
+.promise-card:hover .promise-icon-wrap {
+  background: rgba(206, 171, 82, 0.2);
+  transform: scale(1.05);
+}
+.promise-icon-wrap img {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) saturate(100%) invert(76%) sepia(30%) saturate(500%) hue-rotate(10deg) brightness(95%);
+}
+
+.promise-card h3 {
+  margin-bottom: var(--sp-5);
+  font-size: 1.25rem;
+  line-height: 1.15;
+}
+.promise-card .body-text {
+  margin-bottom: var(--sp-6);
+  font-size: 0.875rem;
+}
+
+.promise-proof {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ==========================================================================
+   9. STATS — Chiffres Clés (Bloc 4)
+   Parallax-style background with overlay, animated counters
+   ========================================================================== */
+.stats {
+  position: relative;
+  padding: var(--sp-section) 0;
+  overflow: hidden;
+}
+.stats-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.stats-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+.stats-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,17,23,0.88) 0%, rgba(13,17,23,0.72) 40%, rgba(13,17,23,0.8) 70%, rgba(13,17,23,0.95) 100%),
+    linear-gradient(270deg, rgba(177,29,35,0.05) 0%, transparent 40%, transparent 60%, rgba(206,171,82,0.04) 100%);
+}
+
+.stats-content {
+  position: relative;
+  z-index: 2;
+}
+.stats-header {
+  text-align: center;
+  margin-bottom: var(--sp-11);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sp-5);
+}
+.stat-cell {
+  text-align: center;
+  padding: var(--sp-8) var(--sp-5);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stat-cell:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-accent);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 4.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--sp-3);
+  background: linear-gradient(145deg, var(--text-primary) 30%, var(--accent-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-number .stat-unit {
+  font-size: 0.55em;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   10. PROGRAMS (Bloc 5)
+   4 cards: Maternelle, Primaire, Collège, Lycée — dark bg, real BISP photos
+   ========================================================================== */
+.programs {
+  padding: var(--sp-section) 0;
+  background: var(--bg-deep);
+  position: relative;
+}
+.programs-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--sp-11);
+}
+.programs-header .lead {
+  margin: var(--sp-6) auto 0;
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-6);
+}
+
+.program-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.program-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-dramatic);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.program-img {
+  position: relative;
+  height: 260px;
+  overflow: hidden;
+}
+.program-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.program-card:hover .program-img img {
+  transform: scale(1.08);
+}
+.program-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(13,17,23,0.75) 0%, rgba(13,17,23,0.1) 50%, transparent 100%);
+}
+.program-age-badge {
+  position: absolute;
+  top: var(--sp-5);
+  right: var(--sp-5);
+  z-index: 2;
+  background: var(--accent-red);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.program-body {
+  padding: var(--sp-7) var(--sp-6) var(--sp-6);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.program-cycle {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: var(--sp-3);
+}
+.program-card h3 {
+  font-size: 1.375rem;
+  margin-bottom: var(--sp-5);
+  line-height: 1.15;
+}
+.program-card .body-text {
+  font-size: 0.875rem;
+  margin-bottom: var(--sp-6);
+  flex: 1;
+}
+
+.program-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+  gap: var(--sp-4);
+}
+.program-price {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.program-price strong {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+.program-discover {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.program-discover:hover {
+  gap: 10px;
+  color: var(--accent-red-light);
+}
+
+/* ==========================================================================
+   11. TESTIMONIALS (Bloc 6)
+   Horizontal scroll carousel with parent quotes
+   ========================================================================== */
+.testimonials {
+  padding: var(--sp-section) 0;
+  background: var(--bg-section);
+  position: relative;
+  overflow: hidden;
+}
+.testimonials::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.testimonials-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--sp-11);
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter);
+}
+.carousel-track {
+  display: flex;
+  gap: var(--sp-6);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: var(--gutter);
+  -webkit-overflow-scrolling: touch;
+  padding: var(--sp-5) var(--sp-1) var(--sp-7);
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.testimonial-card {
+  flex: 0 0 min(400px, 82vw);
+  scroll-snap-align: start;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: var(--sp-9) var(--sp-7);
+  position: relative;
+  transition: all 0.4s ease;
+}
+.testimonial-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-deep);
+  transform: translateY(-4px);
+}
+
+/* Big red quotation mark */
+.tq-mark {
+  font-family: var(--font-editorial);
+  font-size: 6rem;
+  line-height: 0.7;
+  color: var(--accent-red);
+  opacity: 0.2;
+  position: absolute;
+  top: var(--sp-6);
+  left: var(--sp-6);
+  pointer-events: none;
+}
+
+.tq-text {
+  font-family: var(--font-editorial);
+  font-size: 1.0625rem;
+  font-style: italic;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-7);
+  position: relative;
+  z-index: 1;
+}
+
+.tq-author {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+}
+.tq-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-gold-dim);
+  border: 1px solid var(--accent-gold-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+.tq-name {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+.tq-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+}
+
+/* Carousel navigation arrows */
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-8);
+}
+.carousel-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.carousel-btn:hover {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  box-shadow: var(--shadow-glow-red);
+}
+.carousel-btn:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   12. DIRECTOR — Mot du Directeur (Bloc 7)
+   2-column: portrait left, quote right
+   ========================================================================== */
+.director {
+  padding: var(--sp-section) 0;
+  background: var(--bg-deep);
+  position: relative;
+}
+.director-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--sp-12);
+  align-items: center;
+}
+
+/* Portrait with gold accent frame */
+.director-portrait {
+  position: relative;
+}
+.director-portrait-img {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-dramatic);
+  position: relative;
+  z-index: 2;
+}
+.director-portrait-img img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+.director-portrait-deco {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  width: 55%;
+  height: 55%;
+  border: 3px solid var(--accent-gold);
+  border-radius: var(--radius);
+  opacity: 0.2;
+  z-index: 1;
+}
+.director-portrait-deco-2 {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  width: 35%;
+  height: 35%;
+  border: 1px solid var(--accent-red);
+  border-radius: var(--radius);
+  opacity: 0.15;
+  z-index: 1;
+}
+
+/* Quote and signature */
+.director-quote {
+  position: relative;
+}
+.director-quote blockquote {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.1875rem, 2.2vw, 1.625rem);
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: var(--sp-8);
+  padding-left: var(--sp-7);
+  border-left: 3px solid var(--accent-red);
+  position: relative;
+}
+
+.director-sig {
+  margin-bottom: var(--sp-8);
+}
+.director-sig-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.director-sig-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+.director-sig-school {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   13. CTA FINAL + FOOTER (Bloc 8)
+   ========================================================================== */
+
+/* --- CTA Final --- */
+.cta-final {
+  position: relative;
+  padding: var(--sp-section) 0;
+  text-align: center;
+  overflow: hidden;
+}
+.cta-final-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.cta-final-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);
+}
+.cta-final-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(13,17,23,0.93) 0%, rgba(22,29,40,0.90) 100%);
+}
+.cta-final-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.cta-final h2 {
+  margin-bottom: var(--sp-6);
+}
+.cta-final .lead {
+  margin: 0 auto var(--sp-9);
+  text-align: center;
+}
+.cta-final-actions {
+  display: flex;
+  gap: var(--sp-5);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-11);
+}
+
+.cta-accreditations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-9);
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--border-subtle);
+}
+.cta-accreditations img {
+  height: 50px;
+  width: auto;
+  opacity: 0.6;
+  filter: brightness(0) invert(1);
+  transition: opacity 0.3s ease;
+}
+.cta-accreditations img:hover {
+  opacity: 1;
+}
+
+/* --- Footer --- */
+.footer {
+  background: var(--bg-section-alt);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--sp-11) 0 var(--sp-7);
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(3, 1fr);
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-10);
+}
+
+/* Brand column */
+.footer-brand-col {
+  max-width: 300px;
+}
+.footer-logo {
+  height: 40px;
+  width: auto;
+  margin-bottom: var(--sp-6);
+}
+.footer-brand-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--sp-6);
+}
+.footer-social-row {
+  display: flex;
+  gap: var(--sp-4);
+}
+.footer-social-link {
+  width: 40px;
+  height: 40px;
+  min-height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.footer-social-link:hover {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  color: var(--text-primary);
+}
+
+/* Footer nav columns */
+.footer-col-title {
+  font-family: var(--font-primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: var(--sp-6);
+  line-height: 1.4;
+}
+.footer-col-list {
+  list-style: none;
+}
+.footer-col-list li {
+  margin-bottom: var(--sp-3);
+}
+.footer-col-list a {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+  display: inline-block;
+  padding: 2px 0;
+}
+.footer-col-list a:hover {
+  color: var(--text-primary);
+}
+
+/* Campus addresses */
+.footer-campus-block {
+  margin-bottom: var(--sp-5);
+}
+.footer-campus-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+.footer-campus-addr {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.footer-phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: var(--sp-5);
+  transition: color 0.3s ease;
+}
+.footer-phone-link:hover {
+  color: var(--accent-gold);
+}
+
+/* Footer bottom bar */
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--sp-7);
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+}
+.footer-legal-text {
+  font-size: 0.6875rem;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+.footer-legal-text a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer-accred-row {
+  display: flex;
+  gap: var(--sp-6);
+  align-items: center;
+}
+.footer-accred-row img {
+  height: 32px;
+  width: auto;
+  opacity: 0.4;
+  filter: brightness(0) invert(0.65);
+  transition: opacity 0.3s ease;
+}
+.footer-accred-row img:hover {
+  opacity: 0.7;
+}
+.footer-lang-row {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}
+.footer-lang-row a {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  transition: color 0.3s ease;
+}
+.footer-lang-row a.active {
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.05);
+}
+
+/* ==========================================================================
+   14. SCROLL REVEAL ANIMATIONS
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.16s; }
+.reveal-d3 { transition-delay: 0.24s; }
+.reveal-d4 { transition-delay: 0.32s; }
+.reveal-d5 { transition-delay: 0.40s; }
+
+/* Stagger grid children */
+.stagger > *:nth-child(1) { transition-delay: 0s; }
+.stagger > *:nth-child(2) { transition-delay: 0.09s; }
+.stagger > *:nth-child(3) { transition-delay: 0.18s; }
+.stagger > *:nth-child(4) { transition-delay: 0.27s; }
+.stagger > *:nth-child(5) { transition-delay: 0.36s; }
+
+/* ==========================================================================
+   15. COUNTER ANIMATION
+   ========================================================================== */
+.counter-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   16. RESPONSIVE — TABLET (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  /* Nav: hide desktop links, show hamburger */
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta-btn { display: none; }
+
+  .promises-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .programs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .director-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-8);
+  }
+  .director-portrait {
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   17. RESPONSIVE — MOBILE (max-width: 767px) & SMALL (375px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  :root {
+    --sp-section: 5rem;
+  }
+
+  .promises-grid,
+  .programs-grid {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stats-grid .stat-cell:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .director-grid {
+    text-align: center;
+  }
+  .director-quote blockquote {
+    padding-left: var(--sp-5);
+    text-align: left;
+  }
+  .director-portrait-deco,
+  .director-portrait-deco-2 {
+    display: none;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--sp-7);
+  }
+  .footer-brand-col {
+    max-width: 100%;
+  }
+  .footer-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--sp-5);
+  }
+
+  .cta-accreditations {
+    flex-direction: column;
+    gap: var(--sp-6);
+  }
+
+  .testimonial-card {
+    flex: 0 0 88vw;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 9vw, 3.5rem);
+  }
+}
+
+@media (max-width: 375px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ==========================================================================
+   18. DECORATIVE ELEMENTS
+   ========================================================================== */
+
+/* Subtle film grain texture — cinematic like Aiglon */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.018;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 512px 512px;
+}
+
+/* Section divider line */
+.section-divider {
+  display: block;
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.section-divider::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+/* Wave SVG separator */
+.wave-sep {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: -2px 0;
+  line-height: 0;
+}
+
+/* ==========================================================================
+   19. ACCESSIBILITY
+   ========================================================================== */
+
+/* Skip link */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: var(--gutter);
+  background: var(--accent-red);
+  color: var(--text-primary);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  z-index: 10000;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus {
+  top: var(--sp-5);
+}
+
+/* Focus ring — gold, visible */
+:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   20. FLOATING CTA — MOBILE
+   ========================================================================== */
+.floating-mobile-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  padding: var(--sp-4) var(--gutter);
+  background: rgba(13, 17, 23, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-subtle);
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
+}
+.floating-mobile-cta.visible {
+  transform: translateY(0);
+}
+.floating-mobile-cta .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .floating-mobile-cta {
+    display: block;
+  }
+  .footer {
+    padding-bottom: 80px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     SKIP LINK — WCAG 2.1 AA
+     ================================================================ -->
+<a href="#main" class="skip-to-content">Aller au contenu principal</a>
+
+<!-- ================================================================
+     BLOC 1 : NAVIGATION
+     Logo BISP + 5 items + CTA + FR/EN toggle — Sticky
+     ================================================================ -->
+<header>
+  <nav class="nav" id="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="/" class="nav-logo" aria-label="BISP — Accueil">
+        <img src="../assets/logos/logo-bisp-header.svg"
+             alt="BISP — École Bilingue Internationale de Paris"
+             width="160" height="44">
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" role="menubar">
+        <li role="none"><a href="#ecole" role="menuitem">Notre école</a></li>
+        <li role="none"><a href="#programmes" role="menuitem">Programmes</a></li>
+        <li role="none"><a href="#admissions" role="menuitem">Admissions</a></li>
+        <li role="none"><a href="#vie-scolaire" role="menuitem">Vie scolaire</a></li>
+        <li role="none"><a href="#actualites" role="menuitem">Actualités</a></li>
+      </ul>
+
+      <!-- Right: lang + CTA + hamburger -->
+      <div class="nav-right">
+        <div class="nav-lang" role="group" aria-label="Choix de langue">
+          <a href="#" class="active" aria-current="true" lang="fr">FR</a>
+          <a href="#" lang="en">EN</a>
+        </div>
+        <a href="#contact" class="nav-cta-btn">Planifier une visite</a>
+        <button class="nav-hamburger" id="navHamburger"
+                aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileOverlay">
+          <div class="hamburger-bars">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay menu -->
+  <div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-label="Menu de navigation" aria-hidden="true">
+    <div class="mobile-overlay-links">
+      <a href="#ecole">Notre école</a>
+      <a href="#programmes">Programmes</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#vie-scolaire">Vie scolaire</a>
+      <a href="#actualites">Actualités</a>
+    </div>
+    <div class="mobile-overlay-cta">
+      <a href="#contact" class="btn btn-primary">Planifier une visite</a>
+      <a href="tel:+33144189483" class="btn btn-outline">+33 (0) 1 44 18 94 83</a>
+    </div>
+    <div class="mobile-overlay-lang">
+      <a href="#" class="active" lang="fr">FR</a>
+      <a href="#" lang="en">EN</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================================================================
+     BLOC 2 : HERO
+     Video background + H1 with Aiglon red-word treatment + badge + CTAs
+     ================================================================ -->
+<main id="main">
+<section class="hero" aria-label="Introduction — École bilingue internationale de Paris">
+  <div class="hero-media" aria-hidden="true">
+    <video autoplay muted loop playsinline
+           poster="../assets/images/hero-poster.jpg"
+           preload="auto">
+      <source src="../assets/videos/video-presentation-bisp.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <!-- Proof badge -->
+    <div class="hero-badge">
+      <svg class="hero-badge-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      Cambridge & Éducation Nationale — depuis 2012
+    </div>
+
+    <!-- H1: Aiglon style — each key word in red -->
+    <h1>
+      <span class="hero-line">Deux <span class="accent">langues.</span></span>
+      <span class="hero-line">Douze <span class="accent">élèves.</span></span>
+      <span class="hero-line">Un <span class="accent">monde.</span></span>
+    </h1>
+
+    <p class="hero-sub">
+      À Paris, une école bilingue internationale où chaque enfant est connu,
+      accompagné et préparé — en français et en anglais. 32 nationalités,
+      double curriculum Cambridge et français.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Planifier une visite</a>
+      <a href="#programmes" class="btn btn-outline">Découvrir nos programmes</a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll-indicator" aria-hidden="true">
+    <span class="hero-scroll-text">Découvrir</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     BLOC 3 : LES 4 PROMESSES
+     Intimité, Double passeport, Monde, Confiance — Pictos SVG
+     ================================================================ -->
+<section class="promises" id="ecole" aria-labelledby="promises-heading">
+  <div class="container">
+    <div class="promises-header reveal">
+      <span class="section-label">Ce qui nous distingue</span>
+      <h2 id="promises-heading">Ce qui fait de BISP une école <span class="accent">à part.</span></h2>
+      <p class="lead">Dans l'intimité de classes de 12 élèves, nous donnons à chaque enfant un double passeport académique et la confiance de grandir entre les langues.</p>
+    </div>
+
+    <div class="promises-grid stagger">
+      <!-- 1. Intimité -->
+      <article class="promise-card reveal">
+        <div class="promise-icon-wrap">
+          <img src="../assets/pictos/eleves.svg" alt="" aria-hidden="true" width="28" height="28">
+        </div>
+        <h3><span class="accent">Intimité</span></h3>
+        <p class="body-text">Des classes de 12 élèves où chaque enfant est connu par son prénom. Un accompagnement personnalisé hebdomadaire dans un cocon éducatif à taille humaine, réparti sur 3 campus dans le 15e arrondissement.</p>
+        <div class="promise-proof">12 à 14 élèves par classe</div>
+      </article>
+
+      <!-- 2. Double passeport -->
+      <article class="promise-card reveal">
+        <div class="promise-icon-wrap">
+          <img src="../assets/pictos/bilingue.svg" alt="" aria-hidden="true" width="28" height="28">
+        </div>
+        <h3>Double <span class="accent">passeport</span></h3>
+        <p class="body-text">Cambridge Assessment International et Éducation Nationale française, sans compromis. Deux systèmes académiques, un seul parcours d'excellence — accrédité Pearson Edexcel.</p>
+        <div class="promise-proof">50/50 français et anglais</div>
+      </article>
+
+      <!-- 3. Monde -->
+      <article class="promise-card reveal">
+        <div class="promise-icon-wrap">
+          <img src="../assets/pictos/nationalites.svg" alt="" aria-hidden="true" width="28" height="28">
+        </div>
+        <h3>Le <span class="accent">Monde</span></h3>
+        <p class="body-text">Une micro-société internationale au cœur de Paris. 32 nationalités qui apprennent ensemble, échangent et tissent des liens entre cultures. Chaque jour est un voyage sans quitter l'école.</p>
+        <div class="promise-proof">32 nationalités représentées</div>
+      </article>
+
+      <!-- 4. Confiance -->
+      <article class="promise-card reveal">
+        <div class="promise-icon-wrap">
+          <img src="../assets/pictos/enfants.svg" alt="" aria-hidden="true" width="28" height="28">
+        </div>
+        <h3><span class="accent">Confiance</span></h3>
+        <p class="body-text">Le bilinguisme comme seconde nature, pas comme matière scolaire. Dès 3 ans, nos enfants pensent et créent dans deux langues — naturellement, intuitivement, avec une confiance qui les accompagnera toute leur vie.</p>
+        <div class="promise-proof">Immersion bilingue dès la maternelle</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Wave separator -->
+<img src="../assets/images/wave-negative-blue.svg" alt="" class="wave-sep" aria-hidden="true" loading="lazy">
+
+<!-- ================================================================
+     BLOC 4 : CHIFFRES CLÉS
+     Background photo parallax + 5 animated counters
+     ================================================================ -->
+<section class="stats" aria-labelledby="stats-heading">
+  <div class="stats-bg" aria-hidden="true">
+    <img src="../assets/stock/diverse-students.jpg" alt="" loading="lazy" width="1440" height="800">
+  </div>
+
+  <div class="stats-content container">
+    <div class="stats-header reveal">
+      <span class="section-label">BISP en chiffres</span>
+      <h2 id="stats-heading">Les chiffres qui <span class="accent">comptent.</span></h2>
+    </div>
+
+    <div class="stats-grid stagger">
+      <div class="stat-cell reveal">
+        <div class="stat-number counter-num" data-target="32">0</div>
+        <div class="stat-label">Nationalités représentées</div>
+      </div>
+      <div class="stat-cell reveal">
+        <div class="stat-number counter-num" data-target="12">0</div>
+        <div class="stat-label">Élèves par classe en moyenne</div>
+      </div>
+      <div class="stat-cell reveal">
+        <div class="stat-number">50<span class="stat-unit">/50</span></div>
+        <div class="stat-label">Français et anglais, à parts égales</div>
+      </div>
+      <div class="stat-cell reveal">
+        <div class="stat-number counter-num" data-target="14">0</div>
+        <div class="stat-label">Années d'excellence éducative</div>
+      </div>
+      <div class="stat-cell reveal">
+        <div class="stat-number counter-num" data-target="3">0</div>
+        <div class="stat-label">Campus dans le 15<sup>e</sup> arrondissement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     BLOC 5 : PROGRAMMES
+     Maternelle, Primaire, Collège, Lycée — real BISP photos
+     ================================================================ -->
+<section class="programs" id="programmes" aria-labelledby="programs-heading">
+  <div class="container">
+    <div class="programs-header reveal">
+      <span class="section-label">Nos programmes</span>
+      <h2 id="programs-heading">Un parcours <span class="accent">complet,</span> de 3 à 18 ans.</h2>
+      <p class="lead">De la maternelle au lycée, chaque étape est pensée pour construire des esprits bilingues, confiants et ouverts sur le monde.</p>
+    </div>
+
+    <div class="programs-grid stagger">
+      <!-- Maternelle -->
+      <article class="program-card reveal">
+        <div class="program-img">
+          <img src="../assets/images/jeux-enfant.png"
+               alt="Enfant en maternelle bilingue jouant avec des jouets éducatifs à BISP Paris"
+               loading="lazy" width="600" height="400">
+          <span class="program-age-badge">3 – 6 ans</span>
+        </div>
+        <div class="program-body">
+          <span class="program-cycle">Cycle 1</span>
+          <h3>Maternelle <span class="accent">bilingue</span></h3>
+          <p class="body-text">Immersion naturelle dès le plus jeune âge. En contact avec des enseignants de langue maternelle anglophone et francophone, les enfants acquièrent un accent natif et parlent comme des natifs dans des classes de 12 élèves.</p>
+          <div class="program-meta">
+            <div class="program-price">À partir de <strong>13 800 €</strong></div>
+            <a href="#" class="program-discover" aria-label="Découvrir la maternelle bilingue BISP">Découvrir &#8594;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Primaire -->
+      <article class="program-card reveal">
+        <div class="program-img">
+          <img src="../assets/images/activites-enfants.png"
+               alt="Élèves de primaire prenant des notes en cours bilingue à BISP Paris"
+               loading="lazy" width="600" height="400">
+          <span class="program-age-badge">6 – 11 ans</span>
+        </div>
+        <div class="program-body">
+          <span class="program-cycle">Cycles 2 & 3</span>
+          <h3>Primaire <span class="accent">bilingue</span></h3>
+          <p class="body-text">Un curriculum riche et exigeant, 50% en français et 50% en anglais par des enseignants natifs. L'ambiance cosmopolite avec 32 nationalités permet une ouverture d'esprit naturelle et spontanée.</p>
+          <div class="program-meta">
+            <div class="program-price">À partir de <strong>16 800 €</strong></div>
+            <a href="#" class="program-discover" aria-label="Découvrir le primaire bilingue BISP">Découvrir &#8594;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Collège -->
+      <article class="program-card reveal">
+        <div class="program-img">
+          <img src="../assets/images/fille-travaille.png"
+               alt="Élève du collège bilingue BISP travaillant en classe à Paris"
+               loading="lazy" width="600" height="400">
+          <span class="program-age-badge">11 – 15 ans</span>
+        </div>
+        <div class="program-body">
+          <span class="program-cycle">Cycle 4</span>
+          <h3>Collège <span class="accent">bilingue</span></h3>
+          <p class="body-text">Double méthodologie analytique française et pragmatique anglo-saxonne. Les collégiens développent l'art d'argumenter et de présenter avec assurance en français comme en anglais.</p>
+          <div class="program-meta">
+            <div class="program-price">À partir de <strong>21 800 €</strong></div>
+            <a href="#" class="program-discover" aria-label="Découvrir le collège bilingue BISP">Découvrir &#8594;</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Lycée -->
+      <article class="program-card reveal">
+        <div class="program-img">
+          <img src="../assets/images/litterature-francaise-lycee-bilingue.png"
+               alt="Lycéens bilingues prenant des notes en cours de littérature à BISP Paris"
+               loading="lazy" width="600" height="400">
+          <span class="program-age-badge">15 – 18 ans</span>
+        </div>
+        <div class="program-body">
+          <span class="program-cycle">Lycée</span>
+          <h3>Lycée <span class="accent">bilingue</span></h3>
+          <p class="body-text">Préparation intensive aux meilleures universités internationales. Rigueur intellectuelle, leadership et maturité académique dans les deux langues pour un parcours professionnel ambitieux.</p>
+          <div class="program-meta">
+            <div class="program-price">À partir de <strong>21 800 €</strong></div>
+            <a href="#" class="program-discover" aria-label="Découvrir le lycée bilingue BISP">Découvrir &#8594;</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     BLOC 6 : TÉMOIGNAGES
+     Horizontal carousel — parent quotes, diverse nationalities
+     ================================================================ -->
+<section class="testimonials" id="temoignages" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="testimonials-header reveal">
+      <span class="section-label">Témoignages</span>
+      <h2 id="testimonials-heading">Ils nous ont confié leurs enfants.<br>Voici ce qu'ils <span class="accent">en disent.</span></h2>
+    </div>
+  </div>
+
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="carouselTrack" role="list">
+      <!-- Témoignage 1 — Franco-allemande -->
+      <article class="testimonial-card" role="listitem">
+        <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+        <p class="tq-text">Notre fille est arrivée à BISP à 4 ans sans parler un mot d'anglais. Deux ans plus tard, elle passe du français à l'anglais sans même s'en rendre compte. Ce qui nous a le plus marqués, c'est l'attention individuelle — les enseignants connaissent vraiment chaque enfant, ses forces et ses défis.</p>
+        <div class="tq-author">
+          <div class="tq-avatar" aria-hidden="true">SR</div>
+          <div>
+            <div class="tq-name">Sophie R.</div>
+            <div class="tq-detail">Mère — Franco-allemande — Enfant en CE2</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Témoignage 2 — Britannique -->
+      <article class="testimonial-card" role="listitem">
+        <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+        <p class="tq-text">We relocated from London and were anxious about our son's transition. BISP made it seamless. The 50/50 model is genuine — not just a marketing claim. He's now thriving in both languages, and the small class sizes mean he's never lost in the crowd.</p>
+        <div class="tq-author">
+          <div class="tq-avatar" aria-hidden="true">JW</div>
+          <div>
+            <div class="tq-name">James W.</div>
+            <div class="tq-detail">Père — Britannique — Enfant en 6e</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Témoignage 3 — Japonaise -->
+      <article class="testimonial-card" role="listitem">
+        <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+        <p class="tq-text">Après trois écoles internationales dans trois pays différents, BISP est celle où notre fils se sent enfin chez lui. La communauté est petite mais incroyablement diverse — 32 nationalités dans une école à taille humaine, c'est un trésor rare à Paris.</p>
+        <div class="tq-author">
+          <div class="tq-avatar" aria-hidden="true">YT</div>
+          <div>
+            <div class="tq-name">Yuki T.</div>
+            <div class="tq-detail">Mère — Japonaise — Enfant en CM1</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Témoignage 4 — Marocain-français -->
+      <article class="testimonial-card" role="listitem">
+        <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+        <p class="tq-text">Nos deux enfants ont commencé dès la maternelle. L'aîné est maintenant au collège et son bilinguisme est parfait — il pense véritablement dans les deux langues. Le double curriculum Cambridge et français ouvre des portes que les autres écoles ne peuvent pas offrir.</p>
+        <div class="tq-author">
+          <div class="tq-avatar" aria-hidden="true">MA</div>
+          <div>
+            <div class="tq-name">Mohamed A.</div>
+            <div class="tq-detail">Père — Marocain-français — Enfants en maternelle et 4e</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Témoignage 5 — Italienne -->
+      <article class="testimonial-card" role="listitem">
+        <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+        <p class="tq-text">What sets BISP apart is the genuine intimacy. With 12 students per class, our daughter receives the individual attention she needs. The teachers don't just know her name — they know her strengths, her challenges, and exactly how to bring out her best.</p>
+        <div class="tq-author">
+          <div class="tq-avatar" aria-hidden="true">EC</div>
+          <div>
+            <div class="tq-name">Elena C.</div>
+            <div class="tq-detail">Mère — Italienne — Enfant en CE1</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Témoignage 6 — Américain -->
+      <article class="testimonial-card" role="listitem">
+        <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+        <p class="tq-text">As an American expat family, finding a school that truly values both French and English equally was our priority. BISP delivers on that promise every day. The Cambridge accreditation gives us peace of mind for university applications worldwide.</p>
+        <div class="tq-author">
+          <div class="tq-avatar" aria-hidden="true">DM</div>
+          <div>
+            <div class="tq-name">David M.</div>
+            <div class="tq-detail">Père — Américain — Enfant en CM2</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="carousel-nav" aria-label="Navigation des témoignages">
+      <button class="carousel-btn" id="carouselPrev" aria-label="Témoignage précédent">&#8592;</button>
+      <button class="carousel-btn" id="carouselNext" aria-label="Témoignage suivant">&#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     BLOC 7 : MOT DU DIRECTEUR
+     Portrait left + citation right
+     ================================================================ -->
+<section class="director" id="directeur" aria-labelledby="director-heading">
+  <div class="container">
+    <div class="director-grid">
+      <!-- Portrait -->
+      <div class="director-portrait reveal">
+        <div class="director-portrait-img">
+          <img src="../assets/stock/classroom-students.jpg"
+               alt="Directeur de l'école BISP — Bilingual International School of Paris"
+               loading="lazy" width="500" height="667">
+        </div>
+        <div class="director-portrait-deco" aria-hidden="true"></div>
+        <div class="director-portrait-deco-2" aria-hidden="true"></div>
+      </div>
+
+      <!-- Quote + signature -->
+      <div class="director-quote reveal">
+        <span class="section-label">Mot du directeur</span>
+        <h2 id="director-heading">Une <span class="italic-serif">vision</span> pour chaque <span class="accent">enfant.</span></h2>
+
+        <blockquote>
+          <p>Depuis la fondation de BISP en 2012, notre conviction n'a jamais changé : chaque enfant mérite d'être connu, pas seulement par son nom, mais dans toute la richesse de sa personnalité.</p>
+          <p style="margin-top: var(--sp-5);">Dans nos classes de douze élèves, nous ne formons pas des bilingues — nous élevons des citoyens du monde qui pensent, créent et rêvent dans deux langues. Le bilinguisme n'est pas une matière chez nous. C'est un mode de vie, une façon de voir le monde avec deux regards différents et de l'embrasser tout entier.</p>
+          <p style="margin-top: var(--sp-5);">Notre double curriculum Cambridge et français n'est pas un compromis — c'est une promesse. Celle d'offrir à chaque enfant les clés de deux systèmes éducatifs d'excellence, pour un avenir sans frontières.</p>
+        </blockquote>
+
+        <div class="director-sig">
+          <span class="director-sig-name">La Direction</span>
+          <span class="director-sig-title">Bilingual International School of Paris</span>
+          <span class="director-sig-school">Fondée en 2012 — Paris 15e arrondissement</span>
+        </div>
+
+        <a href="#contact" class="btn btn-gold">Planifier votre visite</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     BLOC 8 : CTA FINAL + FOOTER
+     ================================================================ -->
+
+<!-- CTA Final -->
+<section class="cta-final" id="contact" aria-labelledby="cta-heading">
+  <div class="cta-final-bg" aria-hidden="true">
+    <img src="../assets/stock/paris-cityscape.jpg" alt="" loading="lazy" width="1440" height="800">
+  </div>
+  <div class="cta-final-inner container reveal">
+    <span class="section-label" style="justify-content: center;">Rejoignez-nous</span>
+    <h2 id="cta-heading">Prêt à découvrir <span class="accent">BISP</span> ?</h2>
+    <p class="lead" style="margin-left: auto; margin-right: auto;">
+      Venez rencontrer nos enseignants, découvrir nos trois campus dans le 15e arrondissement
+      et comprendre pourquoi plus de 32 nationalités nous font confiance depuis 14 ans.
+    </p>
+
+    <div class="cta-final-actions">
+      <a href="#" class="btn btn-primary">Planifier ma visite</a>
+      <a href="tel:+33144189483" class="btn btn-outline">&#9742; +33 (0) 1 44 18 94 83</a>
+    </div>
+
+    <div class="cta-accreditations">
+      <img src="../assets/logos/cambridge.png" alt="Cambridge Assessment International Education" loading="lazy" width="200" height="50">
+      <img src="../assets/logos/pearson-edexcel.png" alt="Pearson Edexcel" loading="lazy" width="200" height="50">
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <!-- Brand column -->
+      <div class="footer-brand-col">
+        <img src="../assets/logos/logo-bisp-header.svg" alt="BISP" class="footer-logo" width="160" height="40">
+        <p class="footer-brand-desc">
+          École bilingue internationale à Paris. Double curriculum Cambridge Assessment et Éducation Nationale française, de la maternelle au lycée. 32 nationalités au cœur du 15e arrondissement.
+        </p>
+        <div class="footer-social-row">
+          <a href="#" class="footer-social-link" aria-label="Facebook">f</a>
+          <a href="#" class="footer-social-link" aria-label="Instagram">ig</a>
+          <a href="#" class="footer-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="footer-social-link" aria-label="YouTube">yt</a>
+        </div>
+      </div>
+
+      <!-- Navigation column -->
+      <div>
+        <h4 class="footer-col-title">Navigation</h4>
+        <ul class="footer-col-list">
+          <li><a href="#">Notre école</a></li>
+          <li><a href="#">Valeurs et méthodes</a></li>
+          <li><a href="#">Éducation bilingue</a></li>
+          <li><a href="#">Admissions</a></li>
+          <li><a href="#">Vie scolaire</a></li>
+          <li><a href="#">Actualités</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Programs column -->
+      <div>
+        <h4 class="footer-col-title">Programmes</h4>
+        <ul class="footer-col-list">
+          <li><a href="#">Maternelle bilingue</a></li>
+          <li><a href="#">Primaire bilingue</a></li>
+          <li><a href="#">Collège bilingue</a></li>
+          <li><a href="#">Lycée bilingue</a></li>
+          <li><a href="#">Club du mercredi</a></li>
+          <li><a href="#">Stages vacances</a></li>
+          <li><a href="#">Système scolaire</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact / 3 campus -->
+      <div>
+        <h4 class="footer-col-title">Nos 3 campus — Paris 15e</h4>
+        <div class="footer-campus-block">
+          <div class="footer-campus-name">Campus Entrepreneurs</div>
+          <div class="footer-campus-addr">61-63 rue des Entrepreneurs, 75015 Paris</div>
+        </div>
+        <div class="footer-campus-block">
+          <div class="footer-campus-name">Campus Letellier I</div>
+          <div class="footer-campus-addr">10-14 rue Letellier, 75015 Paris</div>
+        </div>
+        <div class="footer-campus-block">
+          <div class="footer-campus-name">Campus Letellier II</div>
+          <div class="footer-campus-addr">17-21 rue Letellier, 75015 Paris</div>
+        </div>
+        <a href="tel:+33144189483" class="footer-phone-link" aria-label="Appeler BISP">
+          &#9742; +33 (0) 1 44 18 94 83
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bar">
+      <span class="footer-legal-text">
+        &copy; 2026 BISP — Bilingual International School of Paris. Tous droits réservés.
+        <a href="#">Mentions légales</a> &middot; <a href="#">Politique de confidentialité</a>
+      </span>
+      <div class="footer-accred-row">
+        <img src="../assets/logos/cambridge.png" alt="Cambridge" loading="lazy" width="120" height="32">
+        <img src="../assets/logos/pearson-edexcel.png" alt="Pearson Edexcel" loading="lazy" width="120" height="32">
+      </div>
+      <div class="footer-lang-row">
+        <a href="#" class="active" lang="fr">FR</a>
+        <a href="#" lang="en">EN</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</main>
+
+<!-- Floating CTA — Mobile -->
+<div class="floating-mobile-cta" id="floatingCta" aria-hidden="true">
+  <a href="tel:+33144189483" class="btn btn-primary">&#9742; Appeler BISP</a>
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT — Progressive enhancement, minimal
+     ================================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     NAV: Scroll — transparent -> solid, show/hide floating CTA
+     ------------------------------------------------------------------ */
+  var navbar = document.getElementById('navbar');
+  var floatingCta = document.getElementById('floatingCta');
+  var ticking = false;
+
+  function handleScroll() {
+    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    /* Navbar solid state */
+    if (scrollY > 80) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+
+    /* Floating CTA after hero */
+    if (floatingCta) {
+      if (scrollY > window.innerHeight * 0.75) {
+        floatingCta.classList.add('visible');
+      } else {
+        floatingCta.classList.remove('visible');
+      }
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(handleScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  /* ------------------------------------------------------------------
+     MOBILE MENU: hamburger toggle
+     ------------------------------------------------------------------ */
+  var hamburger = document.getElementById('navHamburger');
+  var overlay = document.getElementById('mobileOverlay');
+
+  if (hamburger && overlay) {
+    hamburger.addEventListener('click', function() {
+      var isOpen = overlay.classList.toggle('open');
+      hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      overlay.setAttribute('aria-hidden', String(!isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    /* Close on link click */
+    overlay.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        overlay.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* Escape key closes */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) {
+        overlay.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        hamburger.focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     SCROLL REVEAL: IntersectionObserver
+     ------------------------------------------------------------------ */
+  if ('IntersectionObserver' in window) {
+    var reveals = document.querySelectorAll('.reveal');
+    var revealObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    reveals.forEach(function(el) { revealObs.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     COUNTER ANIMATION: Smooth count-up on scroll into view
+     ------------------------------------------------------------------ */
+  if ('IntersectionObserver' in window) {
+    var counters = document.querySelectorAll('.counter-num[data-target]');
+    var counterObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function(c) { counterObs.observe(c); });
+  }
+
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    if (isNaN(target)) return;
+    var dur = 1800;
+    var startTime = null;
+
+    function tick(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / dur, 1);
+      /* easeOutExpo */
+      var eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = target;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ------------------------------------------------------------------
+     TESTIMONIALS CAROUSEL: prev/next buttons
+     ------------------------------------------------------------------ */
+  var track = document.getElementById('carouselTrack');
+  var prevBtn = document.getElementById('carouselPrev');
+  var nextBtn = document.getElementById('carouselNext');
+
+  if (track && prevBtn && nextBtn) {
+    var cardWidth = function() {
+      var firstCard = track.querySelector('.testimonial-card');
+      if (!firstCard) return 420;
+      return firstCard.offsetWidth + 24; /* card width + gap */
+    };
+
+    prevBtn.addEventListener('click', function() {
+      track.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', function() {
+      track.scrollBy({ left: cardWidth(), behavior: 'smooth' });
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     SMOOTH SCROLL: anchor links
+     ------------------------------------------------------------------ */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (href === '#' || href.length < 2) return;
+      var target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        var offset = navbar ? navbar.offsetHeight + 16 : 80;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------
+     INIT
+     ------------------------------------------------------------------ */
+  handleScroll(); /* Set initial nav state */
+
+})();
+</script>
+
+</body>
+</html>

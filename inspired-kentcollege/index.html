@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BISP — École Bilingue Internationale de Paris</title>
+<meta name="description" content="École bilingue internationale à Paris. Double curriculum Cambridge et français, 12 élèves par classe, 32 nationalités. De la maternelle au lycée.">
+<link rel="icon" type="image/png" href="../assets/logos/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BISP — INSPIRED BY KENT COLLEGE
+   Palette : Rouge monochromatique #aa0040 + corail #ff4951
+   Font    : Montserrat (proxy Azo Sans) — 700 dominant
+   Formes  : Cercles, organique, border-radius 50px/100%
+   ============================================================ */
+
+/* ----- RESET & BASE ----- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --crimson: #aa0040;
+  --crimson-dark: #8a0033;
+  --crimson-deep: #6e0029;
+  --coral: #ff4951;
+  --coral-light: #ff6b72;
+  --white: #ffffff;
+  --off-white: #faf8f6;
+  --cream: #f5f0eb;
+  --grey-light: #f4f4f4;
+  --grey-text: #5d5d5d;
+  --grey-dark: #3a3a3a;
+  --black: #1a1a1a;
+  --font-main: 'Montserrat', sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 16px;
+  --radius-lg: 50px;
+  --radius-circle: 50%;
+  --shadow-subtle: 0 2px 20px rgba(0,0,0,0.06);
+  --shadow-card: 0 8px 40px rgba(0,0,0,0.08);
+  --shadow-elevated: 0 16px 60px rgba(0,0,0,0.12);
+  --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --max-width: 1320px;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--grey-text);
+  background: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: var(--font-main);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ----- SKIP TO CONTENT ----- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--crimson);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  font-size: 0.875rem;
+  z-index: 10000;
+  transition: top 0.3s;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ----- UTILITY ----- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 3px;
+  background: var(--coral);
+  border-radius: 2px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.section-title--white {
+  color: var(--white);
+}
+
+.section-title--crimson {
+  color: var(--crimson);
+}
+
+/* Decorative dots — Kent College signature */
+.dot {
+  display: inline-block;
+  border-radius: var(--radius-circle);
+  flex-shrink: 0;
+}
+.dot--coral {
+  background: var(--coral);
+}
+.dot--crimson {
+  background: var(--crimson);
+}
+.dot--sm { width: 8px; height: 8px; }
+.dot--md { width: 14px; height: 14px; }
+.dot--lg { width: 24px; height: 24px; }
+.dot--xl { width: 48px; height: 48px; }
+
+/* Organic photo shapes — Kent College signature */
+.img-circle {
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+.img-organic {
+  border-radius: 48% 52% 55% 45% / 50% 45% 55% 50%;
+  object-fit: cover;
+}
+.img-rounded {
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 36px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition);
+  text-align: center;
+  min-height: 52px;
+}
+.btn--primary {
+  background: var(--crimson);
+  color: var(--white);
+}
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--crimson-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(170, 0, 64, 0.3);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--crimson);
+  border: 2px solid var(--crimson);
+}
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  background: var(--crimson);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+.btn--white {
+  background: var(--white);
+  color: var(--crimson);
+}
+.btn--white:hover,
+.btn--white:focus-visible {
+  background: var(--cream);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,255,255,0.2);
+}
+.btn--coral {
+  background: var(--coral);
+  color: var(--white);
+}
+.btn--coral:hover,
+.btn--coral:focus-visible {
+  background: var(--coral-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 73, 81, 0.3);
+}
+.btn--ghost-white {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.5);
+}
+.btn--ghost-white:hover,
+.btn--ghost-white:focus-visible {
+  background: rgba(255,255,255,0.15);
+  border-color: var(--white);
+}
+.btn .arrow {
+  display: inline-block;
+  transition: transform var(--transition);
+}
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Focus visible for keyboard nav */
+*:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-video video {
+    display: none;
+  }
+  .hero-video .hero-poster {
+    display: block !important;
+  }
+  .counter-value {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   BLOC 1 : NAVIGATION STICKY
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9000;
+  transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+  padding: 18px 0;
+}
+.nav.scrolled {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+  padding: 10px 0;
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.nav__logo {
+  flex-shrink: 0;
+  height: 44px;
+  transition: height var(--transition);
+}
+.nav.scrolled .nav__logo {
+  height: 36px;
+}
+.nav__logo img {
+  height: 100%;
+  width: auto;
+}
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.nav__link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.01em;
+  position: relative;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+.nav.scrolled .nav__link {
+  color: var(--grey-dark);
+}
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--coral);
+  border-radius: 1px;
+  transition: width var(--transition);
+}
+.nav__link:hover::after,
+.nav__link:focus-visible::after {
+  width: 100%;
+}
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav__lang {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  display: flex;
+  gap: 4px;
+}
+.nav.scrolled .nav__lang {
+  color: var(--grey-dark);
+}
+.nav__lang-item {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.nav__lang-item.active {
+  background: var(--crimson);
+  color: var(--white);
+}
+.nav.scrolled .nav__lang-item.active {
+  background: var(--crimson);
+  color: var(--white);
+}
+.nav__cta {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: var(--radius-lg);
+  background: var(--coral);
+  color: var(--white);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.nav.scrolled .nav__cta {
+  background: var(--crimson);
+}
+.nav__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 73, 81, 0.4);
+}
+
+/* Hamburger - mobile only */
+.nav__hamburger {
+  display: none;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 9999;
+}
+.nav__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.nav.scrolled .nav__hamburger span {
+  background: var(--grey-dark);
+}
+.nav__hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.nav__hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav__hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile menu overlay */
+.nav__mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--crimson);
+  z-index: 9800;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.nav__mobile-menu.open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+.nav__mobile-menu a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+}
+.nav__mobile-menu a:hover {
+  color: var(--coral-light);
+}
+
+/* ============================================================
+   BLOC 2 : HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--crimson-deep);
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-video video,
+.hero-video .hero-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-video .hero-poster {
+  display: none;
+}
+.hero-video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(110, 0, 41, 0.82) 0%,
+    rgba(170, 0, 64, 0.65) 50%,
+    rgba(110, 0, 41, 0.78) 100%
+  );
+  z-index: 2;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 3;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 140px 40px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
+
+.hero__text {
+  max-width: 600px;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-lg);
+  padding: 8px 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero__badge .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--coral);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.4); }
+}
+
+.hero__title {
+  font-size: clamp(2.75rem, 5.5vw, 4.5rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.hero__title span {
+  color: var(--coral-light);
+}
+
+.hero__sub {
+  font-size: 1.125rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 520px;
+}
+
+.hero__ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Hero floating photos — Kent College organic shapes */
+.hero__visuals {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+}
+
+.hero__photo-1 {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-55%, -55%);
+  border-radius: 48% 52% 55% 45% / 50% 45% 55% 50%;
+  object-fit: cover;
+  border: 5px solid rgba(255,255,255,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+.hero__photo-2 {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  bottom: 10%;
+  right: 5%;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: 4px solid rgba(255, 73, 81, 0.5);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  z-index: 3;
+}
+
+/* Decorative elements floating around hero photos */
+.hero__decor-dot-1 {
+  position: absolute;
+  top: 8%;
+  right: 20%;
+  z-index: 1;
+}
+.hero__decor-dot-2 {
+  position: absolute;
+  bottom: 25%;
+  left: 5%;
+  z-index: 1;
+}
+.hero__decor-dot-3 {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  z-index: 1;
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.hero__scroll-chevron {
+  width: 24px;
+  height: 24px;
+  border-left: 2px solid rgba(255,255,255,0.5);
+  border-bottom: 2px solid rgba(255,255,255,0.5);
+  transform: rotate(-45deg);
+  animation: bounce-chevron 2s infinite;
+}
+@keyframes bounce-chevron {
+  0%, 20%, 50%, 80%, 100% { transform: rotate(-45deg) translateY(0); }
+  40% { transform: rotate(-45deg) translateY(8px); }
+  60% { transform: rotate(-45deg) translateY(4px); }
+}
+
+/* ============================================================
+   BLOC 3 : 4 PROMESSES
+   ============================================================ */
+.promesses {
+  padding: 120px 0;
+  background: var(--white);
+  position: relative;
+}
+
+.promesses__header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.promesses__header .section-title {
+  margin-bottom: 16px;
+}
+.promesses__header p {
+  font-size: 1.0625rem;
+  color: var(--grey-text);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.promesses__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.promesse-card {
+  text-align: center;
+  padding: 48px 28px 44px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+  position: relative;
+}
+.promesse-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 4px;
+  background: var(--coral);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.promesse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-elevated);
+}
+.promesse-card:hover::before {
+  opacity: 1;
+}
+
+.promesse-card__icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 24px;
+  background: linear-gradient(135deg, rgba(170,0,64,0.08), rgba(255,73,81,0.08));
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+.promesse-card:hover .promesse-card__icon {
+  background: var(--crimson);
+}
+.promesse-card__icon img {
+  width: 36px;
+  height: 36px;
+  transition: filter var(--transition);
+}
+.promesse-card:hover .promesse-card__icon img {
+  filter: brightness(0) invert(1);
+}
+
+.promesse-card__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.promesse-card__text {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--grey-text);
+  margin-bottom: 16px;
+}
+
+.promesse-card__proof {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--crimson);
+  background: rgba(170,0,64,0.06);
+  padding: 6px 16px;
+  border-radius: var(--radius-lg);
+}
+
+/* ============================================================
+   BLOC 4 : CHIFFRES
+   ============================================================ */
+.chiffres {
+  position: relative;
+  padding: 100px 0;
+  background: var(--crimson);
+  overflow: hidden;
+}
+
+/* Decorative background pattern */
+.chiffres::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255,73,81,0.25) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%),
+    radial-gradient(circle at 60% 80%, rgba(110,0,41,0.4) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Floating circles decoration */
+.chiffres__decor {
+  position: absolute;
+  border-radius: var(--radius-circle);
+  border: 2px solid rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+.chiffres__decor--1 {
+  width: 200px;
+  height: 200px;
+  top: -60px;
+  left: -40px;
+}
+.chiffres__decor--2 {
+  width: 300px;
+  height: 300px;
+  bottom: -100px;
+  right: -80px;
+}
+.chiffres__decor--3 {
+  width: 120px;
+  height: 120px;
+  top: 40%;
+  right: 15%;
+  background: rgba(255,73,81,0.1);
+}
+
+.chiffres__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.chiffres__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.chiffres__header .section-label {
+  color: var(--coral-light);
+}
+.chiffres__header .section-label::before {
+  background: var(--coral-light);
+}
+.chiffres__header .section-title--white {
+  margin-bottom: 12px;
+}
+.chiffres__header p {
+  font-size: 1.0625rem;
+  color: rgba(255,255,255,0.7);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.chiffres__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+
+.chiffre-item {
+  text-align: center;
+  padding: 36px 16px;
+  background: rgba(255,255,255,0.07);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all var(--transition);
+}
+.chiffre-item:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-4px);
+}
+
+.chiffre-item__number {
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+}
+.chiffre-item__number .accent {
+  color: var(--coral-light);
+}
+
+.chiffre-item__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   BLOC 5 : PROGRAMMES
+   ============================================================ */
+.programmes {
+  padding: 120px 0;
+  background: var(--off-white);
+  position: relative;
+}
+
+/* Top decoration dots */
+.programmes__dots {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.programmes__header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.programmes__header .section-title {
+  margin-bottom: 16px;
+}
+.programmes__header p {
+  font-size: 1.0625rem;
+  color: var(--grey-text);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.programmes__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.programme-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.programme-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.programme-card__img {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+.programme-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.programme-card:hover .programme-card__img img {
+  transform: scale(1.05);
+}
+.programme-card__age {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: var(--crimson);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius-lg);
+  letter-spacing: 0.02em;
+}
+
+.programme-card__body {
+  padding: 28px 24px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.programme-card__level {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.programme-card__desc {
+  font-size: 0.9375rem;
+  color: var(--grey-text);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.programme-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--grey-light);
+}
+
+.programme-card__price {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--crimson);
+}
+.programme-card__price small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--grey-text);
+  display: block;
+}
+
+.programme-card__link {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--coral);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap var(--transition);
+}
+.programme-card__link:hover {
+  gap: 10px;
+}
+
+/* ============================================================
+   BLOC 5b : VIE SCOLAIRE — GALLERY MOSAIC (Kent College style)
+   ============================================================ */
+.vie-gallery {
+  padding: 100px 0 120px;
+  background: var(--crimson);
+  position: relative;
+  overflow: hidden;
+}
+.vie-gallery::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: var(--radius-circle);
+  background: rgba(255,73,81,0.1);
+  bottom: -300px;
+  left: -200px;
+  pointer-events: none;
+}
+.vie-gallery::after {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: var(--radius-circle);
+  border: 2px solid rgba(255,255,255,0.06);
+  top: 60px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.vie-gallery__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.vie-gallery__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.vie-gallery__header .section-label {
+  color: var(--coral-light);
+}
+.vie-gallery__header .section-label::before {
+  background: var(--coral-light);
+}
+.vie-gallery__header-text {
+  max-width: 560px;
+}
+.vie-gallery__header-text p {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.0625rem;
+  margin-top: 12px;
+}
+
+.vie-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+.vie-gallery__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  transition: transform var(--transition);
+}
+.vie-gallery__item:hover {
+  transform: scale(1.02);
+}
+.vie-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.vie-gallery__item:hover img {
+  transform: scale(1.08);
+}
+.vie-gallery__item--wide {
+  grid-column: span 2;
+}
+.vie-gallery__item--tall {
+  grid-row: span 2;
+}
+.vie-gallery__item--circle {
+  border-radius: var(--radius-circle);
+  aspect-ratio: 1 / 1;
+}
+.vie-gallery__item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(110,0,41,0.7) 0%, transparent 60%);
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.vie-gallery__item:hover .vie-gallery__item-overlay {
+  opacity: 1;
+}
+.vie-gallery__item-caption {
+  color: var(--white);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Decorative KC-style letters */
+.vie-gallery__letters {
+  position: absolute;
+  bottom: -40px;
+  right: 40px;
+  font-size: 12rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .vie-gallery { padding: 72px 0; }
+  .vie-gallery__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .vie-gallery__item--wide { grid-column: span 1; }
+  .vie-gallery__item--tall { grid-row: span 1; }
+  .vie-gallery__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (max-width: 480px) {
+  .vie-gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .vie-gallery__item { min-height: 200px; }
+}
+
+/* ============================================================
+   BLOC 5c : ACTIVITES STRIP — 3 highlights with icons
+   ============================================================ */
+.activites-strip {
+  padding: 72px 0;
+  background: var(--off-white);
+}
+.activites-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.activites-strip__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 32px 28px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  transition: all var(--transition);
+}
+.activites-strip__item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+.activites-strip__icon {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  background: linear-gradient(135deg, rgba(170,0,64,0.08), rgba(255,73,81,0.08));
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.activites-strip__icon img {
+  width: 28px;
+  height: 28px;
+}
+.activites-strip__content h3 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+.activites-strip__content p {
+  font-size: 0.875rem;
+  color: var(--grey-text);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .activites-strip__grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================================
+   BLOC 6 : TEMOIGNAGES
+   ============================================================ */
+.temoignages {
+  padding: 120px 0;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Large decorative quote mark */
+.temoignages__quote-bg {
+  position: absolute;
+  top: 60px;
+  right: -40px;
+  font-size: 20rem;
+  font-weight: 900;
+  color: rgba(170, 0, 64, 0.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.temoignages__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.temoignages__header .section-title {
+  margin-bottom: 16px;
+}
+.temoignages__header p {
+  font-size: 1.0625rem;
+  color: var(--grey-text);
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.temoignages__carousel {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.temoignages__track {
+  display: flex;
+  gap: 40px;
+  overflow: hidden;
+}
+
+.temoignage-card {
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 48px;
+  background: var(--off-white);
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.temoignage-card__photo-wrap {
+  position: relative;
+}
+.temoignage-card__photo {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: 4px solid var(--white);
+  box-shadow: 0 8px 32px rgba(170, 0, 64, 0.12);
+}
+.temoignage-card__photo-dot {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+}
+
+.temoignage-card__content {
+  position: relative;
+}
+.temoignage-card__quote-mark {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--coral);
+  line-height: 1;
+  margin-bottom: -12px;
+  opacity: 0.5;
+}
+.temoignage-card__text {
+  font-size: 1.125rem;
+  color: var(--grey-dark);
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.temoignage-card__author {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--black);
+}
+.temoignage-card__meta {
+  font-size: 0.8125rem;
+  color: var(--grey-text);
+  margin-top: 2px;
+}
+
+.temoignages__nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+.temoignages__nav-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-circle);
+  border: 2px solid var(--crimson);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--crimson);
+  font-size: 1.125rem;
+  transition: all var(--transition);
+  cursor: pointer;
+  background: transparent;
+}
+.temoignages__nav-btn:hover {
+  background: var(--crimson);
+  color: var(--white);
+}
+.temoignages__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.temoignages__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-circle);
+  background: rgba(170, 0, 64, 0.2);
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  padding: 0;
+}
+.temoignages__dot.active {
+  background: var(--crimson);
+  width: 28px;
+  border-radius: 5px;
+}
+
+/* ============================================================
+   BLOC 7 : MOT DU DIRECTEUR
+   ============================================================ */
+.directeur {
+  padding: 120px 0;
+  background: var(--crimson);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative elements */
+.directeur::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: var(--radius-circle);
+  background: rgba(255,73,81,0.12);
+  top: -200px;
+  right: -150px;
+  pointer-events: none;
+}
+.directeur::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: var(--radius-circle);
+  border: 2px solid rgba(255,255,255,0.06);
+  bottom: -100px;
+  left: -60px;
+  pointer-events: none;
+}
+
+.directeur__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.directeur__photo-wrap {
+  position: relative;
+}
+.directeur__photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 48% 52% 55% 45% / 50% 45% 55% 50%;
+  border: 5px solid rgba(255,255,255,0.15);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+}
+.directeur__photo-dot-1 {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+}
+.directeur__photo-dot-2 {
+  position: absolute;
+  bottom: 40px;
+  left: -12px;
+}
+
+.directeur__content {
+  color: var(--white);
+}
+.directeur__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--coral-light);
+  margin-bottom: 24px;
+}
+.directeur__label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 3px;
+  background: var(--coral-light);
+  border-radius: 2px;
+}
+
+.directeur__quote-open {
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 0.6;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: 16px;
+}
+.directeur__text {
+  font-size: 1.125rem;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 32px;
+  font-style: italic;
+}
+.directeur__name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.directeur__role {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+  margin-bottom: 36px;
+}
+.directeur__cta .btn--white {
+  color: var(--crimson);
+}
+
+/* ============================================================
+   BLOC 8 : CTA FINAL + FOOTER
+   ============================================================ */
+
+/* CTA Band */
+.cta-band {
+  padding: 80px 0;
+  background: var(--black);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-band::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: var(--radius-circle);
+  background: rgba(170,0,64,0.15);
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.cta-band__inner {
+  position: relative;
+  z-index: 1;
+}
+.cta-band__title {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.cta-band__sub {
+  font-size: 1.0625rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 36px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-band__buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Footer */
+.footer {
+  background: var(--crimson-deep);
+  color: rgba(255,255,255,0.7);
+  padding: 72px 0 0;
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer__brand {
+  max-width: 280px;
+}
+.footer__logo {
+  height: 40px;
+  margin-bottom: 20px;
+  filter: brightness(0) invert(1);
+}
+.footer__brand-text {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.footer__accreditations {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.footer__accreditations img {
+  height: 40px;
+  opacity: 0.7;
+  transition: opacity var(--transition);
+  filter: brightness(0) invert(1);
+}
+.footer__accreditations img:hover {
+  opacity: 1;
+}
+
+.footer__col-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer__links a {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.6);
+  transition: color var(--transition);
+}
+.footer__links a:hover {
+  color: var(--white);
+}
+
+.footer__campus {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.footer__campus-item {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.footer__campus-name {
+  font-weight: 700;
+  color: var(--white);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.footer__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--coral-light);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  margin-top: 32px;
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.4);
+}
+.footer__bottom-links {
+  display: flex;
+  gap: 24px;
+}
+.footer__bottom-links a {
+  color: rgba(255,255,255,0.4);
+  transition: color var(--transition);
+}
+.footer__bottom-links a:hover {
+  color: var(--white);
+}
+
+.footer__lang-toggle {
+  display: flex;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.footer__lang-toggle a {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  color: rgba(255,255,255,0.5);
+}
+.footer__lang-toggle a.active {
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+}
+
+/* ============================================================
+   RESPONSIVE — 1024px
+   ============================================================ */
+@media (max-width: 1024px) {
+  .container { padding: 0 28px; }
+  .nav__inner { padding: 0 28px; }
+
+  .hero__content {
+    grid-template-columns: 1fr;
+    padding: 120px 28px 80px;
+    text-align: center;
+  }
+  .hero__text { max-width: 100%; margin: 0 auto; }
+  .hero__sub { margin: 0 auto 40px; }
+  .hero__ctas { justify-content: center; }
+  .hero__visuals { display: none; }
+
+  .promesses__grid { grid-template-columns: repeat(2, 1fr); }
+
+  .chiffres__grid { grid-template-columns: repeat(3, 1fr); }
+  .chiffres__grid .chiffre-item:nth-child(4),
+  .chiffres__grid .chiffre-item:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .programmes__grid { grid-template-columns: repeat(2, 1fr); }
+
+  .directeur__inner {
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+  }
+
+  .footer__top {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  .footer__brand {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 768px (tablette)
+   ============================================================ */
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .nav__inner { padding: 0 24px; }
+  .nav__links { display: none; }
+  .nav__hamburger { display: flex; }
+  .nav__lang { display: none; }
+
+  .promesses__grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .chiffres { padding: 80px 0; }
+  .chiffres__grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .programmes { padding: 80px 0; }
+  .programmes__grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+
+  .temoignage-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 36px 24px;
+  }
+  .temoignage-card__photo-wrap { margin: 0 auto; }
+
+  .directeur { padding: 80px 0; }
+  .directeur__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .directeur__photo-wrap {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 375px (mobile)
+   ============================================================ */
+@media (max-width: 480px) {
+  .container { padding: 0 20px; }
+  .nav__inner { padding: 0 20px; }
+
+  .hero { min-height: 90vh; }
+  .hero__content { padding: 100px 20px 60px; }
+  .hero__title { font-size: 2.25rem; }
+  .hero__sub { font-size: 1rem; }
+  .hero__ctas { flex-direction: column; }
+  .hero__ctas .btn { width: 100%; }
+  .hero__scroll { display: none; }
+
+  .promesses { padding: 80px 0; }
+  .promesses__grid { grid-template-columns: 1fr; }
+  .promesse-card { padding: 36px 24px 32px; }
+
+  .chiffres__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .chiffre-item { padding: 24px 12px; }
+  .chiffre-item:last-child { grid-column: 1 / -1; }
+
+  .programme-card__img { height: 180px; }
+
+  .temoignage-card { padding: 28px 20px; gap: 24px; }
+  .temoignage-card__photo { width: 100px; height: 100px; }
+  .temoignage-card__text { font-size: 1rem; }
+
+  .cta-band { padding: 60px 0; }
+  .cta-band__buttons { flex-direction: column; align-items: center; }
+  .cta-band__buttons .btn { width: 100%; max-width: 320px; }
+
+  .footer__top { grid-template-columns: 1fr; }
+  .footer__bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .footer__bottom-links { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ============================================================
+   ANIMATIONS (CSS-only, respects reduced motion)
+   ============================================================ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+.animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+.animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+.animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+
+/* Mobile sticky CTA */
+.mobile-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 8000;
+}
+.mobile-cta__inner {
+  display: flex;
+  gap: 10px;
+}
+.mobile-cta .btn {
+  flex: 1;
+  font-size: 0.8125rem;
+  padding: 14px 16px;
+  min-height: 48px;
+}
+
+@media (max-width: 768px) {
+  .mobile-cta { display: block; }
+  body { padding-bottom: 76px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Skip to content -->
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+<!-- ============================================================
+     BLOC 1 : NAVIGATION STICKY
+     ============================================================ -->
+<nav class="nav" role="navigation" aria-label="Navigation principale">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo" aria-label="BISP — Accueil">
+      <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP — École Bilingue Internationale de Paris" width="140" height="44">
+    </a>
+
+    <ul class="nav__links" role="list">
+      <li><a href="#ecole" class="nav__link">Notre école</a></li>
+      <li><a href="#programmes" class="nav__link">Programmes</a></li>
+      <li><a href="#admissions" class="nav__link">Admissions</a></li>
+      <li><a href="#vie-scolaire" class="nav__link">Vie scolaire</a></li>
+      <li><a href="#actualites" class="nav__link">Actualités</a></li>
+    </ul>
+
+    <div class="nav__right">
+      <div class="nav__lang" role="group" aria-label="Langue">
+        <span class="nav__lang-item active" aria-current="true">FR</span>
+        <a href="/en/" class="nav__lang-item">EN</a>
+      </div>
+      <a href="#admissions" class="nav__cta">Inscrire mon enfant</a>
+    </div>
+
+    <button class="nav__hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="nav__mobile-menu" role="dialog" aria-label="Menu mobile">
+    <a href="#ecole">Notre école</a>
+    <a href="#programmes">Programmes</a>
+    <a href="#admissions">Admissions</a>
+    <a href="#vie-scolaire">Vie scolaire</a>
+    <a href="#actualites">Actualités</a>
+    <a href="#admissions" class="btn btn--white" style="margin-top: 16px;">Inscrire mon enfant</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     BLOC 2 : HERO
+     ============================================================ -->
+<section class="hero" id="main-content" aria-label="Accueil">
+  <div class="hero-video">
+    <video autoplay muted loop playsinline poster="../assets/images/hero-poster.jpg" aria-hidden="true">
+      <source src="../assets/videos/video-presentation-bisp.mp4" type="video/mp4">
+    </video>
+    <img src="../assets/images/hero-poster.jpg" alt="" class="hero-poster" aria-hidden="true">
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__text">
+      <div class="hero__badge">
+        <span class="dot" aria-hidden="true"></span>
+        Cambridge International &middot; Pearson Edexcel
+      </div>
+
+      <h1 class="hero__title">
+        Deux langues.<br>
+        Douze élèves.<br>
+        <span>Un monde.</span>
+      </h1>
+
+      <p class="hero__sub">
+        À Paris, une école bilingue internationale où chaque enfant est connu, accompagné
+        et préparé — en français et en anglais. De la maternelle au lycée.
+      </p>
+
+      <div class="hero__ctas">
+        <a href="#admissions" class="btn btn--white">
+          Planifier une visite <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="#programmes" class="btn btn--ghost-white">
+          Découvrir nos programmes
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__visuals" aria-hidden="true">
+      <img src="../assets/images/jeux-enfant.png"
+           alt="Enfant jouant à l'école BISP"
+           class="hero__photo-1"
+           loading="eager"
+           width="320" height="320">
+      <img src="../assets/images/activites-enfants.png"
+           alt="Élèves en activité à BISP"
+           class="hero__photo-2"
+           loading="eager"
+           width="200" height="200">
+      <span class="hero__decor-dot-1 dot dot--coral dot--xl" aria-hidden="true"></span>
+      <span class="hero__decor-dot-2 dot dot--crimson dot--lg" aria-hidden="true"></span>
+      <span class="hero__decor-dot-3 dot dot--coral dot--md" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span>Découvrir</span>
+    <span class="hero__scroll-chevron"></span>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 3 : 4 PROMESSES
+     ============================================================ -->
+<section class="promesses" id="ecole" aria-labelledby="promesses-title">
+  <div class="container">
+    <div class="promesses__header">
+      <div class="section-label">Nos engagements</div>
+      <h2 class="section-title" id="promesses-title">
+        Ce qui fait de BISP<br>une école <span style="color: var(--crimson);">à part.</span>
+      </h2>
+      <p>Quatre piliers fondateurs qui guident chaque décision pédagogique, chaque jour.</p>
+    </div>
+
+    <div class="promesses__grid">
+      <!-- Intimité -->
+      <div class="promesse-card animate-on-scroll">
+        <div class="promesse-card__icon">
+          <img src="../assets/pictos/eleves.svg" alt="" aria-hidden="true" width="36" height="36">
+        </div>
+        <h3 class="promesse-card__title">Intimité</h3>
+        <p class="promesse-card__text">
+          Des classes de 12 élèves où chaque enfant est connu par son prénom.
+          Personne ne passe inaperçu dans notre village éducatif.
+        </p>
+        <span class="promesse-card__proof">
+          <span class="dot dot--crimson dot--sm" aria-hidden="true"></span>
+          12 élèves par classe
+        </span>
+      </div>
+
+      <!-- Double passeport -->
+      <div class="promesse-card animate-on-scroll delay-1">
+        <div class="promesse-card__icon">
+          <img src="../assets/pictos/bilingue.svg" alt="" aria-hidden="true" width="36" height="36">
+        </div>
+        <h3 class="promesse-card__title">Double passeport</h3>
+        <p class="promesse-card__text">
+          Cambridge Assessment et Éducation Nationale — deux systèmes académiques,
+          un seul parcours sans compromis.
+        </p>
+        <span class="promesse-card__proof">
+          <span class="dot dot--crimson dot--sm" aria-hidden="true"></span>
+          50/50 français-anglais
+        </span>
+      </div>
+
+      <!-- Monde -->
+      <div class="promesse-card animate-on-scroll delay-2">
+        <div class="promesse-card__icon">
+          <img src="../assets/pictos/nationalites.svg" alt="" aria-hidden="true" width="36" height="36">
+        </div>
+        <h3 class="promesse-card__title">Monde</h3>
+        <p class="promesse-card__text">
+          32 nationalités au sein d'une communauté à taille humaine.
+          Une micro-société internationale au cœur de Paris.
+        </p>
+        <span class="promesse-card__proof">
+          <span class="dot dot--crimson dot--sm" aria-hidden="true"></span>
+          32 nationalités
+        </span>
+      </div>
+
+      <!-- Confiance -->
+      <div class="promesse-card animate-on-scroll delay-3">
+        <div class="promesse-card__icon">
+          <img src="../assets/pictos/enfants.svg" alt="" aria-hidden="true" width="36" height="36">
+        </div>
+        <h3 class="promesse-card__title">Confiance</h3>
+        <p class="promesse-card__text">
+          Le bilinguisme comme seconde nature, pas comme matière scolaire.
+          Immersion dès 3 ans, pensée dans deux langues.
+        </p>
+        <span class="promesse-card__proof">
+          <span class="dot dot--crimson dot--sm" aria-hidden="true"></span>
+          Immersion dès 3 ans
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 4 : CHIFFRES
+     ============================================================ -->
+<section class="chiffres" aria-labelledby="chiffres-title">
+  <div class="chiffres__decor chiffres__decor--1" aria-hidden="true"></div>
+  <div class="chiffres__decor chiffres__decor--2" aria-hidden="true"></div>
+  <div class="chiffres__decor chiffres__decor--3" aria-hidden="true"></div>
+
+  <div class="container chiffres__inner">
+    <div class="chiffres__header">
+      <div class="section-label">BISP en chiffres</div>
+      <h2 class="section-title section-title--white" id="chiffres-title">
+        Les chiffres qui comptent.
+      </h2>
+      <p>Derrière chaque nombre, un engagement concret envers nos élèves.</p>
+    </div>
+
+    <div class="chiffres__grid">
+      <div class="chiffre-item animate-on-scroll">
+        <div class="chiffre-item__number counter-value" data-target="32">32</div>
+        <div class="chiffre-item__label">Nationalités<br>représentées</div>
+      </div>
+      <div class="chiffre-item animate-on-scroll delay-1">
+        <div class="chiffre-item__number counter-value" data-target="12">12</div>
+        <div class="chiffre-item__label">Élèves par classe<br>en moyenne</div>
+      </div>
+      <div class="chiffre-item animate-on-scroll delay-2">
+        <div class="chiffre-item__number"><span class="accent">50</span>/50</div>
+        <div class="chiffre-item__label">Français et anglais<br>à parts égales</div>
+      </div>
+      <div class="chiffre-item animate-on-scroll delay-3">
+        <div class="chiffre-item__number counter-value" data-target="14">14</div>
+        <div class="chiffre-item__label">Années<br>d'expérience</div>
+      </div>
+      <div class="chiffre-item animate-on-scroll delay-4">
+        <div class="chiffre-item__number counter-value" data-target="3">3</div>
+        <div class="chiffre-item__label">Campus dans le<br>15<sup>e</sup> arrondissement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 5 : PROGRAMMES
+     ============================================================ -->
+<section class="programmes" id="programmes" aria-labelledby="programmes-title">
+  <div class="programmes__dots" aria-hidden="true">
+    <span class="dot dot--coral dot--md"></span>
+    <span class="dot dot--crimson dot--sm"></span>
+    <span class="dot dot--coral dot--lg"></span>
+  </div>
+
+  <div class="container">
+    <div class="programmes__header">
+      <div class="section-label">Parcours complet</div>
+      <h2 class="section-title" id="programmes-title">
+        Un parcours complet,<br>de <span style="color: var(--crimson);">3 à 18 ans.</span>
+      </h2>
+      <p>
+        Quatre niveaux, un même engagement : le bilinguisme intégral,
+        l'excellence académique et l'épanouissement de chaque enfant.
+      </p>
+    </div>
+
+    <div class="programmes__grid">
+      <!-- Maternelle -->
+      <article class="programme-card animate-on-scroll">
+        <div class="programme-card__img">
+          <img src="../assets/stock/preschool-kids.jpg"
+               alt="Enfants en maternelle bilingue à BISP"
+               loading="lazy" width="400" height="220">
+          <span class="programme-card__age">3 — 6 ans</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Maternelle</h3>
+          <p class="programme-card__desc">
+            Immersion bilingue dès le plus jeune âge. Les enfants acquièrent naturellement
+            deux langues dans un cocon bienveillant de 12 élèves.
+          </p>
+          <div class="programme-card__footer">
+            <div class="programme-card__price">
+              13.800 €
+              <small>par an</small>
+            </div>
+            <a href="#" class="programme-card__link">
+              Découvrir <span class="arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Primaire -->
+      <article class="programme-card animate-on-scroll delay-1">
+        <div class="programme-card__img">
+          <img src="../assets/stock/classroom-students.jpg"
+               alt="Élèves en primaire bilingue à BISP"
+               loading="lazy" width="400" height="220">
+          <span class="programme-card__age">6 — 11 ans</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Primaire</h3>
+          <p class="programme-card__desc">
+            Double curriculum Cambridge et Éducation Nationale.
+            32 nationalités qui enrichissent le quotidien de chaque élève.
+          </p>
+          <div class="programme-card__footer">
+            <div class="programme-card__price">
+              16.800 €
+              <small>par an</small>
+            </div>
+            <a href="#" class="programme-card__link">
+              Découvrir <span class="arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Collège -->
+      <article class="programme-card animate-on-scroll delay-2">
+        <div class="programme-card__img">
+          <img src="../assets/images/fille-travaille.png"
+               alt="Collégienne travaillant en classe bilingue à BISP"
+               loading="lazy" width="400" height="220">
+          <span class="programme-card__age">11 — 15 ans</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Collège</h3>
+          <p class="programme-card__desc">
+            Pensée critique, débat bilingue, projets interdisciplinaires.
+            L'excellence académique au service de la confiance en soi.
+          </p>
+          <div class="programme-card__footer">
+            <div class="programme-card__price">
+              21.800 €
+              <small>par an</small>
+            </div>
+            <a href="#" class="programme-card__link">
+              Découvrir <span class="arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Lycée -->
+      <article class="programme-card animate-on-scroll delay-3">
+        <div class="programme-card__img">
+          <img src="../assets/stock/graduation.jpg"
+               alt="Lycéens diplômés de BISP"
+               loading="lazy" width="400" height="220">
+          <span class="programme-card__age">15 — 18 ans</span>
+        </div>
+        <div class="programme-card__body">
+          <h3 class="programme-card__level">Lycée</h3>
+          <p class="programme-card__desc">
+            Préparation aux études supérieures en France et à l'international.
+            Double diplôme, double horizon, double confiance.
+          </p>
+          <div class="programme-card__footer">
+            <div class="programme-card__price">
+              21.800 €
+              <small>par an</small>
+            </div>
+            <a href="#" class="programme-card__link">
+              Découvrir <span class="arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 5b : VIE SCOLAIRE GALLERY — Kent College mosaic
+     ============================================================ -->
+<section class="vie-gallery" aria-labelledby="vie-gallery-title">
+  <span class="vie-gallery__letters" aria-hidden="true">BISP</span>
+
+  <div class="container vie-gallery__inner">
+    <div class="vie-gallery__header">
+      <div class="vie-gallery__header-text">
+        <div class="section-label">Vie scolaire</div>
+        <h2 class="section-title section-title--white" id="vie-gallery-title">
+          Art, sport, culture.<br>
+          Bien plus qu'une école.
+        </h2>
+        <p>
+          La vie scolaire à BISP ne s'arrête pas aux cours. Musique, théâtre, sport,
+          sorties culturelles — chaque enfant explore ses passions.
+        </p>
+      </div>
+      <a href="#" class="btn btn--ghost-white">
+        Voir toutes les activités <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+
+    <div class="vie-gallery__grid">
+      <div class="vie-gallery__item vie-gallery__item--wide animate-on-scroll">
+        <img src="../assets/stock/art-class.jpg" alt="Cours d'arts plastiques à BISP" loading="lazy">
+        <div class="vie-gallery__item-overlay">
+          <span class="vie-gallery__item-caption">Arts plastiques</span>
+        </div>
+      </div>
+      <div class="vie-gallery__item vie-gallery__item--circle animate-on-scroll delay-1">
+        <img src="../assets/stock/students-sports.jpg" alt="Éducation physique à BISP" loading="lazy">
+        <div class="vie-gallery__item-overlay">
+          <span class="vie-gallery__item-caption">Sport</span>
+        </div>
+      </div>
+      <div class="vie-gallery__item animate-on-scroll delay-2">
+        <img src="../assets/stock/students-reading.jpg" alt="Élèves en bibliothèque à BISP" loading="lazy">
+        <div class="vie-gallery__item-overlay">
+          <span class="vie-gallery__item-caption">Littérature</span>
+        </div>
+      </div>
+      <div class="vie-gallery__item animate-on-scroll delay-1">
+        <img src="../assets/stock/playground.jpg" alt="Récréation à BISP" loading="lazy">
+        <div class="vie-gallery__item-overlay">
+          <span class="vie-gallery__item-caption">Récréations</span>
+        </div>
+      </div>
+      <div class="vie-gallery__item animate-on-scroll delay-2">
+        <img src="../assets/images/ecole-bisp.jpg" alt="L'école BISP dans le 15e arrondissement" loading="lazy">
+        <div class="vie-gallery__item-overlay">
+          <span class="vie-gallery__item-caption">Nos campus</span>
+        </div>
+      </div>
+      <div class="vie-gallery__item vie-gallery__item--wide animate-on-scroll delay-3">
+        <img src="../assets/stock/diverse-students.jpg" alt="Diversité internationale à BISP" loading="lazy">
+        <div class="vie-gallery__item-overlay">
+          <span class="vie-gallery__item-caption">32 nationalités, une communauté</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 5c : ACTIVITES STRIP — 3 highlights
+     ============================================================ -->
+<section class="activites-strip" aria-label="Activités extrascolaires">
+  <div class="container">
+    <div class="activites-strip__grid">
+      <div class="activites-strip__item animate-on-scroll">
+        <div class="activites-strip__icon">
+          <img src="../assets/pictos/art.svg" alt="" aria-hidden="true">
+        </div>
+        <div class="activites-strip__content">
+          <h3>Arts & théâtre</h3>
+          <p>
+            Chaque semaine, musique, théâtre et arts plastiques ouvrent
+            d'autres modes d'expression — en français et en anglais.
+          </p>
+        </div>
+      </div>
+      <div class="activites-strip__item animate-on-scroll delay-1">
+        <div class="activites-strip__icon">
+          <img src="../assets/pictos/education-physique.svg" alt="" aria-hidden="true">
+        </div>
+        <div class="activites-strip__content">
+          <h3>Sport & bien-être</h3>
+          <p>
+            Éducation physique, jeux collectifs et sorties plein air.
+            Le corps et l'esprit, ensemble.
+          </p>
+        </div>
+      </div>
+      <div class="activites-strip__item animate-on-scroll delay-2">
+        <div class="activites-strip__icon">
+          <img src="../assets/pictos/musique.svg" alt="" aria-hidden="true">
+        </div>
+        <div class="activites-strip__content">
+          <h3>Club du mercredi</h3>
+          <p>
+            Activités ludiques et pédagogiques en anglais, ouvertes
+            à toutes les familles — chaque mercredi et pendant les vacances.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 6 : TEMOIGNAGES
+     ============================================================ -->
+<section class="temoignages" aria-labelledby="temoignages-title">
+  <span class="temoignages__quote-bg" aria-hidden="true">&ldquo;</span>
+
+  <div class="container">
+    <div class="temoignages__header">
+      <div class="section-label">Témoignages</div>
+      <h2 class="section-title" id="temoignages-title">
+        Ils nous ont confié<br>leurs <span style="color: var(--crimson);">enfants.</span>
+      </h2>
+      <p>Voici ce qu'ils en disent.</p>
+    </div>
+
+    <div class="temoignages__carousel">
+      <div class="temoignages__track" id="testimonial-track">
+        <!-- Testimonial 1 -->
+        <div class="temoignage-card" role="group" aria-label="Témoignage 1 sur 3">
+          <div class="temoignage-card__photo-wrap">
+            <img src="../assets/stock/student-portrait1.jpg"
+                 alt="Portrait de parent"
+                 class="temoignage-card__photo"
+                 loading="lazy" width="140" height="140">
+            <span class="temoignage-card__photo-dot dot dot--coral dot--md" aria-hidden="true"></span>
+          </div>
+          <div class="temoignage-card__content">
+            <div class="temoignage-card__quote-mark" aria-hidden="true">&ldquo;</div>
+            <p class="temoignage-card__text">
+              Nos deux enfants ont rejoint BISP il y a trois ans. Le changement a été
+              remarquable : ils passent du français à l'anglais sans même y penser.
+              Mais ce qui nous touche le plus, c'est l'attention individualisée.
+              Les enseignants connaissent vraiment chaque enfant.
+            </p>
+            <div class="temoignage-card__author">Sophie M.</div>
+            <div class="temoignage-card__meta">Mère de deux enfants en primaire — Française</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="temoignage-card" role="group" aria-label="Témoignage 2 sur 3" style="display: none;">
+          <div class="temoignage-card__photo-wrap">
+            <img src="../assets/stock/student-portrait2.jpg"
+                 alt="Portrait de parent"
+                 class="temoignage-card__photo"
+                 loading="lazy" width="140" height="140">
+            <span class="temoignage-card__photo-dot dot dot--coral dot--md" aria-hidden="true"></span>
+          </div>
+          <div class="temoignage-card__content">
+            <div class="temoignage-card__quote-mark" aria-hidden="true">&ldquo;</div>
+            <p class="temoignage-card__text">
+              En arrivant de Londres, nous cherchions une école qui respecterait le parcours
+              Cambridge de notre fils tout en l'intégrant au système français. BISP a dépassé
+              nos attentes. Le double curriculum n'est pas un compromis — c'est une vraie
+              richesse académique.
+            </p>
+            <div class="temoignage-card__author">James & Aiko T.</div>
+            <div class="temoignage-card__meta">Parents d'un collégien — Britannique & Japonaise</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="temoignage-card" role="group" aria-label="Témoignage 3 sur 3" style="display: none;">
+          <div class="temoignage-card__photo-wrap">
+            <img src="../assets/stock/diverse-students.jpg"
+                 alt="Portrait de parent"
+                 class="temoignage-card__photo"
+                 loading="lazy" width="140" height="140">
+            <span class="temoignage-card__photo-dot dot dot--coral dot--md" aria-hidden="true"></span>
+          </div>
+          <div class="temoignage-card__content">
+            <div class="temoignage-card__quote-mark" aria-hidden="true">&ldquo;</div>
+            <p class="temoignage-card__text">
+              Ce que j'apprécie chez BISP, c'est la diversité authentique. Ma fille a des
+              amis de 15 nationalités différentes dans sa classe de 12 élèves. Elle apprend
+              la tolérance et l'ouverture d'esprit chaque jour, naturellement. C'est un
+              cadeau inestimable pour son avenir.
+            </p>
+            <div class="temoignage-card__author">Carlos R.</div>
+            <div class="temoignage-card__meta">Père d'une élève en maternelle — Brésilien</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="temoignages__nav">
+        <button class="temoignages__nav-btn" id="prev-testimonial" aria-label="Témoignage précédent">
+          &#8592;
+        </button>
+        <div class="temoignages__dots" role="tablist" aria-label="Sélection témoignage">
+          <button class="temoignages__dot active" data-index="0" role="tab" aria-selected="true" aria-label="Témoignage 1"></button>
+          <button class="temoignages__dot" data-index="1" role="tab" aria-selected="false" aria-label="Témoignage 2"></button>
+          <button class="temoignages__dot" data-index="2" role="tab" aria-selected="false" aria-label="Témoignage 3"></button>
+        </div>
+        <button class="temoignages__nav-btn" id="next-testimonial" aria-label="Témoignage suivant">
+          &#8594;
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 7 : MOT DU DIRECTEUR
+     ============================================================ -->
+<section class="directeur" id="vie-scolaire" aria-labelledby="directeur-title">
+  <div class="container directeur__inner">
+    <div class="directeur__photo-wrap" aria-hidden="true">
+      <img src="../assets/stock/teacher-children.jpg"
+           alt="Directeur de l'école BISP"
+           class="directeur__photo"
+           loading="lazy"
+           width="380" height="507">
+      <span class="directeur__photo-dot-1 dot dot--coral dot--xl"></span>
+      <span class="directeur__photo-dot-2 dot dot--crimson dot--lg"></span>
+    </div>
+
+    <div class="directeur__content">
+      <div class="directeur__label" id="directeur-title">Mot du directeur</div>
+
+      <div class="directeur__quote-open" aria-hidden="true">&ldquo;</div>
+
+      <p class="directeur__text">
+        Chaque matin, quand j'accueille nos élèves, je vois l'avenir tel que nous le rêvons :
+        des enfants de 32 nationalités qui se saluent dans deux langues, qui rient ensemble,
+        qui apprennent les uns des autres autant que de leurs enseignants.
+        <br><br>
+        À BISP, nous ne formons pas seulement des élèves bilingues. Nous formons
+        des citoyens du monde, armés de deux cultures académiques, nourris par la diversité
+        de leur communauté, et portés par la confiance que donne l'attention individuelle.
+        Dans nos classes de 12 élèves, chaque enfant a sa place et sa voix.
+        <br><br>
+        C'est cette promesse qui guide notre école depuis 14 ans, et c'est celle
+        que nous renouvelons chaque jour.
+      </p>
+
+      <div class="directeur__name">Le Directeur</div>
+      <div class="directeur__role">Fondateur & Directeur, BISP</div>
+
+      <div class="directeur__cta">
+        <a href="#admissions" class="btn btn--white">
+          Planifier votre visite <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BLOC 8 : CTA FINAL + FOOTER
+     ============================================================ -->
+<section class="cta-band" id="admissions" aria-label="Inscription">
+  <div class="container cta-band__inner">
+    <h2 class="cta-band__title">Prêt à découvrir BISP ?</h2>
+    <p class="cta-band__sub">
+      Rejoignez une communauté de 32 nationalités dans l'intimité de classes de 12 élèves.
+      Planifiez votre visite ou contactez-nous.
+    </p>
+    <div class="cta-band__buttons">
+      <a href="tel:+33144189483" class="btn btn--coral">
+        Appeler le +33 1 44 18 94 83
+      </a>
+      <a href="#" class="btn btn--ghost-white">
+        Demander une brochure <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP" class="footer__logo" width="140" height="40">
+        <p class="footer__brand-text">
+          École bilingue internationale à Paris. Double curriculum Cambridge et Éducation Nationale.
+          De la maternelle au lycée, dans l'intimité de classes de 12 élèves.
+        </p>
+        <div class="footer__accreditations">
+          <img src="../assets/logos/cambridge.png" alt="Cambridge International" width="auto" height="40">
+          <img src="../assets/logos/pearson-edexcel.png" alt="Pearson Edexcel" width="auto" height="40">
+        </div>
+      </div>
+
+      <div>
+        <h3 class="footer__col-title">Notre école</h3>
+        <ul class="footer__links" role="list">
+          <li><a href="#">Valeurs et méthodes</a></li>
+          <li><a href="#">Éducation bilingue</a></li>
+          <li><a href="#">Nos locaux</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Système scolaire</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer__col-title">Programmes</h3>
+        <ul class="footer__links" role="list">
+          <li><a href="#">Maternelle</a></li>
+          <li><a href="#">Primaire</a></li>
+          <li><a href="#">Collège</a></li>
+          <li><a href="#">Lycée</a></li>
+          <li><a href="#">Club du mercredi</a></li>
+          <li><a href="#">Stages vacances</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer__col-title">Nos campus</h3>
+        <div class="footer__campus">
+          <div class="footer__campus-item">
+            <div class="footer__campus-name">Campus Entrepreneurs</div>
+            61-63 rue des Entrepreneurs<br>75015 Paris
+          </div>
+          <div class="footer__campus-item">
+            <div class="footer__campus-name">Campus Letellier I</div>
+            10-14 rue Letellier<br>75015 Paris
+          </div>
+          <div class="footer__campus-item">
+            <div class="footer__campus-name">Campus Letellier II</div>
+            17-21 rue Letellier<br>75015 Paris
+          </div>
+          <a href="tel:+33144189483" class="footer__phone">
+            &#9742; +33 1 44 18 94 83
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; 2026 BISP — École Bilingue Internationale de Paris. Tous droits réservés.</span>
+      <div class="footer__bottom-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+        <a href="#">Recrutement</a>
+      </div>
+      <div class="footer__lang-toggle">
+        <a href="#" class="active">FR</a>
+        <a href="/en/">EN</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-cta" aria-label="Actions rapides">
+  <div class="mobile-cta__inner">
+    <a href="tel:+33144189483" class="btn btn--primary">Appeler</a>
+    <a href="#admissions" class="btn btn--coral">Inscrire mon enfant</a>
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT — Minimal
+     ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* --- Nav scroll behavior --- */
+  var nav = document.querySelector('.nav');
+  var lastScroll = 0;
+
+  function onScroll() {
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    if (y > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    lastScroll = y;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* --- Mobile hamburger --- */
+  var hamburger = document.querySelector('.nav__hamburger');
+  var mobileMenu = document.querySelector('.nav__mobile-menu');
+
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      var isOpen = hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  /* --- Testimonial carousel --- */
+  var cards = document.querySelectorAll('.temoignage-card');
+  var dots = document.querySelectorAll('.temoignages__dot');
+  var prevBtn = document.getElementById('prev-testimonial');
+  var nextBtn = document.getElementById('next-testimonial');
+  var currentSlide = 0;
+  var totalSlides = cards.length;
+
+  function showSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    currentSlide = index;
+
+    cards.forEach(function(card, i) {
+      card.style.display = i === index ? '' : 'none';
+    });
+
+    dots.forEach(function(dot, i) {
+      dot.classList.toggle('active', i === index);
+      dot.setAttribute('aria-selected', i === index);
+    });
+  }
+
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', function() { showSlide(currentSlide - 1); });
+    nextBtn.addEventListener('click', function() { showSlide(currentSlide + 1); });
+  }
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      showSlide(parseInt(dot.dataset.index, 10));
+    });
+  });
+
+  /* --- Counter animation --- */
+  var counters = document.querySelectorAll('.counter-value');
+
+  function animateCounter(el) {
+    var target = parseInt(el.dataset.target, 10);
+    var duration = 1800;
+    var start = 0;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* --- Scroll-triggered animations --- */
+  var animated = document.querySelectorAll('.animate-on-scroll');
+  var counterAnimated = false;
+
+  function checkVisibility() {
+    var windowHeight = window.innerHeight;
+
+    animated.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < windowHeight * 0.88) {
+        el.classList.add('visible');
+      }
+    });
+
+    if (!counterAnimated) {
+      var chiffresSection = document.querySelector('.chiffres');
+      if (chiffresSection) {
+        var rect = chiffresSection.getBoundingClientRect();
+        if (rect.top < windowHeight * 0.75) {
+          counterAnimated = true;
+          counters.forEach(function(c) { animateCounter(c); });
+        }
+      }
+    }
+  }
+
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener('load', checkVisibility);
+  checkVisibility();
+
+  /* --- Keyboard nav: Escape closes mobile menu --- */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      hamburger.focus();
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

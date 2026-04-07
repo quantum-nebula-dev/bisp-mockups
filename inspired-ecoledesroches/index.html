@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BISP — École Bilingue Internationale de Paris</title>
+  <meta name="description" content="BISP, école bilingue internationale à Paris. Double curriculum Cambridge et français, 12 élèves par classe, 32 nationalités. De la maternelle au lycée.">
+
+  <!-- Fonts: DM Sans (proxy Gill Sans) + Source Sans 3 (proxy Agrandir) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================================
+       DESIGN TOKENS — École des Roches style mapped to BISP
+       ================================================================ */
+    :root {
+      /* Palette */
+      --navy:        #0b1e3a;
+      --navy-deep:   #071529;
+      --navy-light:  #132d54;
+      --gold:        #fdb82e;
+      --gold-soft:   #f5c95c;
+      --gold-dark:   #d99a12;
+      --cream:       #f8f5ef;
+      --cream-warm:  #faf7f1;
+      --white:       #ffffff;
+      --black:       #000000;
+      --grey-text:   #4a5568;
+      --grey-light:  #e8e4dc;
+      --grey-mid:    #9ca3af;
+      --overlay-dark: rgba(11, 30, 58, 0.72);
+      --overlay-mid:  rgba(11, 30, 58, 0.55);
+
+      /* Typography */
+      --font-display: 'DM Sans', 'Gill Sans', sans-serif;
+      --font-body:    'Source Sans 3', 'Agrandir', sans-serif;
+
+      /* Shadows — cinematic 136px blur from EDR tokens */
+      --shadow-cinema:   0 136px 136px rgba(0, 0, 0, 0.12);
+      --shadow-card:     0 40px 80px rgba(0, 0, 0, 0.08);
+      --shadow-soft:     0 20px 60px rgba(0, 0, 0, 0.06);
+      --shadow-hover:    0 50px 100px rgba(0, 0, 0, 0.14);
+      --shadow-subtle:   0 4px 20px rgba(0, 0, 0, 0.04);
+
+      /* Radius — pills from EDR tokens */
+      --radius-pill: 9999px;
+      --radius-card: 30px;
+      --radius-soft: 16px;
+      --radius-sm:   8px;
+
+      /* Transitions */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --dur-fast: 0.3s;
+      --dur-mid: 0.5s;
+      --dur-slow: 0.8s;
+    }
+
+    /* ================================================================
+       RESET + BASE
+       ================================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: color var(--dur-fast) var(--ease-smooth);
+    }
+
+    ul, ol { list-style: none; }
+
+    /* Skip to content — WCAG */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--navy);
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 0.875rem;
+      z-index: 10000;
+      transition: top var(--dur-fast) var(--ease-out);
+    }
+    .skip-link:focus {
+      top: 16px;
+      outline: 3px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* Focus visible — WCAG */
+    :focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    /* ================================================================
+       UTILITY
+       ================================================================ */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 64px);
+    }
+
+    .container--wide {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 80px);
+    }
+
+    .section-pad {
+      padding-top: clamp(80px, 10vw, 140px);
+      padding-bottom: clamp(80px, 10vw, 140px);
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.7;
+      color: var(--grey-text);
+      max-width: 640px;
+    }
+
+    /* Buttons — pill shape (EDR 9999px) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 0.9375rem;
+      letter-spacing: 0.03em;
+      border-radius: var(--radius-pill);
+      padding: 16px 36px;
+      cursor: pointer;
+      border: none;
+      transition: all var(--dur-fast) var(--ease-out);
+      min-height: 52px;
+      line-height: 1;
+    }
+    .btn:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .btn--gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .btn--gold:hover {
+      background: var(--gold-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(253, 184, 46, 0.3);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+    }
+    .btn--outline:hover {
+      border-color: var(--white);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline-navy {
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid rgba(11, 30, 58, 0.25);
+    }
+    .btn--outline-navy:hover {
+      border-color: var(--navy);
+      background: rgba(11, 30, 58, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .btn--white {
+      background: var(--white);
+      color: var(--navy);
+    }
+    .btn--white:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn__arrow {
+      display: inline-block;
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+    .btn:hover .btn__arrow {
+      transform: translateX(4px);
+    }
+
+    /* ================================================================
+       1. NAVIGATION — Sticky
+       ================================================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: background var(--dur-mid) var(--ease-smooth),
+                  box-shadow var(--dur-mid) var(--ease-smooth),
+                  padding var(--dur-mid) var(--ease-smooth);
+      padding: 20px 0;
+    }
+    .nav--scrolled {
+      background: var(--navy);
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.2);
+      padding: 12px 0;
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 64px);
+    }
+
+    .nav__logo img {
+      height: 44px;
+      width: auto;
+      transition: height var(--dur-mid) var(--ease-smooth);
+    }
+    .nav--scrolled .nav__logo img {
+      height: 36px;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .nav__links a {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 6px 0;
+      position: relative;
+      transition: color var(--dur-fast) var(--ease-smooth);
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transition: width var(--dur-fast) var(--ease-out);
+    }
+    .nav__links a:hover {
+      color: var(--white);
+    }
+    .nav__links a:hover::after {
+      width: 100%;
+    }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav__lang {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      gap: 4px;
+    }
+    .nav__lang a {
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      transition: all var(--dur-fast) var(--ease-smooth);
+    }
+    .nav__lang a.active {
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .nav__lang a:hover {
+      color: var(--white);
+    }
+
+    .nav__cta {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 11px 26px;
+      border-radius: var(--radius-pill);
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .nav__cta:hover {
+      background: var(--gold-soft);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(253, 184, 46, 0.25);
+    }
+
+    /* Mobile hamburger */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1001;
+      background: none;
+      border: none;
+    }
+    .nav__hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all var(--dur-fast) var(--ease-out);
+      display: block;
+    }
+    .nav__hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .nav__hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav__hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Mobile menu overlay */
+    .nav__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--navy);
+      z-index: 999;
+      padding: 100px 32px 48px;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+    .nav__mobile-menu.open {
+      display: flex;
+    }
+    .nav__mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 200;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: color var(--dur-fast) var(--ease-smooth);
+    }
+    .nav__mobile-menu a:hover {
+      color: var(--gold);
+    }
+    .nav__mobile-menu .btn {
+      margin-top: 24px;
+      align-self: flex-start;
+    }
+
+    /* ================================================================
+       2. HERO
+       ================================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .hero__video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .hero__video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero__poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(11, 30, 58, 0.4) 0%,
+        rgba(11, 30, 58, 0.65) 50%,
+        rgba(11, 30, 58, 0.85) 100%
+      );
+      z-index: 2;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      max-width: 860px;
+      padding: 0 clamp(24px, 5vw, 48px);
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(253, 184, 46, 0.12);
+      border: 1px solid rgba(253, 184, 46, 0.25);
+      color: var(--gold);
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease-out) 0.3s forwards;
+    }
+    .hero__badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s var(--ease-out) 0.5s forwards;
+    }
+    .hero__title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero__subtitle {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 600px;
+      margin: 0 auto 44px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s var(--ease-out) 0.7s forwards;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s var(--ease-out) 0.9s forwards;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.4);
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: bounce-scroll 2.5s ease-in-out infinite;
+    }
+    .hero__scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+
+    /* ================================================================
+       3. LES 4 PROMESSES
+       ================================================================ */
+    .promises {
+      background: var(--cream);
+      position: relative;
+    }
+
+    .promises__header {
+      text-align: center;
+      margin-bottom: clamp(48px, 6vw, 80px);
+    }
+
+    .promises__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .promise-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: clamp(32px, 3vw, 48px) clamp(24px, 2.5vw, 36px);
+      box-shadow: var(--shadow-soft);
+      transition: all var(--dur-mid) var(--ease-out);
+      position: relative;
+      overflow: hidden;
+    }
+    .promise-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur-mid) var(--ease-out);
+    }
+    .promise-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+    .promise-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .promise-card__icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(11, 30, 58, 0.04);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .promise-card__icon img {
+      width: 28px;
+      height: 28px;
+      filter: brightness(0) saturate(100%) invert(9%) sepia(31%) saturate(3166%) hue-rotate(196deg) brightness(96%) contrast(103%);
+    }
+
+    .promise-card__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: var(--navy);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .promise-card__text {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--grey-text);
+      margin-bottom: 20px;
+    }
+
+    .promise-card__proof {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .promise-card__proof::before {
+      content: '';
+      width: 20px;
+      height: 1.5px;
+      background: var(--gold);
+      display: block;
+    }
+
+    /* ================================================================
+       4. CHIFFRES CLÉS
+       ================================================================ */
+    .stats {
+      position: relative;
+      background: var(--navy);
+      overflow: hidden;
+    }
+
+    .stats__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .stats__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.18;
+    }
+    .stats__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(11, 30, 58, 0.92) 0%,
+        rgba(11, 30, 58, 0.78) 100%
+      );
+    }
+
+    .stats__content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .stats__header {
+      text-align: center;
+      margin-bottom: clamp(48px, 6vw, 80px);
+    }
+    .stats__header .section-title {
+      color: var(--white);
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 32px 16px;
+      position: relative;
+    }
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-item__number {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 12px;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-item__label {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.9375rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.5;
+      max-width: 160px;
+      margin: 0 auto;
+    }
+
+    /* ================================================================
+       5. PROGRAMMES
+       ================================================================ */
+    .programs {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .programs::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(253, 184, 46, 0.04) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .programs__header {
+      text-align: center;
+      margin-bottom: clamp(48px, 6vw, 80px);
+      position: relative;
+      z-index: 1;
+    }
+    .programs__header .section-title {
+      color: var(--white);
+    }
+    .programs__header .section-subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 auto;
+    }
+
+    .programs__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .program-card {
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: var(--navy-light);
+      transition: all var(--dur-mid) var(--ease-out);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+    .program-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-cinema);
+    }
+
+    .program-card__image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .program-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--dur-slow) var(--ease-out);
+    }
+    .program-card:hover .program-card__image img {
+      transform: scale(1.06);
+    }
+    .program-card__image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to top, var(--navy-light), transparent);
+    }
+
+    .program-card__body {
+      padding: 28px 28px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .program-card__level {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .program-card__ages {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+
+    .program-card__desc {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .program-card__price {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.03em;
+      margin-bottom: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .program-card__price strong {
+      color: var(--gold);
+      font-weight: 500;
+      font-size: 1.125rem;
+    }
+
+    .program-card__link {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap var(--dur-fast) var(--ease-out);
+    }
+    .program-card:hover .program-card__link {
+      gap: 14px;
+    }
+
+    /* ================================================================
+       6. TÉMOIGNAGES
+       ================================================================ */
+    .testimonials {
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonials::before {
+      content: '\201C';
+      position: absolute;
+      top: -40px;
+      left: 5%;
+      font-family: var(--font-display);
+      font-size: 28rem;
+      font-weight: 200;
+      color: rgba(11, 30, 58, 0.03);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .testimonials__header {
+      text-align: center;
+      margin-bottom: clamp(48px, 6vw, 72px);
+    }
+
+    .testimonials__carousel {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .testimonial-slide {
+      display: none;
+      text-align: center;
+      padding: 0 clamp(16px, 4vw, 48px);
+    }
+    .testimonial-slide.active {
+      display: block;
+      animation: fadeIn 0.6s var(--ease-out);
+    }
+
+    .testimonial-slide__photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 32px;
+      border: 3px solid var(--gold);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .testimonial-slide__quote {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      line-height: 1.65;
+      color: var(--navy);
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+
+    .testimonial-slide__author {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .testimonial-slide__meta {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--grey-mid);
+      letter-spacing: 0.03em;
+    }
+
+    .testimonials__nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 48px;
+    }
+
+    .testimonials__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(11, 30, 58, 0.15);
+      border: none;
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+      padding: 0;
+    }
+    .testimonials__dot.active {
+      background: var(--gold);
+      width: 32px;
+      border-radius: var(--radius-pill);
+    }
+    .testimonials__dot:hover {
+      background: var(--gold-dark);
+    }
+
+    .testimonials__arrows {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .testimonials__arrow {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(11, 30, 58, 0.15);
+      background: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      color: var(--navy);
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .testimonials__arrow:hover {
+      border-color: var(--navy);
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* ================================================================
+       7. MOT DU DIRECTEUR
+       ================================================================ */
+    .director {
+      background: var(--white);
+      position: relative;
+    }
+
+    .director__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 6vw, 96px);
+      align-items: center;
+    }
+
+    .director__image-wrap {
+      position: relative;
+    }
+    .director__image-frame {
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-cinema);
+      position: relative;
+    }
+    .director__image-frame img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+    }
+    .director__accent {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 120px;
+      height: 120px;
+      background: var(--gold);
+      border-radius: var(--radius-card);
+      z-index: -1;
+      opacity: 0.25;
+    }
+
+    .director__content {
+      max-width: 520px;
+    }
+
+    .director__quote {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      line-height: 1.75;
+      color: var(--navy);
+      margin-bottom: 32px;
+      position: relative;
+      padding-left: 28px;
+      border-left: 2px solid var(--gold);
+    }
+
+    .director__signature {
+      margin-bottom: 8px;
+    }
+    .director__name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.125rem;
+      color: var(--navy);
+    }
+    .director__role {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--grey-mid);
+      margin-top: 2px;
+    }
+
+    .director__cta {
+      margin-top: 36px;
+    }
+
+    /* ================================================================
+       8. CTA FINAL + FOOTER
+       ================================================================ */
+    .cta-final {
+      background: var(--navy);
+      text-align: center;
+      padding: clamp(64px, 8vw, 100px) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-final::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(253, 184, 46, 0.06) 0%, transparent 60%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .cta-final__title {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-final__text {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 40px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-final__actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--navy-deep);
+      padding: clamp(48px, 6vw, 80px) 0 32px;
+    }
+
+    .footer__top {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, 1fr);
+      gap: clamp(32px, 4vw, 64px);
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 40px;
+    }
+
+    .footer__brand img {
+      height: 48px;
+      margin-bottom: 20px;
+    }
+    .footer__brand-text {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 24px;
+    }
+
+    .footer__badges {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .footer__badges img {
+      height: 40px;
+      width: auto;
+      opacity: 0.7;
+      transition: opacity var(--dur-fast) var(--ease-smooth);
+    }
+    .footer__badges img:hover {
+      opacity: 1;
+    }
+
+    .footer__col-title {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer__col ul li {
+      margin-bottom: 10px;
+    }
+    .footer__col ul li a {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color var(--dur-fast) var(--ease-smooth);
+    }
+    .footer__col ul li a:hover {
+      color: var(--white);
+    }
+
+    .footer__campus {
+      margin-bottom: 14px;
+    }
+    .footer__campus-name {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 2px;
+    }
+    .footer__campus-addr {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.5;
+    }
+
+    .footer__phone {
+      margin-top: 20px;
+    }
+    .footer__phone a {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer__phone a:hover {
+      color: var(--gold-soft);
+    }
+
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer__legal {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .footer__social {
+      display: flex;
+      gap: 12px;
+    }
+    .footer__social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .footer__social a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(253, 184, 46, 0.08);
+    }
+
+    .footer__lang-switch {
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.4);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .footer__lang-switch a {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all var(--dur-fast) var(--ease-smooth);
+    }
+    .footer__lang-switch a:hover,
+    .footer__lang-switch a.active {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ================================================================
+       ANIMATIONS
+       ================================================================ */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    @keyframes bounce-scroll {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(12px); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity var(--dur-slow) var(--ease-out),
+                  transform var(--dur-slow) var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Counter animation */
+    .stat-item__number {
+      transition: opacity 0.3s ease;
+    }
+
+    /* ================================================================
+       PREFERS-REDUCED-MOTION — WCAG
+       ================================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .hero__badge, .hero__title, .hero__subtitle, .hero__actions {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ================================================================
+       RESPONSIVE — 1024px
+       ================================================================ */
+    @media (max-width: 1024px) {
+      .promises__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stats__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .stat-item:nth-child(3)::after {
+        display: none;
+      }
+      .programs__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .director__grid {
+        gap: 48px;
+      }
+      .footer__top {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ================================================================
+       RESPONSIVE — 768px (Tablet)
+       ================================================================ */
+    @media (max-width: 768px) {
+      .nav__links {
+        display: none;
+      }
+      .nav__hamburger {
+        display: flex;
+      }
+      .nav__cta.desktop-only {
+        display: none;
+      }
+
+      .promises__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+      .stat-item::after {
+        display: none !important;
+      }
+
+      .programs__grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .director__grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .director__image-wrap {
+        max-width: 360px;
+        margin: 0 auto;
+      }
+      .director__content {
+        max-width: 100%;
+      }
+      .director__quote {
+        text-align: left;
+      }
+
+      .footer__top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .footer__bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* ================================================================
+       RESPONSIVE — 375px (Mobile)
+       ================================================================ */
+    @media (max-width: 480px) {
+      .hero__title {
+        font-size: 2.25rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .stat-item__number {
+        font-size: 2.5rem;
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .stats__grid .stat-item:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .testimonial-slide__quote {
+        font-size: 1.05rem;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        font-size: 0.875rem;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero__actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cta-final__actions {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 16px;
+      }
+    }
+
+    /* ================================================================
+       GALLERY TEASER (between director and CTA)
+       ================================================================ */
+    .gallery-teaser {
+      background: var(--cream);
+      padding: clamp(64px, 8vw, 100px) 0;
+      overflow: hidden;
+    }
+
+    .gallery-teaser__header {
+      text-align: center;
+      margin-bottom: clamp(40px, 5vw, 64px);
+    }
+
+    .gallery-teaser__strip {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: scroll-strip 40s linear infinite;
+    }
+
+    .gallery-teaser__item {
+      width: 320px;
+      height: 220px;
+      border-radius: var(--radius-soft);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-soft);
+      transition: transform var(--dur-mid) var(--ease-out),
+                  box-shadow var(--dur-mid) var(--ease-out);
+    }
+    .gallery-teaser__item:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow-card);
+    }
+    .gallery-teaser__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--dur-slow) var(--ease-out);
+    }
+    .gallery-teaser__item:hover img {
+      transform: scale(1.08);
+    }
+
+    @keyframes scroll-strip {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-teaser__strip {
+        animation: none;
+        flex-wrap: wrap;
+        width: auto;
+        justify-content: center;
+      }
+      .gallery-teaser__item {
+        width: 280px;
+      }
+    }
+
+    /* ================================================================
+       WORLD MAP DECORATION (hero section)
+       ================================================================ */
+    .hero__world-pattern {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.04;
+      background-image:
+        radial-gradient(circle at 20% 50%, var(--gold) 1px, transparent 1px),
+        radial-gradient(circle at 40% 30%, var(--gold) 1px, transparent 1px),
+        radial-gradient(circle at 60% 60%, var(--gold) 1px, transparent 1px),
+        radial-gradient(circle at 80% 40%, var(--gold) 1px, transparent 1px),
+        radial-gradient(circle at 30% 70%, var(--gold) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 50% 20%, var(--gold) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 70% 80%, var(--gold) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 15% 35%, var(--gold) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 85% 65%, var(--gold) 0.5px, transparent 0.5px),
+        radial-gradient(circle at 45% 45%, var(--gold) 1px, transparent 1px);
+      background-size: 100% 100%;
+      pointer-events: none;
+    }
+
+    /* ================================================================
+       PROGRAMS — Enhanced hover overlay
+       ================================================================ */
+    .program-card__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 24px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .program-card__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(253, 184, 46, 0.9);
+      color: var(--navy);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    /* ================================================================
+       PROMISE CARDS — hover accent gradient
+       ================================================================ */
+    .promise-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      background: linear-gradient(
+        to top,
+        rgba(253, 184, 46, 0.04) 0%,
+        transparent 100%
+      );
+      transition: height var(--dur-mid) var(--ease-out);
+      pointer-events: none;
+      border-radius: var(--radius-card);
+    }
+    .promise-card:hover::after {
+      height: 100%;
+    }
+
+    /* ================================================================
+       STATS — enhanced divider styling
+       ================================================================ */
+    .stats__divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        var(--gold),
+        transparent
+      );
+      margin: 0 auto 40px;
+      opacity: 0.5;
+    }
+
+    /* ================================================================
+       TESTIMONIALS — enhanced typography
+       ================================================================ */
+    .testimonial-slide__quote::before {
+      content: '\201C';
+      display: block;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 200;
+      color: var(--gold);
+      line-height: 0.5;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+
+    /* ================================================================
+       CTA FINAL — floating particles
+       ================================================================ */
+    .cta-final__particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .cta-final__particle:nth-child(1) {
+      top: 20%;
+      left: 15%;
+      animation: float-particle 8s ease-in-out infinite;
+    }
+    .cta-final__particle:nth-child(2) {
+      top: 60%;
+      right: 20%;
+      animation: float-particle 10s ease-in-out infinite 2s;
+    }
+    .cta-final__particle:nth-child(3) {
+      bottom: 25%;
+      left: 30%;
+      animation: float-particle 12s ease-in-out infinite 4s;
+    }
+    .cta-final__particle:nth-child(4) {
+      top: 35%;
+      right: 10%;
+      width: 3px;
+      height: 3px;
+      animation: float-particle 9s ease-in-out infinite 1s;
+    }
+    .cta-final__particle:nth-child(5) {
+      bottom: 40%;
+      left: 8%;
+      width: 5px;
+      height: 5px;
+      animation: float-particle 11s ease-in-out infinite 3s;
+    }
+
+    @keyframes float-particle {
+      0%, 100% { transform: translate(0, 0); opacity: 0.15; }
+      25% { transform: translate(20px, -30px); opacity: 0.25; }
+      50% { transform: translate(-10px, -50px); opacity: 0.1; }
+      75% { transform: translate(15px, -20px); opacity: 0.2; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-final__particle {
+        animation: none !important;
+      }
+    }
+
+    /* ================================================================
+       FOOTER — enhanced social hover
+       ================================================================ */
+    .footer__social a::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      opacity: 0;
+      transform: scale(1.2);
+      transition: all var(--dur-fast) var(--ease-out);
+      pointer-events: none;
+    }
+    .footer__social a {
+      position: relative;
+    }
+    .footer__social a:hover::after {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+
+    /* ================================================================
+       EXTRA RESPONSIVE REFINEMENTS — Large desktop 1440+
+       ================================================================ */
+    @media (min-width: 1440px) {
+      .hero__title {
+        font-size: 5rem;
+      }
+      .promises__grid {
+        gap: 40px;
+      }
+      .programs__grid {
+        gap: 32px;
+      }
+      .stats__grid {
+        gap: 40px;
+      }
+      .stat-item__number {
+        font-size: 5rem;
+      }
+      .section-title {
+        font-size: 3.5rem;
+      }
+      .director__grid {
+        gap: 120px;
+      }
+    }
+
+    /* ================================================================
+       EXTRA RESPONSIVE — Between tablet and mobile (600px)
+       ================================================================ */
+    @media (max-width: 600px) and (min-width: 481px) {
+      .programs__grid {
+        grid-template-columns: 1fr;
+        max-width: 380px;
+        margin: 0 auto;
+      }
+      .footer__top {
+        grid-template-columns: 1fr;
+      }
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .testimonials__arrows {
+        gap: 16px;
+      }
+    }
+
+    /* ================================================================
+       PRINT STYLES
+       ================================================================ */
+    @media print {
+      .nav, .mobile-sticky-cta, .hero__video-wrap,
+      .hero__scroll, .testimonials__arrows, .testimonials__nav,
+      .gallery-teaser__strip {
+        display: none !important;
+      }
+      body {
+        font-size: 12pt;
+        color: #000;
+        background: #fff;
+      }
+      .hero {
+        min-height: auto;
+        padding: 40px 20px;
+        background: #0b1e3a !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .section-pad {
+        padding: 30px 0;
+      }
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* ================================================================
+       MOBILE STICKY CTA — Click-to-call
+       ================================================================ */
+    .mobile-sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      background: var(--navy);
+      padding: 12px 16px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .mobile-sticky-cta__inner {
+      display: flex;
+      gap: 10px;
+    }
+    .mobile-sticky-cta__inner a {
+      flex: 1;
+      text-align: center;
+      padding: 14px 16px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
+    .mobile-sticky-cta__call {
+      background: var(--white);
+      color: var(--navy);
+    }
+    .mobile-sticky-cta__visit {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    @media (max-width: 768px) {
+      .mobile-sticky-cta {
+        display: block;
+      }
+      body {
+        padding-bottom: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip to content — WCAG -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- ============================================================
+       BLOC 1 : NAVIGATION STICKY
+       ============================================================ -->
+  <nav class="nav" role="navigation" aria-label="Navigation principale">
+    <div class="nav__inner">
+
+      <a href="#" class="nav__logo" aria-label="BISP — Accueil">
+        <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP — École Bilingue Internationale de Paris" width="140" height="44">
+      </a>
+
+      <div class="nav__links" role="menubar">
+        <a href="#ecole" role="menuitem">Notre école</a>
+        <a href="#programmes" role="menuitem">Programmes</a>
+        <a href="#admissions" role="menuitem">Admissions</a>
+        <a href="#vie-scolaire" role="menuitem">Vie scolaire</a>
+        <a href="#actualites" role="menuitem">Actualités</a>
+      </div>
+
+      <div class="nav__right">
+        <div class="nav__lang" aria-label="Sélection de la langue">
+          <a href="#" class="active" aria-current="true" lang="fr">FR</a>
+          <span aria-hidden="true">/</span>
+          <a href="#" lang="en">EN</a>
+        </div>
+        <a href="#admissions" class="nav__cta desktop-only">Inscrire mon enfant</a>
+      </div>
+
+      <button class="nav__hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav__mobile-menu" id="mobile-menu" role="dialog" aria-label="Menu mobile">
+      <a href="#ecole">Notre école</a>
+      <a href="#programmes">Programmes</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#vie-scolaire">Vie scolaire</a>
+      <a href="#actualites">Actualités</a>
+      <a href="#" class="btn btn--gold" style="margin-top: 24px;">Inscrire mon enfant <span class="btn__arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- ============================================================
+         BLOC 2 : HERO
+         ============================================================ -->
+    <section class="hero" aria-label="Section d'accueil">
+      <div class="hero__video-wrap">
+        <img src="../assets/images/hero-poster.jpg" alt="" class="hero__poster" aria-hidden="true">
+        <video class="hero__video"
+               autoplay muted loop playsinline
+               poster="../assets/images/hero-poster.jpg"
+               aria-hidden="true">
+          <source src="../assets/videos/video-presentation-bisp.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero__world-pattern" aria-hidden="true"></div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          Inscriptions ouvertes 2026-2027
+        </div>
+
+        <h1 class="hero__title">
+          Deux langues. Douze élèves.<br><em>Un monde.</em>
+        </h1>
+
+        <p class="hero__subtitle">
+          À Paris, une école bilingue internationale où chaque enfant est connu,
+          accompagné et préparé — en français et en anglais.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#admissions" class="btn btn--gold">
+            Planifier une visite
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="#programmes" class="btn btn--outline">
+            Découvrir nos programmes
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Découvrir</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 3 : LES 4 PROMESSES
+         ============================================================ -->
+    <section class="promises section-pad" id="ecole" aria-labelledby="promises-title">
+      <div class="container">
+
+        <div class="promises__header reveal">
+          <span class="section-label">Ce qui fait de BISP une école à part</span>
+          <h2 class="section-title" id="promises-title">
+            Quatre promesses.<br>Un seul engagement.
+          </h2>
+        </div>
+
+        <div class="promises__grid">
+
+          <!-- Intimité -->
+          <article class="promise-card reveal" aria-labelledby="promise-intimite">
+            <div class="promise-card__icon">
+              <img src="../assets/pictos/eleves.svg" alt="" aria-hidden="true" width="28" height="28">
+            </div>
+            <h3 class="promise-card__title" id="promise-intimite">Intimité</h3>
+            <p class="promise-card__text">
+              Chaque enfant est connu par son prénom. Dans des classes de 12 élèves,
+              personne ne passe inaperçu. Nos enseignants accompagnent chaque parcours,
+              chaque semaine, en toute proximité.
+            </p>
+            <span class="promise-card__proof">12 élèves par classe</span>
+          </article>
+
+          <!-- Double passeport -->
+          <article class="promise-card reveal" aria-labelledby="promise-passeport">
+            <div class="promise-card__icon">
+              <img src="../assets/pictos/bilingue.svg" alt="" aria-hidden="true" width="28" height="28">
+            </div>
+            <h3 class="promise-card__title" id="promise-passeport">Double passeport</h3>
+            <p class="promise-card__text">
+              Cambridge Assessment et Éducation Nationale, sans compromis.
+              Un double parcours académique qui ouvre chaque porte — en France
+              comme à l'international.
+            </p>
+            <span class="promise-card__proof">50/50 français et anglais</span>
+          </article>
+
+          <!-- Monde -->
+          <article class="promise-card reveal" aria-labelledby="promise-monde">
+            <div class="promise-card__icon">
+              <img src="../assets/pictos/nationalites.svg" alt="" aria-hidden="true" width="28" height="28">
+            </div>
+            <h3 class="promise-card__title" id="promise-monde">Monde</h3>
+            <p class="promise-card__text">
+              32 nationalités dans une école à taille humaine. Une micro-société
+              internationale au cœur du 15e arrondissement, où la diversité est
+              vécue au quotidien.
+            </p>
+            <span class="promise-card__proof">32 nationalités représentées</span>
+          </article>
+
+          <!-- Confiance -->
+          <article class="promise-card reveal" aria-labelledby="promise-confiance">
+            <div class="promise-card__icon">
+              <img src="../assets/pictos/enfants.svg" alt="" aria-hidden="true" width="28" height="28">
+            </div>
+            <h3 class="promise-card__title" id="promise-confiance">Confiance</h3>
+            <p class="promise-card__text">
+              Le bilinguisme comme seconde nature, pas comme matière scolaire.
+              Dès 3 ans, nos enfants grandissent entre les langues — et apprennent
+              à penser dans chacune d'elles.
+            </p>
+            <span class="promise-card__proof">Immersion dès 3 ans</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 4 : CHIFFRES CLÉS
+         ============================================================ -->
+    <section class="stats section-pad" aria-labelledby="stats-title">
+      <div class="stats__bg" aria-hidden="true">
+        <img src="../assets/stock/diverse-students.jpg" alt="" loading="lazy">
+      </div>
+      <div class="container stats__content">
+        <div class="stats__header reveal">
+          <span class="section-label">BISP en quelques chiffres</span>
+          <h2 class="section-title" id="stats-title">Les chiffres parlent d'eux-mêmes</h2>
+        </div>
+
+        <div class="stats__divider" aria-hidden="true"></div>
+        <div class="stats__grid reveal">
+          <div class="stat-item">
+            <div class="stat-item__number" data-target="32">32</div>
+            <div class="stat-item__label">Nationalités<br>représentées</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number" data-target="12">12</div>
+            <div class="stat-item__label">Élèves par classe<br>en moyenne</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number">50/50</div>
+            <div class="stat-item__label">Français et anglais<br>à parts égales</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number" data-target="14">14</div>
+            <div class="stat-item__label">Années<br>d'expérience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-item__number" data-target="3">3</div>
+            <div class="stat-item__label">Campus dans le<br>15e arrondissement</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 5 : NOS PROGRAMMES
+         ============================================================ -->
+    <section class="programs section-pad" id="programmes" aria-labelledby="programs-title">
+      <div class="container">
+
+        <div class="programs__header reveal">
+          <span class="section-label">De la maternelle au lycée</span>
+          <h2 class="section-title" id="programs-title">
+            Un parcours complet,<br>de 3 à 18 ans.
+          </h2>
+          <p class="section-subtitle" style="color: rgba(255,255,255,0.6); margin: 0 auto;">
+            Chaque étape est pensée pour que votre enfant progresse
+            dans les deux langues, avec confiance et exigence.
+          </p>
+        </div>
+
+        <div class="programs__grid">
+
+          <!-- Maternelle -->
+          <article class="program-card reveal" aria-labelledby="prog-maternelle">
+            <div class="program-card__image">
+              <img src="../assets/stock/preschool-kids.jpg" alt="Enfants en maternelle bilingue à BISP" loading="lazy" width="400" height="220">
+              <div class="program-card__overlay">
+                <span class="program-card__badge">Immersion bilingue</span>
+              </div>
+            </div>
+            <div class="program-card__body">
+              <h3 class="program-card__level" id="prog-maternelle">Maternelle</h3>
+              <span class="program-card__ages">3 – 6 ans</span>
+              <p class="program-card__desc">
+                L'immersion bilingue commence ici. Vos enfants apprennent
+                avec des enseignants natifs, dans un environnement chaleureux
+                où le jeu et la découverte sont au cœur des apprentissages.
+              </p>
+              <div class="program-card__price">
+                À partir de <strong>13.800 €</strong> / an
+              </div>
+              <a href="#" class="program-card__link">
+                Découvrir la maternelle <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Primaire -->
+          <article class="program-card reveal" aria-labelledby="prog-primaire">
+            <div class="program-card__image">
+              <img src="../assets/images/fille-travaille.png" alt="Élève en primaire bilingue à BISP" loading="lazy" width="400" height="220">
+              <div class="program-card__overlay">
+                <span class="program-card__badge">Double curriculum</span>
+              </div>
+            </div>
+            <div class="program-card__body">
+              <h3 class="program-card__level" id="prog-primaire">Primaire</h3>
+              <span class="program-card__ages">6 – 11 ans</span>
+              <p class="program-card__desc">
+                Le double curriculum prend sa pleine dimension. Éducation Nationale
+                et Cambridge Assessment, enseignés à parts égales
+                par des professeurs de langue maternelle.
+              </p>
+              <div class="program-card__price">
+                À partir de <strong>16.800 €</strong> / an
+              </div>
+              <a href="#" class="program-card__link">
+                Découvrir le primaire <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Collège -->
+          <article class="program-card reveal" aria-labelledby="prog-college">
+            <div class="program-card__image">
+              <img src="../assets/stock/classroom-students.jpg" alt="Collégiens en classe bilingue à BISP" loading="lazy" width="400" height="220">
+              <div class="program-card__overlay">
+                <span class="program-card__badge">Cambridge + EN</span>
+              </div>
+            </div>
+            <div class="program-card__body">
+              <h3 class="program-card__level" id="prog-college">Collège</h3>
+              <span class="program-card__ages">11 – 15 ans</span>
+              <p class="program-card__desc">
+                Rigueur académique et ouverture internationale. Culture digitale,
+                arts, sport — un programme complet qui prépare à l'exigence
+                du lycée bilingue.
+              </p>
+              <div class="program-card__price">
+                À partir de <strong>21.800 €</strong> / an
+              </div>
+              <a href="#" class="program-card__link">
+                Découvrir le collège <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Lycée -->
+          <article class="program-card reveal" aria-labelledby="prog-lycee">
+            <div class="program-card__image">
+              <img src="../assets/stock/students-reading.jpg" alt="Lycéens en étude au lycée bilingue BISP" loading="lazy" width="400" height="220">
+              <div class="program-card__overlay">
+                <span class="program-card__badge">Double passeport</span>
+              </div>
+            </div>
+            <div class="program-card__body">
+              <h3 class="program-card__level" id="prog-lycee">Lycée</h3>
+              <span class="program-card__ages">15 – 18 ans</span>
+              <p class="program-card__desc">
+                Le double passeport académique ouvre toutes les portes.
+                Préparation aux examens français et Cambridge, esprit critique,
+                et la confiance de penser dans deux langues.
+              </p>
+              <div class="program-card__price">
+                À partir de <strong>21.800 €</strong> / an
+              </div>
+              <a href="#" class="program-card__link">
+                Découvrir le lycée <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 6 : TÉMOIGNAGES PARENTS
+         ============================================================ -->
+    <section class="testimonials section-pad" aria-labelledby="testimonials-title">
+      <div class="container">
+
+        <div class="testimonials__header reveal">
+          <span class="section-label">Témoignages</span>
+          <h2 class="section-title" id="testimonials-title">
+            Ils nous ont confié leurs enfants.<br>Voici ce qu'ils en disent.
+          </h2>
+        </div>
+
+        <div class="testimonials__carousel reveal" role="region" aria-label="Carrousel de témoignages" aria-live="polite">
+
+          <!-- Slide 1 -->
+          <div class="testimonial-slide active" role="group" aria-roledescription="slide" aria-label="Témoignage 1 sur 4">
+            <img src="../assets/stock/student-portrait1.jpg" alt="Portrait de parent BISP" class="testimonial-slide__photo" loading="lazy" width="80" height="80">
+            <blockquote class="testimonial-slide__quote">
+              &laquo; Quand nous sommes arrivés à Paris depuis Londres, nous cherchions une école
+              qui ne sacrifie ni le français ni l'anglais. BISP est le seul endroit où
+              nos enfants progressent vraiment dans les deux langues — et où ils se sentent
+              chez eux dès le premier jour. &raquo;
+            </blockquote>
+            <cite class="testimonial-slide__author">Sarah M.</cite>
+            <p class="testimonial-slide__meta">Mère britannique — 2 enfants en primaire</p>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 2 sur 4">
+            <img src="../assets/stock/student-portrait2.jpg" alt="Portrait de parent BISP" class="testimonial-slide__photo" loading="lazy" width="80" height="80">
+            <blockquote class="testimonial-slide__quote">
+              &laquo; Ce qui nous a convaincus, c'est la taille des classes. 12 élèves,
+              c'est un luxe incroyable. Notre fils, qui était timide, a trouvé sa voix
+              en quelques mois. Les enseignants connaissent chaque enfant par son prénom
+              et adaptent leur approche. &raquo;
+            </blockquote>
+            <cite class="testimonial-slide__author">Kenji T.</cite>
+            <p class="testimonial-slide__meta">Père japonais — 1 enfant en collège</p>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 3 sur 4">
+            <img src="../assets/stock/students-group.jpg" alt="Portrait de parent BISP" class="testimonial-slide__photo" loading="lazy" width="80" height="80">
+            <blockquote class="testimonial-slide__quote">
+              &laquo; Notre fille passe du français à l'anglais sans même s'en rendre compte.
+              À la maison, elle nous corrige en deux langues ! Le plus beau, c'est
+              qu'elle a des amis de douze nationalités différentes. À 8 ans, elle est déjà
+              citoyenne du monde. &raquo;
+            </blockquote>
+            <cite class="testimonial-slide__author">Marie-Ange D.</cite>
+            <p class="testimonial-slide__meta">Mère franco-camerounaise — 1 enfant en primaire</p>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="Témoignage 4 sur 4">
+            <img src="../assets/stock/graduation.jpg" alt="Portrait de parent BISP" class="testimonial-slide__photo" loading="lazy" width="80" height="80">
+            <blockquote class="testimonial-slide__quote">
+              &laquo; Nous avons visité sept écoles bilingues à Paris. BISP est la seule
+              qui offre un vrai 50/50 avec des enseignants natifs dans les deux langues.
+              Le double curriculum Cambridge et français, c'est un passeport
+              pour l'avenir de nos enfants. &raquo;
+            </blockquote>
+            <cite class="testimonial-slide__author">Carlos et Ana R.</cite>
+            <p class="testimonial-slide__meta">Parents brésiliens — 2 enfants en maternelle et primaire</p>
+          </div>
+
+        </div>
+
+        <div class="testimonials__nav" role="tablist" aria-label="Navigation témoignages">
+          <button class="testimonials__dot active" role="tab" aria-selected="true" aria-label="Témoignage 1" data-slide="0"></button>
+          <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 2" data-slide="1"></button>
+          <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 3" data-slide="2"></button>
+          <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="Témoignage 4" data-slide="3"></button>
+        </div>
+
+        <div class="testimonials__arrows">
+          <button class="testimonials__arrow" aria-label="Témoignage précédent" data-dir="prev">&#8592;</button>
+          <button class="testimonials__arrow" aria-label="Témoignage suivant" data-dir="next">&#8594;</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 7 : MOT DU DIRECTEUR
+         ============================================================ -->
+    <section class="director section-pad" aria-labelledby="director-title">
+      <div class="container">
+        <div class="director__grid">
+
+          <div class="director__image-wrap reveal">
+            <div class="director__image-frame">
+              <img src="../assets/images/ecole-bisp.jpg" alt="Le campus principal de BISP dans le 15e arrondissement de Paris" loading="lazy" width="560" height="700">
+            </div>
+            <div class="director__accent" aria-hidden="true"></div>
+          </div>
+
+          <div class="director__content reveal">
+            <span class="section-label">Mot du directeur</span>
+            <h2 class="section-title" id="director-title">
+              Chaque enfant mérite<br>d'être entendu.
+            </h2>
+
+            <blockquote class="director__quote">
+              <p>
+                Quand j'ai fondé BISP il y a 14 ans, je rêvais d'une école où aucun enfant
+                ne serait un numéro. Une école où le bilinguisme ne serait pas une matière
+                de plus, mais une manière de vivre et de penser. Aujourd'hui, avec 32
+                nationalités dans nos classes de 12 élèves, ce rêve est devenu une réalité
+                quotidienne.
+              </p>
+              <p style="margin-top: 16px;">
+                Notre secret est simple : nous connaissons chaque enfant. Nous savons
+                ce qui le passionne, ce qui le bloque, ce qui le fait rire. Et c'est dans
+                cette intimité que naît la confiance — la confiance de parler deux langues,
+                de traverser les cultures, de devenir qui ils sont vraiment.
+              </p>
+            </blockquote>
+
+            <div class="director__signature">
+              <p class="director__name">Le Directeur</p>
+              <p class="director__role">Fondateur et Directeur de BISP</p>
+            </div>
+
+            <div class="director__cta">
+              <a href="#" class="btn btn--outline-navy">
+                Planifier votre visite
+                <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         GALLERY TEASER — Vie à BISP
+         ============================================================ -->
+    <section class="gallery-teaser" aria-label="Galerie photo BISP">
+      <div class="container">
+        <div class="gallery-teaser__header reveal">
+          <span class="section-label">La vie à BISP</span>
+          <h2 class="section-title">Un quotidien riche en découvertes</h2>
+        </div>
+      </div>
+      <div class="gallery-teaser__strip" aria-hidden="true">
+        <!-- Set 1 -->
+        <div class="gallery-teaser__item">
+          <img src="../assets/images/activites-enfants.png" alt="Activités enfants BISP" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/art-class.jpg" alt="Cours d'art à BISP" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/images/jeux-enfant.png" alt="Jeux et récréation à BISP" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/students-sports.jpg" alt="Sport et éducation physique" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/library.jpg" alt="Bibliothèque BISP" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/images/litterature-francaise-lycee-bilingue.png" alt="Cours de littérature française" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/playground.jpg" alt="Cour de récréation" loading="lazy" width="320" height="220">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/teacher-children.jpg" alt="Enseignante avec élèves" loading="lazy" width="320" height="220">
+        </div>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <div class="gallery-teaser__item">
+          <img src="../assets/images/activites-enfants.png" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/art-class.jpg" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/images/jeux-enfant.png" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/students-sports.jpg" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/library.jpg" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/images/litterature-francaise-lycee-bilingue.png" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/playground.jpg" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+        <div class="gallery-teaser__item">
+          <img src="../assets/stock/teacher-children.jpg" alt="" loading="lazy" width="320" height="220" aria-hidden="true">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BLOC 8 : CTA FINAL + FOOTER
+         ============================================================ -->
+    <section class="cta-final" aria-labelledby="cta-final-title">
+      <!-- Floating particles -->
+      <div class="cta-final__particle" aria-hidden="true"></div>
+      <div class="cta-final__particle" aria-hidden="true"></div>
+      <div class="cta-final__particle" aria-hidden="true"></div>
+      <div class="cta-final__particle" aria-hidden="true"></div>
+      <div class="cta-final__particle" aria-hidden="true"></div>
+      <div class="container">
+        <h2 class="cta-final__title reveal" id="cta-final-title">
+          Prêt à découvrir BISP ?
+        </h2>
+        <p class="cta-final__text reveal">
+          Venez nous rencontrer, visiter nos campus et découvrir ce qui fait
+          de BISP une école à part.
+        </p>
+        <div class="cta-final__actions reveal">
+          <a href="#" class="btn btn--gold">
+            Planifier ma visite
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="tel:+33144189483" class="btn btn--outline">
+            +33 1 44 18 94 83
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer__top">
+        <!-- Brand -->
+        <div class="footer__brand">
+          <img src="../assets/logos/logo-bisp-header.svg" alt="Logo BISP" width="140" height="48" loading="lazy">
+          <p class="footer__brand-text">
+            École bilingue internationale à Paris. Double curriculum
+            Cambridge et français, de la maternelle au lycée.
+          </p>
+          <div class="footer__badges">
+            <img src="../assets/logos/cambridge.png" alt="Accréditation Cambridge International" loading="lazy">
+            <img src="../assets/logos/pearson-edexcel.png" alt="Accréditation Pearson Edexcel" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Col: École -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Notre école</h3>
+          <ul>
+            <li><a href="#">Valeurs et méthodes</a></li>
+            <li><a href="#">Éducation bilingue</a></li>
+            <li><a href="#">Nos campus</a></li>
+            <li><a href="#">Actualités</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Col: Programmes -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Programmes</h3>
+          <ul>
+            <li><a href="#">Maternelle (3-6 ans)</a></li>
+            <li><a href="#">Primaire (6-11 ans)</a></li>
+            <li><a href="#">Collège (11-15 ans)</a></li>
+            <li><a href="#">Lycée (15-18 ans)</a></li>
+            <li><a href="#">Club du mercredi</a></li>
+            <li><a href="#">Stages vacances</a></li>
+          </ul>
+        </div>
+
+        <!-- Col: Contact -->
+        <div class="footer__col">
+          <h3 class="footer__col-title">Nos campus</h3>
+          <div class="footer__campus">
+            <p class="footer__campus-name">Campus Entrepreneurs</p>
+            <p class="footer__campus-addr">61-63 rue des Entrepreneurs<br>75015 Paris</p>
+          </div>
+          <div class="footer__campus">
+            <p class="footer__campus-name">Campus Letellier I</p>
+            <p class="footer__campus-addr">10-14 rue Letellier<br>75015 Paris</p>
+          </div>
+          <div class="footer__campus">
+            <p class="footer__campus-name">Campus Letellier II</p>
+            <p class="footer__campus-addr">17-21 rue Letellier<br>75015 Paris</p>
+          </div>
+          <div class="footer__phone">
+            <a href="tel:+33144189483" aria-label="Appeler BISP au +33 1 44 18 94 83">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +33 1 44 18 94 83
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__legal">
+          &copy; 2026 BISP — École Bilingue Internationale de Paris. Tous droits réservés.
+          <a href="#" style="color: rgba(255,255,255,0.4); text-decoration: underline;">Mentions légales</a>
+        </p>
+
+        <div class="footer__social" aria-label="Réseaux sociaux">
+          <a href="#" aria-label="Facebook BISP">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram BISP">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn BISP">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+
+        <div class="footer__lang-switch" aria-label="Changer de langue">
+          <a href="#" class="active">FR</a>
+          <a href="#">EN</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       MOBILE STICKY CTA
+       ============================================================ -->
+  <div class="mobile-sticky-cta" aria-label="Actions rapides">
+    <div class="mobile-sticky-cta__inner">
+      <a href="tel:+33144189483" class="mobile-sticky-cta__call">Appeler</a>
+      <a href="#admissions" class="mobile-sticky-cta__visit">Planifier une visite</a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT — Minimal, performant
+       ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* ---- NAV SCROLL ---- */
+      var nav = document.querySelector('.nav');
+      var scrollThreshold = 60;
+
+      function handleNavScroll() {
+        if (window.scrollY > scrollThreshold) {
+          nav.classList.add('nav--scrolled');
+        } else {
+          nav.classList.remove('nav--scrolled');
+        }
+      }
+      window.addEventListener('scroll', handleNavScroll, { passive: true });
+      handleNavScroll();
+
+      /* ---- HAMBURGER ---- */
+      var hamburger = document.querySelector('.nav__hamburger');
+      var mobileMenu = document.getElementById('mobile-menu');
+
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function() {
+          var isOpen = mobileMenu.classList.toggle('open');
+          hamburger.classList.toggle('active');
+          hamburger.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // Close on link click
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          });
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            hamburger.focus();
+          }
+        });
+      }
+
+      /* ---- SCROLL REVEAL ---- */
+      var reveals = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        reveals.forEach(function(el) {
+          revealObserver.observe(el);
+        });
+      } else {
+        // Fallback: show all
+        reveals.forEach(function(el) {
+          el.classList.add('visible');
+        });
+      }
+
+      /* ---- COUNTER ANIMATION ---- */
+      var statNumbers = document.querySelectorAll('.stat-item__number[data-target]');
+
+      function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        var duration = 1800;
+        var startTime = null;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          // Ease out cubic
+          var easedProgress = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(easedProgress * target);
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = target;
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var counterObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              counterObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        statNumbers.forEach(function(el) {
+          counterObserver.observe(el);
+        });
+      }
+
+      /* ---- TESTIMONIALS CAROUSEL ---- */
+      var slides = document.querySelectorAll('.testimonial-slide');
+      var dots = document.querySelectorAll('.testimonials__dot');
+      var arrows = document.querySelectorAll('.testimonials__arrow');
+      var currentSlide = 0;
+      var autoPlayInterval;
+
+      function goToSlide(index) {
+        // Wrap around
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+
+        slides.forEach(function(s, i) {
+          s.classList.toggle('active', i === index);
+        });
+        dots.forEach(function(d, i) {
+          d.classList.toggle('active', i === index);
+          d.setAttribute('aria-selected', i === index);
+        });
+        currentSlide = index;
+      }
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goToSlide(parseInt(this.getAttribute('data-slide'), 10));
+          resetAutoPlay();
+        });
+      });
+
+      arrows.forEach(function(arrow) {
+        arrow.addEventListener('click', function() {
+          var dir = this.getAttribute('data-dir');
+          goToSlide(dir === 'next' ? currentSlide + 1 : currentSlide - 1);
+          resetAutoPlay();
+        });
+      });
+
+      // Keyboard navigation for carousel
+      document.querySelector('.testimonials__carousel')?.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+          goToSlide(currentSlide - 1);
+          resetAutoPlay();
+        } else if (e.key === 'ArrowRight') {
+          goToSlide(currentSlide + 1);
+          resetAutoPlay();
+        }
+      });
+
+      function startAutoPlay() {
+        autoPlayInterval = setInterval(function() {
+          goToSlide(currentSlide + 1);
+        }, 6000);
+      }
+      function resetAutoPlay() {
+        clearInterval(autoPlayInterval);
+        startAutoPlay();
+      }
+      startAutoPlay();
+
+      /* ---- SMOOTH SCROLL for anchor links ---- */
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          var target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            var navHeight = nav.offsetHeight;
+            var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
