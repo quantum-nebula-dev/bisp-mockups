@@ -210,9 +210,11 @@ function buildNoter(){
         h+=`<div class="rg"><div class="rg-t">${g.cat}</div>${g.desc?`<div style="font-size:0.68rem;color:var(--muted);font-style:italic;margin-bottom:0.4rem">${g.desc}</div>`:''}`;
         g.items.forEach(item=>{
             const v=d.ratings[item]||0;
+            const ckey=m.id+'__comment__'+item;
+            const cval=D.mockups[m.id].comments?D.mockups[m.id].comments[item]||'':'';
             h+=`<div class="ri"><div class="rl">${item}</div><div class="rs">
                 ${[1,2,3,4,5].map(n=>`<button class="sb ${v===n?'sel':''}" onclick="rate('${m.id}',\`${item}\`,${n})">${n}</button>`).join('')}
-            </div></div>`;
+            </div><textarea class="ri-comment" placeholder="Commentaire (optionnel)" onchange="saveComment('${m.id}',\`${item}\`,this.value)">${cval}</textarea></div>`;
         });
         h+='</div>';
     });
