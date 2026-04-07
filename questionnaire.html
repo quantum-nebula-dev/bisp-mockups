@@ -6,93 +6,54 @@
     <title>BISP — Évaluation & Hybridation des Maquettes</title>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --navy:#1a2744; --gold:#c4a35a; --cream:#f5f0eb; --white:#fff; --text:#2d2d2d; --muted:#6b7280; --light:#f3f4f6; --border:#e5e7eb; --pw:420px; }
+        :root{--navy:#1a2744;--gold:#c4a35a;--cream:#f5f0eb;--white:#fff;--text:#2d2d2d;--muted:#6b7280;--light:#f3f4f6;--border:#e5e7eb;--pw:440px}
         *{box-sizing:border-box;margin:0;padding:0}
         body{font-family:'DM Sans',sans-serif;background:#111;color:var(--text);overflow:hidden}
 
-        /* IFRAME = true fullscreen */
+        /* IFRAME fullscreen */
         .iframe-wrap{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1}
         .iframe-wrap iframe{width:100%;height:100%;border:none;background:var(--white)}
 
-        /* LEFT NAV PANEL */
-        .left-toggle{
-            position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:150;
-            background:var(--navy);color:var(--white);border:none;
-            padding:1rem 0.45rem;border-radius:0 8px 8px 0;cursor:pointer;
-            font-family:inherit;font-size:0.68rem;writing-mode:vertical-rl;
-            letter-spacing:0.08em;font-weight:600;
-            box-shadow:2px 0 12px rgba(0,0,0,0.2);transition:all 0.3s;
-        }
+        /* LEFT NAV */
+        .left-toggle{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:150;background:var(--navy);color:var(--white);border:none;padding:1rem 0.45rem;border-radius:0 8px 8px 0;cursor:pointer;font-family:inherit;font-size:0.68rem;writing-mode:vertical-rl;letter-spacing:0.08em;font-weight:600;box-shadow:2px 0 12px rgba(0,0,0,0.2);transition:all 0.3s}
         .left-toggle:hover{background:var(--gold);color:var(--navy)}
         .left-toggle.open{left:var(--pw)}
-
-        .left-panel{
-            position:fixed;top:0;left:calc(-1 * var(--pw));bottom:0;width:var(--pw);
-            z-index:140;background:var(--white);border-right:1px solid var(--border);
-            box-shadow:4px 0 24px rgba(0,0,0,0.1);overflow-y:auto;transition:left 0.3s ease;
-            padding:1.2rem;
-        }
+        .left-panel{position:fixed;top:0;left:calc(-1 * var(--pw));bottom:0;width:var(--pw);z-index:140;background:var(--white);border-right:1px solid var(--border);box-shadow:4px 0 24px rgba(0,0,0,0.1);overflow-y:auto;transition:left 0.3s ease;padding:1.2rem}
         .left-panel.open{left:0}
         .lp-brand{font-family:'EB Garamond',serif;font-size:1.3rem;color:var(--navy);margin-bottom:0.3rem}
         .lp-brand span{color:var(--gold)}
         .lp-sub{font-size:0.75rem;color:var(--muted);margin-bottom:1rem}
         .lp-section{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin:1rem 0 0.4rem;padding-bottom:0.2rem;border-bottom:1px solid var(--cream)}
-        .site-btn{
-            display:flex;align-items:center;gap:0.6rem;width:100%;padding:0.55rem 0.7rem;
-            border:none;border-radius:6px;background:transparent;cursor:pointer;
-            font-family:inherit;font-size:0.82rem;color:var(--text);transition:all 0.15s;
-            text-align:left;
-        }
+        .site-btn{display:flex;align-items:center;gap:0.6rem;width:100%;padding:0.55rem 0.7rem;border:none;border-radius:6px;background:transparent;cursor:pointer;font-family:inherit;font-size:0.82rem;color:var(--text);transition:all 0.15s;text-align:left}
         .site-btn:hover{background:var(--cream)}
         .site-btn.active{background:var(--navy);color:var(--white)}
         .site-btn .sb-rank{font-weight:700;color:var(--gold);min-width:22px}
         .site-btn.active .sb-rank{color:var(--gold)}
         .site-btn .sb-name{flex:1}
-        .site-btn .sb-score{font-size:0.7rem;color:var(--muted)}
-        .site-btn.active .sb-score{color:rgba(255,255,255,0.5)}
         .site-btn .sb-check{color:#4ade80;font-size:0.7rem}
-        .special-btn{
-            display:block;width:100%;padding:0.55rem 0.7rem;border:1.5px solid var(--gold);
-            border-radius:6px;background:transparent;cursor:pointer;
-            font-family:inherit;font-size:0.82rem;color:var(--navy);
-            font-weight:600;transition:all 0.15s;text-align:left;margin-bottom:0.3rem;
-        }
-        .special-btn:hover{background:var(--gold);color:var(--navy)}
-        .special-btn.active{background:var(--gold);color:var(--navy)}
-        .lp-export{
-            display:block;width:100%;padding:0.55rem;border-radius:20px;
-            background:var(--navy);color:var(--white);border:none;cursor:pointer;
-            font-family:inherit;font-size:0.78rem;font-weight:600;margin-top:1rem;
-        }
+        .lp-export{display:block;width:100%;padding:0.55rem;border-radius:20px;background:var(--navy);color:var(--white);border:none;cursor:pointer;font-family:inherit;font-size:0.78rem;font-weight:600;margin-top:1rem}
         .lp-export:hover{background:var(--gold);color:var(--navy)}
         .lp-progress{height:4px;background:var(--cream);border-radius:2px;margin-top:0.8rem;overflow:hidden}
         .lp-progress-fill{height:100%;background:var(--gold);transition:width 0.3s;width:0%}
         .lp-progress-label{font-size:0.65rem;color:var(--muted);margin-top:0.3rem;text-align:center}
 
-        /* RIGHT RATING PANEL */
-        .right-toggle{
-            position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:150;
-            background:var(--navy);color:var(--white);border:none;
-            padding:1rem 0.45rem;border-radius:8px 0 0 8px;cursor:pointer;
-            font-family:inherit;font-size:0.68rem;writing-mode:vertical-rl;
-            letter-spacing:0.08em;font-weight:600;
-            box-shadow:-2px 0 12px rgba(0,0,0,0.2);transition:all 0.3s;
-        }
+        /* RIGHT PANEL */
+        .right-toggle{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:150;background:var(--navy);color:var(--white);border:none;padding:1rem 0.45rem;border-radius:8px 0 0 8px;cursor:pointer;font-family:inherit;font-size:0.68rem;writing-mode:vertical-rl;letter-spacing:0.08em;font-weight:600;box-shadow:-2px 0 12px rgba(0,0,0,0.2);transition:all 0.3s}
         .right-toggle:hover{background:var(--gold);color:var(--navy)}
         .right-toggle.open{right:var(--pw)}
-
-        .right-panel{
-            position:fixed;top:0;right:calc(-1 * var(--pw));bottom:0;width:var(--pw);
-            z-index:140;background:var(--white);border-left:1px solid var(--border);
-            box-shadow:-4px 0 24px rgba(0,0,0,0.1);overflow-y:auto;transition:right 0.3s ease;
-            padding:1.2rem;
-        }
+        .right-panel{position:fixed;top:0;right:calc(-1 * var(--pw));bottom:0;width:var(--pw);z-index:140;background:var(--white);border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,0.1);overflow-y:auto;transition:right 0.3s ease;display:flex;flex-direction:column}
         .right-panel.open{right:0}
 
-        /* Panel content */
+        /* Sub-tabs in right panel */
+        .panel-tabs{display:flex;border-bottom:2px solid var(--cream);background:var(--white);position:sticky;top:0;z-index:2;flex-shrink:0}
+        .ptab{flex:1;padding:0.6rem 0.3rem;border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:0.7rem;font-weight:600;color:var(--muted);transition:all 0.15s;border-bottom:2px solid transparent;margin-bottom:-2px}
+        .ptab:hover{color:var(--navy)}
+        .ptab.active{color:var(--navy);border-bottom-color:var(--gold)}
+        .panel-content{flex:1;overflow-y:auto;padding:1.2rem}
+
+        /* Panel form styles */
         .ph h2{font-family:'EB Garamond',serif;font-size:1.3rem;color:var(--navy);margin-bottom:0.15rem}
-        .ph .sd{font-size:0.75rem;color:var(--muted);font-style:italic;margin-bottom:0.15rem}
-        .ph .badge{display:inline-block;background:var(--navy);color:var(--gold);padding:0.12rem 0.45rem;border-radius:3px;font-size:0.68rem;font-weight:700;margin-bottom:0.8rem}
+        .ph .sd{font-size:0.75rem;color:var(--muted);font-style:italic;margin-bottom:0.8rem}
         .rg{margin-bottom:0.9rem}
         .rg-t{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.35rem;padding-bottom:0.2rem;border-bottom:2px solid var(--cream)}
         .ri{margin-bottom:0.45rem}
@@ -105,124 +66,77 @@
         .tq label{display:block;font-size:0.76rem;font-weight:600;color:var(--navy);margin-bottom:0.15rem}
         .tq textarea{width:100%;padding:0.35rem;border:1.5px solid var(--border);border-radius:5px;font-family:inherit;font-size:0.76rem;resize:vertical;min-height:40px}
         .tq textarea:focus{outline:none;border-color:var(--gold)}
-        .nb{display:flex;gap:0.4rem;margin-top:0.8rem}
-        .nb button{flex:1;padding:0.45rem;border-radius:6px;font-family:inherit;font-size:0.76rem;font-weight:600;cursor:pointer}
-        .n2{background:var(--light);border:1px solid var(--border);color:var(--text)}
-        .n1{background:var(--navy);border:none;color:var(--white)}
-        .n1:hover{background:var(--gold);color:var(--navy)}
 
-        /* VIEWPORT BAR */
-        .vp-bar{
-            position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);
-            display:flex;gap:4px;z-index:100;background:rgba(26,39,68,0.9);
-            padding:4px;border-radius:8px;backdrop-filter:blur(10px);
-        }
-        .vp-btn{padding:0.3rem 0.7rem;border-radius:5px;border:none;font-size:0.7rem;cursor:pointer;font-family:inherit;background:transparent;color:rgba(255,255,255,0.6);transition:all 0.15s}
-        .vp-btn.active{background:var(--gold);color:var(--navy);font-weight:600}
+        /* Comparison/Hybrid/Vision in panel */
+        .p-section-title{font-family:'EB Garamond',serif;font-size:1.2rem;color:var(--navy);margin-bottom:0.5rem}
+        .p-intro{font-size:0.76rem;color:var(--muted);margin-bottom:1rem;line-height:1.4;font-style:italic}
+        .p-row{display:flex;flex-direction:column;gap:0.3rem;margin-bottom:0.7rem;padding:0.5rem;border-radius:6px}
+        .p-row:nth-child(odd){background:var(--cream)}
+        .p-row label{font-size:0.78rem;font-weight:600;color:var(--navy)}
+        .p-row select,.p-row input{padding:0.35rem;border:1.5px solid var(--border);border-radius:5px;font-family:inherit;font-size:0.76rem;width:100%}
+        .p-row select:focus,.p-row input:focus{outline:none;border-color:var(--gold)}
+        .p-row small{font-size:0.68rem;color:var(--muted);font-style:italic}
+        .hyb-sec{margin-bottom:1.2rem}
+        .hyb-sec h4{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gold);margin-bottom:0.4rem;padding-bottom:0.2rem;border-bottom:2px solid var(--cream)}
+        .hyb-row{margin-bottom:0.6rem;padding:0.5rem;border-radius:6px}
+        .hyb-row:nth-child(odd){background:var(--cream)}
+        .hyb-row .hyb-label{font-size:0.78rem;font-weight:600;color:var(--navy);margin-bottom:0.1rem}
+        .hyb-row .hyb-desc{font-size:0.68rem;color:var(--muted);font-style:italic;margin-bottom:0.3rem}
+        .hyb-row select,.hyb-row input{padding:0.35rem;border:1.5px solid var(--border);border-radius:5px;font-family:inherit;font-size:0.76rem;width:100%;margin-bottom:0.2rem}
+        .vis-q{margin-bottom:1rem}
+        .vis-q label{display:block;font-size:0.78rem;font-weight:600;color:var(--navy);margin-bottom:0.15rem}
+        .vis-q .hint{font-size:0.68rem;color:var(--muted);font-style:italic;margin-bottom:0.3rem}
+        .vis-q textarea{width:100%;padding:0.35rem;border:1.5px solid var(--border);border-radius:5px;font-family:inherit;font-size:0.76rem;resize:vertical;min-height:50px}
+        .vis-q textarea:focus{outline:none;border-color:var(--gold)}
+        .t3-row{display:flex;gap:0.4rem;margin-bottom:0.4rem;align-items:center}
+        .t3-rank{font-family:'EB Garamond',serif;font-size:1.2rem;color:var(--gold);font-weight:700;min-width:28px}
+        .t3-row select,.t3-row input{flex:1;padding:0.35rem;border:1.5px solid var(--border);border-radius:5px;font-family:inherit;font-size:0.76rem}
 
-        /* FULLPAGE SECTIONS */
-        .fp{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:130;background:var(--white);overflow-y:auto;padding:0}
-        .fp.active{display:block}
-        .fp h1{font-family:'EB Garamond',serif;font-size:2rem;color:var(--navy);margin-bottom:0.5rem}
-        .fp .intro{font-size:0.92rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;max-width:750px}
-        .fpi{max-width:850px;margin:0 auto}
-
-        .cr{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.5rem;padding:0.6rem 0.8rem;border-radius:6px}
-        .cr:nth-child(odd){background:var(--cream)}
-        .cr label{font-size:0.88rem;font-weight:600;color:var(--navy);align-self:center}
-        .cr select,.t3 select,.t3 input,.hbi select,.hbi input{padding:0.45rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem;background:var(--white)}
-        .cr select:focus,.hbi select:focus,.hbi input:focus{outline:none;border-color:var(--gold)}
-        .t3{display:grid;grid-template-columns:50px 1fr 1.2fr;gap:0.8rem;margin-bottom:0.5rem;align-items:center}
-        .t3r{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-align:center}
-        .hbg{margin-bottom:2rem}
-        .hbg h3{font-family:'EB Garamond',serif;font-size:1.15rem;color:var(--navy);margin-bottom:0.7rem;padding-bottom:0.3rem;border-bottom:2px solid var(--gold)}
-        .hbi{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.7rem;padding:0.7rem;border-radius:6px;margin-bottom:0.4rem}
-        .hbi:nth-child(odd){background:var(--cream)}
-        .hbi:nth-child(even){background:var(--white);border:1px solid var(--border)}
-        .hbe{font-size:0.85rem;font-weight:600;color:var(--navy)}
-        .hbe small{display:block;font-weight:400;color:var(--muted);font-size:0.73rem}
-        .vq{margin-bottom:1.5rem}
-        .vq label{display:block;font-size:0.92rem;font-weight:600;color:var(--navy);margin-bottom:0.25rem}
-        .vq .hint{font-size:0.78rem;color:var(--muted);font-style:italic;margin-bottom:0.4rem}
-        .vq textarea{width:100%;padding:0.5rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem;resize:vertical;min-height:60px}
-        .vq textarea:focus{outline:none;border-color:var(--gold)}
-        .ef{margin-bottom:0.8rem}
-        .ef label{display:block;font-weight:600;color:var(--navy);font-size:0.88rem;margin-bottom:0.2rem}
-        .ef input{width:100%;padding:0.45rem;border:1.5px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.85rem}
-        .sn{display:flex;gap:0.5rem;margin-top:2rem;justify-content:flex-end}
-        .sn button{padding:0.6rem 1.5rem;border-radius:8px;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer}
-
+        /* Toast */
         .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);padding:0.8rem 1.5rem;border-radius:8px;font-size:0.85rem;z-index:300;display:none;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
         .toast.show{display:block;animation:pop 0.3s}
         @keyframes pop{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
-
-        /* Close fullpage button */
-        .fp-close{position:fixed;top:0.35rem;right:1.5rem;z-index:135;background:var(--navy);color:var(--white);border:none;padding:0.4rem 1rem;border-radius:6px;font-family:inherit;font-size:0.8rem;cursor:pointer;font-weight:600}
-        .fp-close:hover{background:var(--gold);color:var(--navy)}
-
-        /* PREVIEW BAR inside fullpage sections */
-        .preview-bar{position:sticky;top:0;z-index:132;background:var(--white);border-bottom:1px solid var(--border);margin:0;padding:0;width:100vw;margin-left:calc(-50vw + 50%)}
-        .preview-tabs{display:flex;gap:4px;padding:0.5rem;background:var(--navy);overflow-x:auto;scrollbar-width:none;justify-content:center;flex-wrap:wrap}
-        .preview-tabs::-webkit-scrollbar{display:none}
-        .preview-tab{padding:0.3rem 0.6rem;border-radius:4px;border:none;font-family:inherit;font-size:0.72rem;font-weight:600;cursor:pointer;white-space:nowrap;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);transition:all 0.15s}
-        .preview-tab:hover{background:rgba(255,255,255,0.2);color:var(--white)}
-        .preview-tab.active{background:var(--gold);color:var(--navy)}
-        .preview-frame-wrap{position:relative;height:55vh;min-height:400px;background:#e2e2e2;border-bottom:3px solid var(--gold);width:100vw;margin-left:calc(-50vw + 50%)}
-        .preview-frame-wrap iframe{width:100%;height:100%;border:none}
-        .preview-collapse{position:absolute;bottom:0.5rem;right:0.8rem;background:rgba(26,39,68,0.85);color:var(--white);border:none;padding:0.3rem 0.7rem;border-radius:4px;font-size:0.7rem;cursor:pointer;font-family:inherit;backdrop-filter:blur(8px)}
-        .preview-collapse:hover{background:var(--gold);color:var(--navy)}
-        .preview-bar.collapsed .preview-frame-wrap{height:0;min-height:0;overflow:hidden;border:none}
-        .preview-bar.collapsed .preview-collapse-row{display:flex;justify-content:center;padding:0.3rem;background:var(--cream)}
-        .preview-expand{background:var(--navy);color:var(--white);border:none;padding:0.3rem 0.8rem;border-radius:4px;font-size:0.7rem;cursor:pointer;font-family:inherit}
-        .preview-expand:hover{background:var(--gold);color:var(--navy)}
     </style>
 </head>
 <body>
 
-<!-- IFRAME = vrai plein écran -->
-<div class="iframe-wrap" id="iframeWrap">
-    <iframe id="mockupFrame" src=""></iframe>
-</div>
+<div class="iframe-wrap"><iframe id="mockupFrame" src=""></iframe></div>
 
-
-<!-- LEFT: Navigation -->
 <button class="left-toggle" id="leftToggle" onclick="toggleLeft()">SITES ▶</button>
 <div class="left-panel" id="leftPanel">
     <div class="lp-brand">BISP <span>Phase 1</span></div>
     <div class="lp-sub">Évaluation & Hybridation — Avril 2026</div>
     <div class="lp-section">9 Maquettes</div>
     <div id="siteList"></div>
-    <div class="lp-section">Synthèse</div>
-    <button class="special-btn" id="spBtn0" onclick="goSpecial(0)">Comparaison directe</button>
-    <button class="special-btn" id="spBtn1" onclick="goSpecial(1)">Hybridation</button>
-    <button class="special-btn" id="spBtn2" onclick="goSpecial(2)">Vision & Direction</button>
     <button class="lp-export" onclick="exportJSON()">Exporter mes réponses (JSON)</button>
     <div class="lp-progress"><div class="lp-progress-fill" id="pFill"></div></div>
     <div class="lp-progress-label" id="pLabel">0%</div>
 </div>
 
-<!-- RIGHT: Rating -->
 <button class="right-toggle" id="rightToggle" onclick="toggleRight()">◀ NOTER</button>
-<div class="right-panel" id="rightPanel"></div>
-
-<!-- FULLPAGE: Comparison, Hybrid, Vision -->
-<div class="fp" id="pgCmp"><button class="fp-close" onclick="closeFP()">✕ Retour</button><div class="fpi" id="fpiCmp"></div></div>
-<div class="fp" id="pgHyb"><button class="fp-close" onclick="closeFP()">✕ Retour</button><div class="fpi" id="fpiHyb"></div></div>
-<div class="fp" id="pgVis"><button class="fp-close" onclick="closeFP()">✕ Retour</button><div class="fpi" id="fpiVis"></div></div>
+<div class="right-panel" id="rightPanel">
+    <div class="panel-tabs">
+        <button class="ptab active" id="ptab0" onclick="switchPanelTab(0)">Noter</button>
+        <button class="ptab" id="ptab1" onclick="switchPanelTab(1)">Comparer</button>
+        <button class="ptab" id="ptab2" onclick="switchPanelTab(2)">Hybrider</button>
+        <button class="ptab" id="ptab3" onclick="switchPanelTab(3)">Vision</button>
+    </div>
+    <div class="panel-content" id="panelContent"></div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
 const M=[
-    {id:"aiglon",name:"Aiglon",rank:1,score:"",url:"inspired-aiglon/index.html",style:"Cinématique sombre, mots-clés rouges, or, ombres dramatiques"},
-    {id:"lerosey",name:"Le Rosey",rank:2,score:"",url:"inspired-lerosey/index.html",style:"Bichromatique old money, serif pur, retenue absolue"},
-    {id:"sevenoaks",name:"Sevenoaks",rank:3,score:"",url:"inspired-sevenoaks/index.html",style:"Split hero teal, sobriété radicale, mosaïque photo"},
-    {id:"gordonstoun",name:"Gordonstoun",rank:4,score:"",url:"inspired-gordonstoun/index.html",style:"Pourpre magazine, layout asymétrique, texture grain"},
-    {id:"kentcollege",name:"Kent College",rank:5,score:"",url:"inspired-kentcollege/index.html",style:"Rouge énergique, formes organiques, anti-scolaire"},
-    {id:"repton",name:"Repton",rank:6,score:"",url:"inspired-repton/index.html",style:"Navy + or, timeline dorée, quiet luxury"},
-    {id:"ecoledesroches",name:"École des Roches",rank:7,score:"",url:"inspired-ecoledesroches/index.html",style:"Navy + or vif, ombres cinéma, pills arrondies"},
-    {id:"beausoleil",name:"Beau Soleil",rank:8,score:"",url:"inspired-beausoleil/index.html",style:"Swiss polish, alternance blanc/navy, boutons pill"},
-    {id:"hautlac",name:"Haut-Lac",rank:9,score:"",url:"inspired-hautlac/index.html",style:"Teal + rouge, coupes diagonales, photos N&B"},
+    {id:"aiglon",name:"Aiglon",rank:1,url:"inspired-aiglon/index.html",style:"Cinématique sombre, mots-clés rouges, or, ombres dramatiques"},
+    {id:"lerosey",name:"Le Rosey",rank:2,url:"inspired-lerosey/index.html",style:"Bichromatique old money, serif pur, retenue absolue"},
+    {id:"sevenoaks",name:"Sevenoaks",rank:3,url:"inspired-sevenoaks/index.html",style:"Split hero teal, sobriété radicale, mosaïque photo"},
+    {id:"gordonstoun",name:"Gordonstoun",rank:4,url:"inspired-gordonstoun/index.html",style:"Pourpre magazine, layout asymétrique, texture grain"},
+    {id:"kentcollege",name:"Kent College",rank:5,url:"inspired-kentcollege/index.html",style:"Rouge énergique, formes organiques, anti-scolaire"},
+    {id:"repton",name:"Repton",rank:6,url:"inspired-repton/index.html",style:"Navy + or, timeline dorée, quiet luxury"},
+    {id:"ecoledesroches",name:"École des Roches",rank:7,url:"inspired-ecoledesroches/index.html",style:"Navy + or vif, ombres cinéma, pills arrondies"},
+    {id:"beausoleil",name:"Beau Soleil",rank:8,url:"inspired-beausoleil/index.html",style:"Swiss polish, alternance blanc/navy, boutons pill"},
+    {id:"hautlac",name:"Haut-Lac",rank:9,url:"inspired-hautlac/index.html",style:"Teal + rouge, coupes diagonales, photos N&B"},
 ];
 const CRIT=[
     {cat:"Première impression",items:["Impact visuel (donne envie de scroller\u00a0?)","Professionnalisme / confiance","Correspondance image BISP"]},
@@ -233,58 +147,35 @@ const CRIT=[
 ];
 const HYB=[
     {title:"Hero / Accueil",items:[{el:"Traitement vidéo / image",desc:"Plein écran\u00a0? Split\u00a0? Overlay\u00a0?"},{el:"Titre et sous-titre",desc:"Police, taille, couleur, animation"},{el:"Badges de preuve",desc:"300 élèves, 32 nationalités..."},{el:"Boutons d\u2019action",desc:"Style, couleur, texte"}]},
-    {title:"Navigation & Structure",items:[{el:"Menu principal",desc:"Police, espacement, comportement"},{el:"CTA dans la nav",desc:"« Planifier une visite »"},{el:"Structure de la page",desc:"Ordre des sections, rythme"}]},
+    {title:"Navigation & Structure",items:[{el:"Menu principal",desc:"Police, espacement, comportement"},{el:"CTA dans la nav",desc:"\u00ab\u00a0Planifier une visite\u00a0\u00bb"},{el:"Structure de la page",desc:"Ordre des sections, rythme"}]},
     {title:"Identité visuelle",items:[{el:"Palette de couleurs",desc:"Dominante + accents"},{el:"Typographie titres",desc:"Serif / sans-serif, graisse"},{el:"Typographie corps",desc:"Police, taille, interligne"},{el:"Ambiance / émotion",desc:"Le feeling global"}]},
     {title:"Sections clés",items:[{el:"4 Promesses",desc:"Layout, icônes, style"},{el:"Chiffres clés",desc:"Compteurs, fond, présentation"},{el:"Programmes",desc:"Cards, timeline, photos, tarifs"},{el:"Témoignages",desc:"Carrousel, quotes, diversité"},{el:"Mot du directeur",desc:"Photo, citation, mise en valeur"},{el:"Footer",desc:"Colonnes, infos, accréditations"}]},
 ];
 const CMP=["Meilleur hero","Meilleure navigation","Meilleures couleurs","Meilleure typographie","Meilleur layout","Meilleure section programmes","Meilleurs témoignages","Le plus émotionnel","Le plus professionnel","Le plus original","Le plus adapté à BISP"];
 
-let D={mockups:{},cmp:{},top3:[{},{},{}],hyb:{},vis:{},eval:{}};
-let cur=0,leftOpen=false,rightOpen=false;
-try{const s=localStorage.getItem('bisp-eval');if(s)D=JSON.parse(s)}catch(e){}
-function save(){try{localStorage.setItem('bisp-eval',JSON.stringify(D))}catch(e){}}
+let D={mockups:{},cmp:{},top3:[{},{},{}],hyb:{},vis:{}};
+let cur=0,leftOpen=false,rightOpen=false,panelTab=0;
+try{const s=localStorage.getItem('bisp-eval2');if(s)D=JSON.parse(s)}catch(e){}
+function save(){try{localStorage.setItem('bisp-eval2',JSON.stringify(D))}catch(e){}}
 
-function init(){
-    buildSiteList();buildCmp();buildHyb();buildVis();
-    goSite(0);
-}
+function init(){buildSiteList();goSite(0);updateProgress()}
 
 function buildSiteList(){
     const el=document.getElementById('siteList');
     M.forEach((m,i)=>{
-        const b=document.createElement('button');
-        b.className='site-btn';b.id='sb'+i;
+        const b=document.createElement('button');b.className='site-btn';b.id='sb'+i;
         b.innerHTML=`<span class="sb-rank">#${m.rank}</span><span class="sb-name">${m.name}</span>`;
-        b.onclick=()=>goSite(i);
-        el.appendChild(b);
+        b.onclick=()=>goSite(i);el.appendChild(b);
     });
 }
 
 function goSite(i){
     cur=i;
-    document.querySelectorAll('.fp').forEach(p=>p.classList.remove('active'));
-    document.getElementById('iframeWrap').style.display='block';
-        document.getElementById('rightToggle').style.display='block';
     document.getElementById('mockupFrame').src=M[i].url;
     document.querySelectorAll('.site-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
-    document.querySelectorAll('.special-btn').forEach(b=>b.classList.remove('active'));
-    buildRight(M[i]);
-    // Auto-close left nav after selection
+    if(panelTab===0)buildNoter();
     if(leftOpen)toggleLeft();
 }
-
-function goSpecial(idx){
-    document.getElementById('iframeWrap').style.display='none';
-        document.getElementById('rightToggle').style.display='none';
-    if(rightOpen)toggleRight();
-    if(leftOpen)toggleLeft();
-    document.querySelectorAll('.fp').forEach(p=>p.classList.remove('active'));
-    document.getElementById(['pgCmp','pgHyb','pgVis'][idx]).classList.add('active');
-    document.querySelectorAll('.site-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.special-btn').forEach((b,j)=>b.classList.toggle('active',j===idx));
-}
-
-function closeFP(){goSite(cur)}
 
 function toggleLeft(){
     leftOpen=!leftOpen;
@@ -298,16 +189,21 @@ function toggleRight(){
     document.getElementById('rightToggle').classList.toggle('open',rightOpen);
     document.getElementById('rightToggle').innerHTML=rightOpen?'FERMER ▶':'◀ NOTER';
 }
-function setVP(w,btn){
-    const f=document.getElementById('mockupFrame');
-    f.style.width=w;f.style.margin=w==='100%'?'0':'0 auto';f.style.display='block';
-    document.querySelectorAll('.vp-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
+
+function switchPanelTab(idx){
+    panelTab=idx;
+    document.querySelectorAll('.ptab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+    if(idx===0)buildNoter();
+    else if(idx===1)buildComparer();
+    else if(idx===2)buildHybrider();
+    else buildVisionPanel();
 }
 
-function buildRight(m){
+// === TAB 0: NOTER ===
+function buildNoter(){
+    const m=M[cur];
     if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},keep:'',change:''};
-    const d=D.mockups[m.id],p=document.getElementById('rightPanel');
+    const d=D.mockups[m.id],pc=document.getElementById('panelContent');
     let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p></div>`;
     CRIT.forEach(g=>{
         h+=`<div class="rg"><div class="rg-t">${g.cat}</div>`;
@@ -321,107 +217,77 @@ function buildRight(m){
     });
     h+=`<div class="tq"><label>Ce que vous garderiez absolument\u00a0:</label><textarea onchange="D.mockups['${m.id}'].keep=this.value;save()">${d.keep||''}</textarea></div>`;
     h+=`<div class="tq"><label>Ce que vous changeriez\u00a0:</label><textarea onchange="D.mockups['${m.id}'].change=this.value;save()">${d.change||''}</textarea></div>`;
-    h+='<div class="nb">';
-    if(cur>0)h+=`<button class="n2" onclick="goSite(${cur-1})">← ${M[cur-1].name}</button>`;
-    if(cur<M.length-1)h+=`<button class="n1" onclick="goSite(${cur+1})">${M[cur+1].name} →</button>`;
-    else h+=`<button class="n1" onclick="goSpecial(0)">Comparaison →</button>`;
-    h+='</div>';
-    p.innerHTML=h;p.scrollTop=0;
+    pc.innerHTML=h;pc.scrollTop=0;
 }
 
 function rate(id,crit,val){
-    D.mockups[id].ratings[crit]=val;save();
-    buildRight(M.find(m=>m.id===id));updateProgress();
-    updateSiteChecks();
+    D.mockups[id].ratings[crit]=val;save();buildNoter();updateProgress();updateSiteChecks();
+}
+
+// === TAB 1: COMPARER ===
+function buildComparer(){
+    const opts=M.map(m=>`<option value="${m.id}" ${D.cmp[m.id]?'':''}>${m.name}</option>`).join('');
+    const pc=document.getElementById('panelContent');
+    let h=`<div class="p-section-title">Comparaison directe</div><p class="p-intro">Pour chaque aspect, quelle maquette est la meilleure\u00a0? Changez de site avec le panneau gauche pour revoir.</p>`;
+    CMP.forEach(a=>{
+        const sel=D.cmp[a]||'';
+        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select></div>`;
+    });
+    h+=`<div style="margin-top:1.2rem"><div class="rg-t">Votre Top 3</div>`;
+    ['1er','2e','3e'].forEach((r,i)=>{
+        h+=`<div class="t3-row"><span class="t3-rank">${r}</span><select onchange="D.top3[${i}].choice=this.value;save()"><option value="">—</option>${M.map(m=>`<option value="${m.id}" ${(D.top3[i].choice||'')===m.id?'selected':''}>${m.name}</option>`).join('')}</select><input placeholder="Pourquoi\u00a0?" value="${D.top3[i].why||''}" onchange="D.top3[${i}].why=this.value;save()"></div>`;
+    });
+    h+='</div>';
+    pc.innerHTML=h;pc.scrollTop=0;
+}
+
+// === TAB 2: HYBRIDER ===
+function buildHybrider(){
+    const pc=document.getElementById('panelContent');
+    let h=`<div class="p-section-title">Hybridation</div><p class="p-intro">Construisez votre site idéal pièce par pièce. Changez de site à gauche pour comparer.</p>`;
+    HYB.forEach(s=>{
+        h+=`<div class="hyb-sec"><h4>${s.title}</h4>`;
+        s.items.forEach(item=>{
+            const k=(s.title+'_'+item.el).replace(/[^a-zA-Z0-9]/g,'_');
+            const sel=D.hyb[k]||'';
+            const why=D.hyb[k+'_why']||'';
+            h+=`<div class="hyb-row"><div class="hyb-label">${item.el}</div><div class="hyb-desc">${item.desc}</div>
+                <select onchange="D.hyb['${k}']=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select>
+                <input placeholder="Pourquoi\u00a0?" value="${why}" onchange="D.hyb['${k}_why']=this.value;save()">
+            </div>`;
+        });
+        h+='</div>';
+    });
+    pc.innerHTML=h;pc.scrollTop=0;
+}
+
+// === TAB 3: VISION ===
+function buildVisionPanel(){
+    const pc=document.getElementById('panelContent');
+    const qs=[
+        {q:"Quelle émotion doit ressentir un parent en arrivant\u00a0?",hint:""},
+        {q:"3 adjectifs pour le site BISP idéal\u00a0:",hint:"ex.\u00a0: chaleureux, prestigieux, moderne, intime..."},
+        {q:"Éléments NON-NÉGOCIABLES\u00a0:",hint:"ex.\u00a0: vidéo en hero, tarifs visibles, accréd. Cambridge..."},
+        {q:"Éléments à ÉVITER\u00a0:",hint:"ex.\u00a0: trop sombre, trop corporate, trop d\u2019animations..."},
+        {q:"Décrivez votre vision du site idéal\u00a0:",hint:"Imaginez le site parfait de BISP"},
+        {q:"Sites web que vous admirez\u00a0:",hint:"URLs ou noms"},
+    ];
+    let h=`<div class="p-section-title">Votre site BISP idéal</div><p class="p-intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait.</p>`;
+    qs.forEach((q,i)=>{
+        h+=`<div class="vis-q"><label>${i+1}. ${q.q}</label>${q.hint?`<p class="hint">${q.hint}</p>`:''}<textarea rows="3" onchange="D.vis['q${i}']=this.value;save()">${D.vis['q'+i]||''}</textarea></div>`;
+    });
+    h+=`<button style="display:block;width:100%;padding:0.55rem;border-radius:20px;background:var(--navy);color:var(--white);border:none;cursor:pointer;font-family:inherit;font-size:0.78rem;font-weight:600;margin-top:1rem" onclick="exportJSON()">Exporter mes réponses</button>`;
+    h+=`<p style="text-align:center;margin-top:1rem;color:var(--gold);font-family:'EB Garamond',serif;font-style:italic;font-size:0.95rem">Merci pour votre évaluation.</p>`;
+    pc.innerHTML=h;pc.scrollTop=0;
 }
 
 function updateSiteChecks(){
     M.forEach((m,i)=>{
-        const d=D.mockups[m.id];
-        const filled=d?Object.keys(d.ratings).length:0;
-        const btn=document.getElementById('sb'+i);
-        const existing=btn.querySelector('.sb-check');
-        if(filled>=15&&!existing){
-            const sp=document.createElement('span');sp.className='sb-check';sp.textContent='✓';
-            btn.appendChild(sp);
-        }else if(filled<15&&existing){existing.remove();}
+        const d=D.mockups[m.id];const filled=d?Object.keys(d.ratings).length:0;
+        const btn=document.getElementById('sb'+i);const ex=btn.querySelector('.sb-check');
+        if(filled>=15&&!ex){const sp=document.createElement('span');sp.className='sb-check';sp.textContent='✓';btn.appendChild(sp)}
+        else if(filled<15&&ex){ex.remove()}
     });
-}
-
-function previewBar(containerId){
-    const tabs=M.map((m,i)=>`<button class="preview-tab ${i===0?'active':''}" onclick="loadPreview('${containerId}','${m.url}',this)">#${m.rank} ${m.name}</button>`).join('');
-    return `<div class="preview-bar" id="pb_${containerId}">
-        <div class="preview-tabs">${tabs}<button class="preview-tab" onclick="togglePreview('${containerId}')" style="margin-left:auto;background:rgba(255,255,255,0.05)">▼ Réduire</button></div>
-        <div class="preview-frame-wrap"><iframe id="pf_${containerId}" src="${M[0].url}"></iframe></div>
-        <div class="preview-collapse-row" style="display:none"><button class="preview-expand" onclick="togglePreview('${containerId}')">▲ Afficher les maquettes</button></div>
-    </div>`;
-}
-function loadPreview(cid,url,btn){
-    document.getElementById('pf_'+cid).src=url;
-    btn.closest('.preview-tabs').querySelectorAll('.preview-tab').forEach(t=>t.classList.remove('active'));
-    btn.classList.add('active');
-    // Uncollapse if collapsed
-    const pb=document.getElementById('pb_'+cid);
-    if(pb.classList.contains('collapsed')){togglePreview(cid)}
-}
-function togglePreview(cid){
-    const pb=document.getElementById('pb_'+cid);
-    const collapsed=pb.classList.toggle('collapsed');
-    const row=pb.querySelector('.preview-collapse-row');
-    row.style.display=collapsed?'flex':'none';
-}
-
-// COMPARISON
-function buildCmp(){
-    const opts=M.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-    let h=previewBar('cmp');
-    h+=`<div style="padding:2.5rem"><h1>Comparaison directe</h1><p class="intro">Pour chaque aspect, choisissez la maquette gagnante. Cliquez sur les onglets ci-dessus pour revoir chaque maquette.</p>`;
-    CMP.forEach(a=>{
-        h+=`<div class="cr"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${opts}</select></div>`;
-    });
-    h+=`<h2 style="font-family:'EB Garamond',serif;color:var(--navy);margin-top:2rem;margin-bottom:1rem">Votre Top 3</h2>`;
-    ['1er','2e','3e'].forEach((r,i)=>{
-        h+=`<div class="t3"><div class="t3r">${r}</div><select onchange="D.top3[${i}].choice=this.value;save()"><option value="">— Choisir —</option>${opts}</select><input placeholder="Pourquoi\u00a0?" onchange="D.top3[${i}].why=this.value;save()"></div>`;
-    });
-    h+=`<div class="sn"><button class="n2" onclick="closeFP()">← Maquettes</button><button class="n1" onclick="goSpecial(1)">Hybridation →</button></div></div>`;
-    document.getElementById('fpiCmp').innerHTML=h;
-}
-
-// HYBRID
-function buildHyb(){
-    const opts=M.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
-    let h=previewBar('hyb');
-    h+=`<div style="padding:2.5rem"><h1>Hybridation</h1><p class="intro">C'est la partie la plus importante. Le site final sera un mélange des meilleurs éléments. Pour chaque composant, choisissez votre préféré et dites pourquoi. Utilisez les onglets ci-dessus pour comparer les maquettes.</p>`;
-    HYB.forEach(s=>{
-        h+=`<div class="hbg"><h3>${s.title}</h3>`;
-        s.items.forEach(item=>{
-            const k=(s.title+'_'+item.el).replace(/[^a-zA-Z0-9]/g,'_');
-            h+=`<div class="hbi"><div class="hbe">${item.el}<small>${item.desc}</small></div><select onchange="D.hyb['${k}']=this.value;save();updateProgress()"><option value="">— Choisir —</option>${opts}</select><input placeholder="Pourquoi\u00a0?" onchange="D.hyb['${k}_why']=this.value;save()"></div>`;
-        });
-        h+='</div>';
-    });
-    h+=`<div class="sn"><button class="n2" onclick="goSpecial(0)">← Comparaison</button><button class="n1" onclick="goSpecial(2)">Vision →</button></div></div>`;
-    document.getElementById('fpiHyb').innerHTML=h;
-}
-
-// VISION
-function buildVis(){
-    const qs=[
-        {q:"Quand un parent arrive sur le site, quelle émotion doit-il ressentir\u00a0?",hint:""},
-        {q:"3 adjectifs qui décrivent le site BISP idéal\u00a0:",hint:"ex.\u00a0: chaleureux, prestigieux, moderne, intime, international..."},
-        {q:"Éléments NON-NÉGOCIABLES pour le site final\u00a0:",hint:"ex.\u00a0: vidéo en hero, tarifs visibles, accréditations Cambridge..."},
-        {q:"Éléments à ÉVITER ABSOLUMENT\u00a0:",hint:"ex.\u00a0: trop sombre, trop corporate, trop d\u2019animations..."},
-        {q:"Décrivez librement votre vision du site idéal\u00a0:",hint:"Imaginez le site parfait de BISP"},
-        {q:"Sites web que vous admirez (URLs ou noms)\u00a0:",hint:""},
-    ];
-    let h=previewBar('vis');
-    h+=`<div style="padding:2.5rem"><h1>Votre site BISP idéal</h1><p class="intro">En vous appuyant sur les 9 maquettes, décrivez le site parfait. Utilisez les onglets ci-dessus si besoin de revoir une maquette.</p>`;
-    qs.forEach((q,i)=>{
-        h+=`<div class="vq"><label>${i+1}. ${q.q}</label>${q.hint?`<p class="hint">${q.hint}</p>`:''}<textarea rows="3" onchange="D.vis['q${i}']=this.value;save()"></textarea></div>`;
-    });
-    h+=`<div class="sn"><button class="n2" onclick="goSpecial(1)">← Hybridation</button><button class="n1" onclick="exportJSON()">Exporter mes réponses</button></div>`;
-    h+=`<p style="text-align:center;margin-top:2rem;color:var(--gold);font-family:'EB Garamond',serif;font-style:italic;font-size:1.1rem">Merci pour votre évaluation.</p></div>`;
-    document.getElementById('fpiVis').innerHTML=h;
 }
 
 function updateProgress(){
@@ -438,8 +304,7 @@ function exportJSON(){
     const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);
     a.download='BISP-evaluation-'+new Date().toISOString().slice(0,10)+'.json';
-    a.click();URL.revokeObjectURL(a.href);
-    showToast('Réponses exportées\u00a0!');
+    a.click();URL.revokeObjectURL(a.href);showToast('Réponses exportées\u00a0!');
 }
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 
