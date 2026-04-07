@@ -139,11 +139,12 @@ const M=[
     {id:"hautlac",name:"Haut-Lac",rank:9,url:"inspired-hautlac/index.html",style:"Teal + rouge, coupes diagonales, photos N&B"},
 ];
 const CRIT=[
-    {cat:"Première impression",items:["Impact visuel (donne envie de scroller\u00a0?)","Professionnalisme / confiance","Correspondance image BISP"]},
-    {cat:"Design & esthétique",items:["Couleurs\u00a0: sophistication et cohérence","Typographie\u00a0: lisibilité + personnalité","Photos & vidéo\u00a0: qualité et émotion","Mise en page\u00a0: structure et rythme"]},
-    {cat:"Contenu & UX",items:["Hero\u00a0: impact du titre + message","Programmes\u00a0: clarté (niveaux, âges, tarifs)","Témoignages\u00a0: crédibilité et mise en valeur","Navigation\u00a0: facilité d\u2019utilisation"]},
-    {cat:"Conversion",items:["Envie de contacter / s\u2019inscrire","Boutons d\u2019action\u00a0: visibilité et efficacité"]},
-    {cat:"Différenciation",items:["Originalité / mémorabilité","Envie de montrer ce site à quelqu\u2019un"]},
+    {cat:"Première impression",items:["Impact visuel immédiat (donne envie de scroller\u00a0?)","Professionnalisme / confiance inspirée","Correspondance avec l\u2019image BISP"]},
+    {cat:"Couleurs & identité",items:["Palette\u00a0: sophistication et cohérence","Contraste et lisibilité du texte","Personnalité de marque (caractère distinctif\u00a0?)"]},
+    {cat:"Typographie",items:["Lisibilité générale","Hiérarchie visuelle (titres vs sous-titres vs corps)","Distinction (se démarque des sites génériques\u00a0?)"]},
+    {cat:"Layout & composition",items:["Structure générale et rythme de la page","Whitespace / espaces de respiration","Cohérence visuelle (éléments homogènes bout en bout)","Transitions entre les sections"]},
+    {cat:"Sections clés",items:["Hero\u00a0: impact et composition","Navigation\u00a0: clarté et esthétique","Qualité et variété du layout des sections intérieures"]},
+    {cat:"Émotion & conversion",items:["Émotion ressentie en parcourant le site","Envie de contacter / planifier une visite","Originalité / mémorabilité"]},
 ];
 const HYB=[
     {title:"Hero / Accueil",items:[{el:"Traitement vidéo / image",desc:"Plein écran\u00a0? Split\u00a0? Overlay\u00a0?"},{el:"Titre et sous-titre",desc:"Police, taille, couleur, animation"},{el:"Badges de preuve",desc:"300 élèves, 32 nationalités..."},{el:"Boutons d\u2019action",desc:"Style, couleur, texte"}]},
@@ -285,13 +286,13 @@ function updateSiteChecks(){
     M.forEach((m,i)=>{
         const d=D.mockups[m.id];const filled=d?Object.keys(d.ratings).length:0;
         const btn=document.getElementById('sb'+i);const ex=btn.querySelector('.sb-check');
-        if(filled>=15&&!ex){const sp=document.createElement('span');sp.className='sb-check';sp.textContent='✓';btn.appendChild(sp)}
-        else if(filled<15&&ex){ex.remove()}
+        if(filled>=19&&!ex){const sp=document.createElement('span');sp.className='sb-check';sp.textContent='✓';btn.appendChild(sp)}
+        else if(filled<19&&ex){ex.remove()}
     });
 }
 
 function updateProgress(){
-    let total=M.length*15+CMP.length+18,filled=0;
+    let total=M.length*19+CMP.length+18,filled=0;
     Object.values(D.mockups).forEach(m=>{filled+=Object.keys(m.ratings).length});
     filled+=Object.values(D.cmp).filter(v=>v).length;
     filled+=Object.keys(D.hyb).filter(k=>!k.endsWith('_why')&&D.hyb[k]).length;
