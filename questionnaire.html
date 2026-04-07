@@ -424,7 +424,7 @@ function buildVis(){
         h+=`<div class="ef"><label>${f}</label><input onchange="D.eval['${f}']=this.value;save()"></div>`;
     });
     h+=`<div class="sn"><button class="n2" onclick="goSpecial(1)">← Hybridation</button><button class="n1" onclick="exportJSON()">Exporter mes réponses</button></div>`;
-    h+=`<p style="text-align:center;margin-top:2rem;color:var(--gold);font-family:'EB Garamond',serif;font-style:italic;font-size:1.1rem">Merci pour votre évaluation.</p>`;
+    h+=`<p style="text-align:center;margin-top:2rem;color:var(--gold);font-family:'EB Garamond',serif;font-style:italic;font-size:1.1rem">Merci pour votre évaluation.</p></div>`;
     document.getElementById('fpiVis').innerHTML=h;
 }
 
