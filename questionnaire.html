@@ -279,7 +279,7 @@ function buildHybrider(){
             const why=D.hyb[k+'_why']||'';
             h+=`<div class="hyb-row"><div class="hyb-label">${item.el}</div><div class="hyb-desc">${item.desc}</div>
                 <select onchange="D.hyb['${k}']=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select>
-                <input placeholder="Pourquoi\u00a0?" value="${why}" onchange="D.hyb['${k}_why']=this.value;save()">
+                <textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires" onchange="D.hyb['${k}_why']=this.value;save()">${why}</textarea>
             </div>`;
         });
         h+='</div>';

@@ -56,7 +56,9 @@
         .ph .sd{font-size:0.75rem;color:var(--muted);font-style:italic;margin-bottom:0.8rem}
         .rg{margin-bottom:0.9rem}
         .rg-t{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.35rem;padding-bottom:0.2rem;border-bottom:2px solid var(--cream)}
-        .ri{margin-bottom:0.45rem}
+        .ri{margin-bottom:0.55rem}
+        .ri-comment{display:block;width:100%;margin-top:0.2rem;padding:0.3rem;border:1px solid var(--border);border-radius:4px;font-family:inherit;font-size:0.7rem;color:var(--muted);resize:vertical;min-height:28px;background:var(--light);transition:border-color 0.15s}
+        .ri-comment:focus{outline:none;border-color:var(--gold);color:var(--text);background:var(--white)}
         .rl{font-size:0.76rem;color:var(--text);margin-bottom:0.15rem;line-height:1.3}
         .rs{display:flex;gap:3px}
         .sb{width:29px;height:29px;border-radius:5px;border:1.5px solid var(--border);background:var(--white);font-size:0.76rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all 0.12s;font-family:inherit}
@@ -203,22 +205,25 @@ function switchPanelTab(idx){
 // === TAB 0: NOTER ===
 function buildNoter(){
     const m=M[cur];
-    if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},firstNotice:'',emotion:'',standout:'',keep:'',change:''};
+    if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},comments:{},firstNotice:'',emotion:'',standout:'',keep:'',change:''};
+    if(!D.mockups[m.id].comments)D.mockups[m.id].comments={};
     const d=D.mockups[m.id],pc=document.getElementById('panelContent');
     let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p></div>`;
     CRIT.forEach(g=>{
         h+=`<div class="rg"><div class="rg-t">${g.cat}</div>${g.desc?`<div style="font-size:0.68rem;color:var(--muted);font-style:italic;margin-bottom:0.4rem">${g.desc}</div>`:''}`;
         g.items.forEach(item=>{
             const v=d.ratings[item]||0;
+            const ckey=m.id+'__comment__'+item;
+            const cval=D.mockups[m.id].comments?D.mockups[m.id].comments[item]||'':'';
             h+=`<div class="ri"><div class="rl">${item}</div><div class="rs">
                 ${[1,2,3,4,5].map(n=>`<button class="sb ${v===n?'sel':''}" onclick="rate('${m.id}',\`${item}\`,${n})">${n}</button>`).join('')}
-            </div></div>`;
+            </div><textarea class="ri-comment" placeholder="Commentaire (optionnel)" onchange="saveComment('${m.id}',\`${item}\`,this.value)">${cval}</textarea></div>`;
         });
         h+='</div>';
     });
-    h+=`<div class="tq"><label>Premier élément que vous remarquez (test 5 sec)\u00a0:</label><textarea rows="1" onchange="D.mockups['${m.id}'].firstNotice=this.value;save()" placeholder="Qu'avez-vous vu en premier\u00a0?">${d.firstNotice||''}</textarea></div>`;
-    h+=`<div class="tq"><label>Ce design vous fait penser à quoi\u00a0? (1-2 mots)</label><textarea rows="1" onchange="D.mockups['${m.id}'].emotion=this.value;save()" placeholder="ex.\u00a0: luxe discret, énergie, sérieux, chaleureux...">${d.emotion||''}</textarea></div>`;
-    h+=`<div class="tq"><label>L'élément qui vous a le plus marqué\u00a0:</label><textarea rows="1" onchange="D.mockups['${m.id}'].standout=this.value;save()" placeholder="Le truc dont vous vous souviendrez">${d.standout||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Premier élément que vous remarquez (test 5 sec)\u00a0:</label><textarea rows="2" onchange="D.mockups['${m.id}'].firstNotice=this.value;save()" placeholder="Qu'avez-vous vu en premier\u00a0?">${d.firstNotice||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Ce design vous fait penser à quoi\u00a0? (1-2 mots)</label><textarea rows="2" onchange="D.mockups['${m.id}'].emotion=this.value;save()" placeholder="ex.\u00a0: luxe discret, énergie, sérieux, chaleureux...">${d.emotion||''}</textarea></div>`;
+    h+=`<div class="tq"><label>L'élément qui vous a le plus marqué\u00a0:</label><textarea rows="2" onchange="D.mockups['${m.id}'].standout=this.value;save()" placeholder="Le truc dont vous vous souviendrez">${d.standout||''}</textarea></div>`;
     h+=`<div class="tq"><label>Ce que vous garderiez absolument\u00a0:</label><textarea onchange="D.mockups['${m.id}'].keep=this.value;save()">${d.keep||''}</textarea></div>`;
     h+=`<div class="tq"><label>Ce que vous changeriez\u00a0:</label><textarea onchange="D.mockups['${m.id}'].change=this.value;save()">${d.change||''}</textarea></div>`;
     pc.innerHTML=h;pc.scrollTop=0;
@@ -238,18 +243,25 @@ function rate(id,crit,val){
     updateProgress();updateSiteChecks();
 }
 
+function saveComment(id,crit,val){
+    if(!D.mockups[id].comments)D.mockups[id].comments={};
+    D.mockups[id].comments[crit]=val;save();
+}
+
 // === TAB 1: COMPARER ===
 function buildComparer(){
     const opts=M.map(m=>`<option value="${m.id}" ${D.cmp[m.id]?'':''}>${m.name}</option>`).join('');
     const pc=document.getElementById('panelContent');
     let h=`<div class="p-section-title">Comparaison directe</div><p class="p-intro">Pour chaque aspect, quelle maquette est la meilleure\u00a0? Changez de site avec le panneau gauche pour revoir.</p>`;
+    if(!D.cmpComments)D.cmpComments={};
     CMP.forEach(a=>{
         const sel=D.cmp[a]||'';
-        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select></div>`;
+        const cc=D.cmpComments[a]||'';
+        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select><textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires (optionnel)" onchange="if(!D.cmpComments)D.cmpComments={};D.cmpComments[\`${a}\`]=this.value;save()">${cc}</textarea></div>`;
     });
     h+=`<div style="margin-top:1.2rem"><div class="rg-t">Votre Top 3</div>`;
     ['1er','2e','3e'].forEach((r,i)=>{
-        h+=`<div class="t3-row"><span class="t3-rank">${r}</span><select onchange="D.top3[${i}].choice=this.value;save()"><option value="">—</option>${M.map(m=>`<option value="${m.id}" ${(D.top3[i].choice||'')===m.id?'selected':''}>${m.name}</option>`).join('')}</select><input placeholder="Pourquoi\u00a0?" value="${D.top3[i].why||''}" onchange="D.top3[${i}].why=this.value;save()"></div>`;
+        h+=`<div class="t3-row" style="flex-direction:column;align-items:stretch"><div style="display:flex;gap:0.4rem;align-items:center"><span class="t3-rank">${r}</span><select style="flex:1" onchange="D.top3[${i}].choice=this.value;save()"><option value="">—</option>${M.map(m=>`<option value="${m.id}" ${(D.top3[i].choice||'')===m.id?'selected':''}>${m.name}</option>`).join('')}</select></div><textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires" onchange="D.top3[${i}].why=this.value;save()">${D.top3[i].why||''}</textarea></div>`;
     });
     h+='</div>';
     pc.innerHTML=h;pc.scrollTop=0;
@@ -267,7 +279,7 @@ function buildHybrider(){
             const why=D.hyb[k+'_why']||'';
             h+=`<div class="hyb-row"><div class="hyb-label">${item.el}</div><div class="hyb-desc">${item.desc}</div>
                 <select onchange="D.hyb['${k}']=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select>
-                <input placeholder="Pourquoi\u00a0?" value="${why}" onchange="D.hyb['${k}_why']=this.value;save()">
+                <textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires" onchange="D.hyb['${k}_why']=this.value;save()">${why}</textarea>
             </div>`;
         });
         h+='</div>';
