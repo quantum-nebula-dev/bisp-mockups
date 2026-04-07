@@ -257,7 +257,7 @@ function buildComparer(){
     CMP.forEach(a=>{
         const sel=D.cmp[a]||'';
         const cc=D.cmpComments[a]||'';
-        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select><textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires (optionnel)" onchange="if(!D.cmpComments)D.cmpComments={};D.cmpComments[\`${a}\`]=this.value;save()">${cc}</textarea></div>`;
+        h+=`<div class="p-row"><label>${a}</label><select onchange="D.cmp[\`${a}\`]=this.value;save();updateProgress()"><option value="">— Choisir —</option>${M.map(m=>`<option value="${m.id}" ${sel===m.id?'selected':''}>${m.name}</option>`).join('')}</select><textarea class="ri-comment" placeholder="" onchange="if(!D.cmpComments)D.cmpComments={};D.cmpComments[\`${a}\`]=this.value;save()">${cc}</textarea></div>`;
     });
     h+=`<div style="margin-top:1.2rem"><div class="rg-t">Votre Top 3</div>`;
     ['1er','2e','3e'].forEach((r,i)=>{
