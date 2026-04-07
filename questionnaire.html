@@ -383,7 +383,7 @@ function buildCmp(){
     ['1er','2e','3e'].forEach((r,i)=>{
         h+=`<div class="t3"><div class="t3r">${r}</div><select onchange="D.top3[${i}].choice=this.value;save()"><option value="">— Choisir —</option>${opts}</select><input placeholder="Pourquoi\u00a0?" onchange="D.top3[${i}].why=this.value;save()"></div>`;
     });
-    h+=`<div class="sn"><button class="n2" onclick="closeFP()">← Maquettes</button><button class="n1" onclick="goSpecial(1)">Hybridation →</button></div>`;
+    h+=`<div class="sn"><button class="n2" onclick="closeFP()">← Maquettes</button><button class="n1" onclick="goSpecial(1)">Hybridation →</button></div></div>`;
     document.getElementById('fpiCmp').innerHTML=h;
 }
 
