@@ -261,7 +261,7 @@ function buildComparer(){
     });
     h+=`<div style="margin-top:1.2rem"><div class="rg-t">Votre Top 3</div>`;
     ['1er','2e','3e'].forEach((r,i)=>{
-        h+=`<div class="t3-row"><span class="t3-rank">${r}</span><select onchange="D.top3[${i}].choice=this.value;save()"><option value="">—</option>${M.map(m=>`<option value="${m.id}" ${(D.top3[i].choice||'')===m.id?'selected':''}>${m.name}</option>`).join('')}</select><input placeholder="Pourquoi\u00a0?" value="${D.top3[i].why||''}" onchange="D.top3[${i}].why=this.value;save()"></div>`;
+        h+=`<div class="t3-row" style="flex-direction:column;align-items:stretch"><div style="display:flex;gap:0.4rem;align-items:center"><span class="t3-rank">${r}</span><select style="flex:1" onchange="D.top3[${i}].choice=this.value;save()"><option value="">—</option>${M.map(m=>`<option value="${m.id}" ${(D.top3[i].choice||'')===m.id?'selected':''}>${m.name}</option>`).join('')}</select></div><textarea class="ri-comment" placeholder="Pourquoi\u00a0? / Commentaires" onchange="D.top3[${i}].why=this.value;save()">${D.top3[i].why||''}</textarea></div>`;
     });
     h+='</div>';
     pc.innerHTML=h;pc.scrollTop=0;
