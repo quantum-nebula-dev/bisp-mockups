@@ -1,3 +1,6 @@
 To https://github.com/quantum-nebula-dev/bisp-mockups.git
    a34ac03..4574152  master -> master
 2026-04-07 17:37:20 — Pushed (5 commits): feat(questionnaire): interactive mockup evaluation framework for BISP website redesign
+To https://github.com/quantum-nebula-dev/bisp-mockups.git
+   4574152..34cea26  master -> master
+2026-04-07 17:46:52 — Pushed (5 commits): refactor: minify CSS and restructure to collapsible side-panel navigation

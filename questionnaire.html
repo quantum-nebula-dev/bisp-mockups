@@ -259,8 +259,7 @@ function goSite(i){
 
 function goSpecial(idx){
     document.getElementById('iframeWrap').style.display='none';
-    document.getElementById('vpBar').style.display='none';
-    document.getElementById('rightToggle').style.display='none';
+        document.getElementById('rightToggle').style.display='none';
     if(rightOpen)toggleRight();
     if(leftOpen)toggleLeft();
     document.querySelectorAll('.fp').forEach(p=>p.classList.remove('active'));
