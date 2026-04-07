@@ -207,7 +207,7 @@ function buildNoter(){
     const d=D.mockups[m.id],pc=document.getElementById('panelContent');
     let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p></div>`;
     CRIT.forEach(g=>{
-        h+=`<div class="rg"><div class="rg-t">${g.cat}</div>`;
+        h+=`<div class="rg"><div class="rg-t">${g.cat}</div>${g.desc?`<div style="font-size:0.68rem;color:var(--muted);font-style:italic;margin-bottom:0.4rem">${g.desc}</div>`:''}`;
         g.items.forEach(item=>{
             const v=d.ratings[item]||0;
             h+=`<div class="ri"><div class="rl">${item}</div><div class="rs">
