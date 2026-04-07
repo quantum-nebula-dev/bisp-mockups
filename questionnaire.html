@@ -252,7 +252,7 @@ function saveComment(id,crit,val){
 function buildComparer(){
     const opts=M.map(m=>`<option value="${m.id}" ${D.cmp[m.id]?'':''}>${m.name}</option>`).join('');
     const pc=document.getElementById('panelContent');
-    let h=`<div class="p-section-title">Comparaison directe</div><p class="p-intro">Pour chaque aspect, quelle maquette est la meilleure\u00a0? Changez de site avec le panneau gauche pour revoir.</p>`;
+    let h=`<div class="p-section-title">Comparaison directe</div><p class="p-intro">Pour chaque aspect, quelle maquette vous semble la plus r\u00e9ussie\u00a0? N\u2019h\u00e9sitez pas \u00e0 revoir les sites via le panneau de gauche.</p>`;
     if(!D.cmpComments)D.cmpComments={};
     CMP.forEach(a=>{
         const sel=D.cmp[a]||'';
