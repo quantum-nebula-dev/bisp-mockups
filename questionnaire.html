@@ -205,7 +205,8 @@ function switchPanelTab(idx){
 // === TAB 0: NOTER ===
 function buildNoter(){
     const m=M[cur];
-    if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},firstNotice:'',emotion:'',standout:'',keep:'',change:''};
+    if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},comments:{},firstNotice:'',emotion:'',standout:'',keep:'',change:''};
+    if(!D.mockups[m.id].comments)D.mockups[m.id].comments={};
     const d=D.mockups[m.id],pc=document.getElementById('panelContent');
     let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p></div>`;
     CRIT.forEach(g=>{
