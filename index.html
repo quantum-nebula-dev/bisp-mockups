@@ -203,7 +203,7 @@ function switchPanelTab(idx){
 // === TAB 0: NOTER ===
 function buildNoter(){
     const m=M[cur];
-    if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},keep:'',change:''};
+    if(!D.mockups[m.id])D.mockups[m.id]={ratings:{},firstNotice:'',emotion:'',standout:'',keep:'',change:''};
     const d=D.mockups[m.id],pc=document.getElementById('panelContent');
     let h=`<div class="ph"><h2>#${m.rank} ${m.name}</h2><p class="sd">${m.style}</p></div>`;
     CRIT.forEach(g=>{
@@ -216,6 +216,9 @@ function buildNoter(){
         });
         h+='</div>';
     });
+    h+=`<div class="tq"><label>Premier élément que vous remarquez (test 5 sec)\u00a0:</label><textarea rows="1" onchange="D.mockups['${m.id}'].firstNotice=this.value;save()" placeholder="Qu'avez-vous vu en premier\u00a0?">${d.firstNotice||''}</textarea></div>`;
+    h+=`<div class="tq"><label>Ce design vous fait penser à quoi\u00a0? (1-2 mots)</label><textarea rows="1" onchange="D.mockups['${m.id}'].emotion=this.value;save()" placeholder="ex.\u00a0: luxe discret, énergie, sérieux, chaleureux...">${d.emotion||''}</textarea></div>`;
+    h+=`<div class="tq"><label>L'élément qui vous a le plus marqué\u00a0:</label><textarea rows="1" onchange="D.mockups['${m.id}'].standout=this.value;save()" placeholder="Le truc dont vous vous souviendrez">${d.standout||''}</textarea></div>`;
     h+=`<div class="tq"><label>Ce que vous garderiez absolument\u00a0:</label><textarea onchange="D.mockups['${m.id}'].keep=this.value;save()">${d.keep||''}</textarea></div>`;
     h+=`<div class="tq"><label>Ce que vous changeriez\u00a0:</label><textarea onchange="D.mockups['${m.id}'].change=this.value;save()">${d.change||''}</textarea></div>`;
     pc.innerHTML=h;pc.scrollTop=0;
